@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // creating a user
 router.post('/register', check, async (req, res) => {
@@ -33,13 +34,29 @@ async function check(req, res, next) {
 }
 
 router.post('/login', async (req, res) => {
-    console.log(req.body)
     const userOne = await userModel.findOne({ email: req.body.email })
     if (!userOne) return res.status(404).send("You are not registered")
 
     const decryptedHashedPass = await bcrypt.compare(req.body.password, userOne.password)
     if (!decryptedHashedPass) return res.status(406).send('Password is wrong')
-    res.status(200).send(userOne)
+    const data = { id: userOne.id }
+    const token = jwt.sign(data, process.env.private_json, { expiresIn: '3d' })
+    res.status(200).send({ userOne, token })
+})
+
+router.post('/verifyToken', (req, res) => {
+    const token = req.body.token
+    if (token) {
+        try {
+            const secret = process.env.private_json;
+            const decodedToken = jwt.verify(token, secret);
+            return res.status(200).send(true)
+        } catch {
+            return res.status(500).send('leo');
+        }
+    } else {
+        return res.status(500).send('shah')
+    }
 })
 
 module.exports = router
