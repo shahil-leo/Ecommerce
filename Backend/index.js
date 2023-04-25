@@ -3,7 +3,7 @@ const app = express()
 app.use(express.json())
 const CreateUser = require('./routes/createUser')
 const Product = require('../Backend/routes/Product')
-
+const Cart = require('./routes/cart')
 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -24,3 +24,4 @@ mongoose.connect(mongoUrl).then(() => {
 
 app.use('/user', CreateUser)
 app.use('/product', Product)
+app.use('/cart', Cart)

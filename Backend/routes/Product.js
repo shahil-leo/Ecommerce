@@ -51,9 +51,9 @@ router.get('/every', async (req, res) => {
 // getting one product
 router.get('/unique/:id', async (req, res) => {
     const id = req.params.id
-    const oneProduct = await productModel.findById(id)
-    if (!oneProduct) res.status(504).send("don't have any products")
-    res.send(oneProduct)
+    const singleProduct = await productModel.findById(id)
+    if (!singleProduct) res.status(504).send("don't have any products")
+    res.send(singleProduct)
 })
 
 
