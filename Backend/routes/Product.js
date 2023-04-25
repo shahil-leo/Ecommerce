@@ -20,8 +20,18 @@ router.post('/create', async (req, res) => {
         console.log(e)
     }
 })
-
-
+// updating user
+router.put('/update/:id', async (req, res) => {
+    const id = req.params.id
+    const updatedData = req.body
+    console.log(id)
+    const updatedProduct = await productModel.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updatedData }
+    )
+    if (!updatedProduct) return res.status(404).send('Not updated user')
+    res.send(updatedProduct)
+})
 
 
 module.exports = router
