@@ -23,5 +23,16 @@ router.get('/every/:userId', async (req, res) => {
     res.status(200).send(CartUser)
 })
 
+router.get('/delete/:userId/:id', async (req, res) => {
+    const userId = req.params.userId
+    const ids = req.params.id
+    const DeleteCart = await userModel.updateOne(
+        { _id: new ObjectId(userId) },
+        { $pull: { cart: ids } }
+    )
+    if (!DeleteCart) return res.status(505).send('Cannot delete object')
+    res.status(200).send(DeleteCart)
+})
+
 
 module.exports = router
