@@ -34,5 +34,18 @@ router.get('/delete/:userId/:id', async (req, res) => {
     res.status(200).send(DeleteCart)
 })
 
+router.get('/single/:userId', async (req, res) => {
+    const userId = req.params.userId
+    const singleUser = await userModel.findOne({ _id: new ObjectId(userId) }, { cart: 1 })
+    if (!singleUser) return res.status(500).send('No cart available to show')
+    for (let index = 0; index < singleUser.cart.length; index++) {
+        const element = singleUser.cart[index];
+        const singleProduct = await productModel.findById(element)
+        if (!singleProduct) return res.status(500).send('no such products')
+        cartProductsArray.push(singleProduct)
+    }
+    console.log(cartProductsArray);
+    res.status(200).send(cartProductsArray)
+})
 
 module.exports = router
