@@ -41,6 +41,13 @@ router.post('/delete/:id', async (req, res) => {
     res.status(200).send(deleteOne)
 })
 
+//getting every product
+router.get('/every', async (req, res) => {
+    const everyProduct = await productModel.find()
+    if (!everyProduct) res.status(504).send("don't have products")
+    res.send(everyProduct)
+})
+
 
 
 module.exports = router
