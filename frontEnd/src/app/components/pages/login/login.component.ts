@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,10 @@ export class LoginComponent implements OnInit {
   // }
   form!: FormGroup
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -24,6 +28,10 @@ export class LoginComponent implements OnInit {
   }
   get fc() {
     return this.form.controls
+  }
+
+  login(Data: any) {
+    this.userService.loginUser(Data).subscribe(console.log)
   }
 
 

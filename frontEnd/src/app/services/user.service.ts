@@ -12,4 +12,7 @@ export class UserService {
     const { confirmPassword, ...others } = data
     return this.http.post('http://localhost:4000/user/register', others)
   }
+  loginUser(Data: any) {
+    return this.http.post('http://localhost:4000/user/login', Data)
+  }
 }
