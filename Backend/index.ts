@@ -1,14 +1,11 @@
 import express from 'express'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 const app = express()
 app.use(express.json())
-
-import dotenv from 'dotenv'
 dotenv.config()
-
-
-import mongoose from 'mongoose'
 const mongoPass = process.env.mongoPass
-const mongoUrl = `mongodb+srv://shahil_kv:${mongoPass}@securepass.ltjt1vx.mongodb.net/Ecommerce`
+const mongoUrl: string = `mongodb+srv://shahil_kv:${mongoPass}@securepass.ltjt1vx.mongodb.net/Ecommerce`
 
 mongoose.connect(mongoUrl).then(() => {
     app.listen(4000, () => {
@@ -19,4 +16,4 @@ mongoose.connect(mongoUrl).then(() => {
     console.log(e)
 })
 
-// console.log('shdahi');
+// app.use('/user',)
