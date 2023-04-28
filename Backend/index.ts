@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import { user } from './routes/user'
+import { auth } from './routes/auth'
 const app = express()
 app.use(express.json())
 dotenv.config()
@@ -17,4 +17,4 @@ mongoose.connect(mongoUrl).then(() => {
     console.log(e)
 })
 
-app.use('/user', user)
+app.use('/user', auth)
