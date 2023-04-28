@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import { user } from './routes/user'
 const app = express()
 app.use(express.json())
 dotenv.config()
@@ -16,4 +17,4 @@ mongoose.connect(mongoUrl).then(() => {
     console.log(e)
 })
 
-// app.use('/user',)
+app.use('/user', user)
