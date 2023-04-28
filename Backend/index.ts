@@ -1,8 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import { auth } from './routes/auth'
 const app = express()
+app.use(cors())
 app.use(express.json())
 dotenv.config()
 const mongoPass = process.env.mongoPass
