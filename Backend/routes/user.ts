@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import { UserModel } from '../models/userSchema';
-import { verifyTokenAndAuthorization } from '../middlewares/verify';
+import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
 
 router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
     const { error } = req.body
@@ -29,6 +29,26 @@ router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
         res.status(200).send(deletedUser)
     } catch (error) {
         res.status(500).send('user Id is not valid')
+    }
+})
+
+router.get('/singleUser/:id', verifyTokenAndAdmin, async (req, res) => {
+    const id = req.params.id
+    try {
+        const singleUser = await UserModel.findById(id)
+        if (!singleUser) return res.status(500).json('there is no user with this id')
+        res.status(200).json(singleUser)
+    } catch (error) {
+        res.status(200).json(error)
+    }
+})
+router.get('/allUser', verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const allUser = await UserModel.find()
+        if (!allUser) return res.status(500).json('there are no users ')
+        res.status(200).json(allUser)
+    } catch (error) {
+        res.status(200).json(error)
     }
 })
 
