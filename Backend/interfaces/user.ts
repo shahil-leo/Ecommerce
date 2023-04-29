@@ -7,6 +7,12 @@ export interface User {
     isAdmin: Boolean,
 }
 
+export interface token {
+    id: string,
+    isAdmin: boolean,
+    iat: number,
+    exp: number
+}
 
 export interface fullUser {
     '$__': _;

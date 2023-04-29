@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { auth } from './routes/auth'
+import { user } from './routes/user'
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -19,4 +20,5 @@ mongoose.connect(mongoUrl).then(() => {
     console.log(e)
 })
 
-app.use('/user', auth)
+app.use('/auth', auth)
+app.use('/user', user)
