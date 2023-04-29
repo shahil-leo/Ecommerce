@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { RegisterUser } from 'src/app/models/register-user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -19,7 +19,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private toaster: ToastrModule
+    private toaster: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -36,11 +36,12 @@ export class RegisterComponent {
   }
   formSubmit(formData: RegisterUser) {
     console.log(formData)
-    if (!(formData.password === formData.confirmPassword)) return console.log('password is not same')
-    this.userService.registerUser(formData).subscribe({
+    if (!(formData.password === formData.confirmPassword)) return this.toaster.error('Password is not same')
+    return this.userService.registerUser(formData).subscribe({
       next: (res) => { console.log(res) },
-      error: (e) => { console.log(e.error) },
+      error: (e) => { this.toaster.error(e.error) },
       complete: () => {
+        this.toaster.success('Created successfully')
         this.form.reset()
         this.router.navigate(['/login'])
       }

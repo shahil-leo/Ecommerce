@@ -5,3 +5,11 @@ export interface RegisterUser {
   password: string,
   confirmPassword: string,
 }
+export interface Login {
+  _id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  isAdmin: boolean
+  accessToken: string
+}

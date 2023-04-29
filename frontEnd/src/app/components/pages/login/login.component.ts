@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls
   }
 
-  login(Data: any) {
+  login(Data: 'email' | 'password') {
     this.userService.loginUser(Data).subscribe(console.log)
   }
 
