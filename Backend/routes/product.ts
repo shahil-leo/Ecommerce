@@ -41,13 +41,33 @@ router.put('/update/:productId', verifyTokenAndAdmin, async (req, res) => {
 })
 
 router.delete('/delete/:productId', verifyTokenAndAdmin, async (req, res) => {
-    const id = req.params.productId
+    const productId = req.params.productId
     try {
-        const deletedProduct = await productModel.findByIdAndDelete(id)
+        const deletedProduct = await productModel.findByIdAndDelete(productId)
         if (!deletedProduct) return res.status(500).json('server problem cannot delete product')
         res.status(200).json('Product deleted successfully')
     } catch (error) {
         res.status(500).json(error)
+    }
+})
+router.get('/all', async (req, res) => {
+    try {
+        const allProducts = await productModel.find();
+        if (!allProducts) return res.status(500).json('server not getting all products')
+        res.status(200).json(allProducts)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+router.get('/single/:productId', async (req, res) => {
+    const productId = req.params.productId
+    try {
+        const singleProduct = await productModel.findById(productId)
+        if (!singleProduct) return res.status(500).json('there is no product')
+        res.status(200).json(singleProduct)
+
+    } catch (error) {
+        res.status(600).json(error)
     }
 })
 
