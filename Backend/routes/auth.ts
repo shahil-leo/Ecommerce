@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
         isAdmin: user._doc.isAdmin
     }, secretJwt, { expiresIn: '1d' })
     const { password, ...others } = user._doc
-    res.status(200).json({ others, accessToken })
+    res.status(200).json({ ...others, accessToken })
 })
 
 export const auth = router
