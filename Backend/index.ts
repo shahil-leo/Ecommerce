@@ -5,6 +5,7 @@ import cors from 'cors'
 import { auth } from './routes/auth'
 import { user } from './routes/user'
 import { product } from './routes/product'
+import { cart } from './routes/cart'
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -24,3 +25,4 @@ mongoose.connect(mongoUrl).then(() => {
 app.use('/auth', auth)
 app.use('/user', user)
 app.use('/product', product)
+app.use('/cart', cart)
