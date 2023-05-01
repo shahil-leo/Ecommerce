@@ -19,6 +19,8 @@ export function verifyToken(req: any, res: Response, next: NextFunction) {
             req.user = token
             next()
         })
+    } else {
+        return res.status(500).json('No token')
     }
 }
 
@@ -27,7 +29,7 @@ export function verifyTokenAndAuthorization(req: any, res: Response, next: NextF
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next()
         } else {
-            res.status(500).json('token and id is not matching the same user')
+            return res.status(500).json('token and id is not matching the same user')
         }
     })
 }
@@ -36,7 +38,7 @@ export function verifyTokenAndAdmin(req: any, res: Response, next: NextFunction)
         if (req.user.isAdmin) {
             next()
         } else {
-            res.status(500).json('you are not a admin')
+            return res.status(500).json('you are not a admin')
         }
     })
 }
