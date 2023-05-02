@@ -74,3 +74,16 @@ interface Paths {
     updatedAt: string;
     __v: string;
 }
+
+
+export interface recoveryUser {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    isAdmin: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
