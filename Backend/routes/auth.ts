@@ -1,7 +1,7 @@
 
 import express, { json, text } from 'express'
-import nodemailer from 'nodemailer'
 import crypto from 'crypto'
+import nodemailer from 'nodemailer'
 const router = express.Router()
 import bcrypt from 'bcrypt'
 import { UserModel } from "../models/userSchema";
