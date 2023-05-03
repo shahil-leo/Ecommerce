@@ -1,4 +1,4 @@
-import { cartInterface } from './../interfaces/cart';
+import { cartInterface } from '../interfaces/cart';
 import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema<cartInterface>({

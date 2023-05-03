@@ -92,7 +92,7 @@ router.post('/forgot', async (req, res) => {
             } else {
                 recoveryEmail()
                 async function recoveryEmail() {
-                    const addRecoverCode = await UserModel.findByIdAndUpdate(user.id,
+                    const addRecoverCode = await UserModel.findByIdAndUpdate<recoveryUser>(user.id,
                         {
                             $set: {
 
