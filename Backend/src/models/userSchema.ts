@@ -23,6 +23,9 @@ const UserSchema = new mongoose.Schema<User>({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    recoveryCode: {
+        type: String
     }
 },
     { timestamps: true })

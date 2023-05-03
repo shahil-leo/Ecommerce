@@ -2,6 +2,7 @@
 import express, { json, text } from 'express'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
+import { ObjectId } from 'mongodb'
 const router = express.Router()
 import bcrypt from 'bcrypt'
 import { UserModel } from "../models/userSchema";
@@ -11,10 +12,7 @@ import { User, fullUser, recoveryUser } from '../interfaces/user';
 import jwt from 'jsonwebtoken'
 dotenv.config()
 
-
-let recoveryEmail: string
-let recoveryPass: string
-let emailId: string
+let code: string
 
 function generateCode(): string {
     const code = crypto.randomBytes(3).toString('hex');
@@ -63,20 +61,19 @@ router.post('/login', async (req, res) => {
 
 // forgot password
 router.post('/forgot', async (req, res) => {
-    emailId = req.body.email
-    console.log(emailId)
+    const emailId = req.body.email
     try {
         const user: any = await UserModel.findOne({ email: emailId })
         console.log(user)
         if (!user) return res.status(500).json('not user found')
         // code generation for unique user
-        const code = generateCode()
+        code = generateCode()
         console.log(code)
         const transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'mshahilk28@gmail.com',
-                pass: 'owqycyrmlhtsqpbv'
+                pass: `${process.env.node_mailer}`
             }
         })
         const message = {
@@ -88,19 +85,18 @@ router.post('/forgot', async (req, res) => {
         }
         transport.sendMail(message, (error: any, info: any) => {
             if (error) {
-                console.log(error);
+                return res.status(500).json('Mail not working')
             } else {
                 recoveryEmail()
                 async function recoveryEmail() {
-                    const addRecoverCode = await UserModel.findByIdAndUpdate<recoveryUser>(user.id,
+                    const addRecoverCode = await UserModel.updateOne<recoveryUser>({ _id: new ObjectId(user._id) },
+
                         {
                             $set: {
-
                                 recoveryCode: code
                             }
                         }, { new: true })
                     if (!addRecoverCode) return res.status(500).json('No recovery code is set to backend')
-                    console.log(user.id)
                     return res.status(200).json(addRecoverCode)
                 }
             }
@@ -110,17 +106,16 @@ router.post('/forgot', async (req, res) => {
     }
 
 })
-router.post('/check/', async (req, res) => {
-
-    const codes = req.body.codes
-    if (codes) {
-        // const user = await UserModel.findOne<recoveryUser>({ email: emailId })
-        // if (!user) return res.status(500).json('not user found')
-        // return res.status(200).json(user.email)
+router.post('/check', async (req, res) => {
+    const emailId = req.body.email
+    const code = req.body.code
+    const user: any = await UserModel.findOne<recoveryUser>({ email: emailId })
+    if (!user) return res.status(500).json('not user found')
+    if (code === user.recoveryCode) {
+        return res.status(200).json('yeah i got you')
     } else {
-        res.status(500).json('you are not verified to that')
+        return res.status(500).json('you are not that user')
     }
-
 })
 
 
