@@ -70,5 +70,19 @@ router.get('/single/:productId', async (req, res) => {
         res.status(600).json(error)
     }
 })
+router.get('/Allcategory', async (req, res) => {
+    try {
+        const everyCategory = await productModel.aggregate([
+            { $group: { _id: "$categories" } },
+            { $project: { _id: 0, categories: "$_id" } }
+        ])
+        if (!everyCategory) return res.status(500).json('No category found')
+        res.json(everyCategory)
+    } catch (e) {
+        res.json(e)
+    }
+
+})
+
 
 export const product = router

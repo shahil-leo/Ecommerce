@@ -14,6 +14,8 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LoadingComponent } from './components/layouts/loading/loading.component'
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { HeroSectionComponent } from './components/layouts/hero-section/hero-section.component';
+import { CategoriesComponent } from './components/layouts/categories/categories.component';
+import { SmCategoryComponent } from './components/layouts/sm-category/sm-category.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { HeroSectionComponent } from './components/layouts/hero-section/hero-sec
     HomeComponent,
     LoadingComponent,
     HeroSectionComponent,
+    CategoriesComponent,
+    SmCategoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,4 +16,7 @@ export class UserService {
   loginUser(Data: any): Observable<Login> {
     return this.http.post<Login>('http://localhost:4000/auth/login', Data)
   }
+  allCategory() {
+    return this.http.get('http://localhost:4000/product/Allcategory')
+  }
 }

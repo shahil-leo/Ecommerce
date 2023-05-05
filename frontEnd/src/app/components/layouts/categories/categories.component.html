@@ -1,0 +1,16 @@
+<section class="p-5">
+  <div class="max-w-[85rem] mx-auto mt-2 md:mt-16">
+    <h1 class="text-3xl font-bold">Shop our Top Categories</h1>
+
+    <div class="flex flex-wrap my-10 gap-7">
+      <div
+        class="min-h-[10rem] min-w-[10rem] lg:min-w-[12rem] lg:min-h-[12rem] bg-green-400 rounded-lg"
+        *ngFor="let category of uniqueArray"
+      >
+        <h1 class="px-2 py-2 text-xl font-medium text-center top-2">
+          {{ category }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</section>
