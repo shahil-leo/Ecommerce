@@ -7,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  women?: string = "women"
-  weekly?: string = 'men'
+  offer?: string
+  weekly?: string
+  new?: string
+  selling?: string
+
   ngOnInit(): void {
-    this.women = "women"
-    this.weekly = "Weekly"
+    this.offer = "women"
+    this.weekly = "women"
+    this.new = "women"
+    this.selling = "women"
   }
 
 }

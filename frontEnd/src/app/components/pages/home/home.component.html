@@ -1,6 +1,46 @@
 <app-navbar></app-navbar>
 <app-hero-section></app-hero-section>
 <app-categories></app-categories>
-<app-sm-category [category]="women"></app-sm-category>
+<app-sm-category [category]="offer"></app-sm-category>
 <app-brand></app-brand>
 <app-sm-category [category]="weekly"></app-sm-category>
+<!-- big banner -->
+
+<div class="md:my-32 my-12 h-[30rem] md:h-[36rem] bg-gray-400">
+  <div class="flex items-center">
+    <span class="flex-[2] hidden md:block"></span>
+    <div
+      class="flex-1 flex gap-6 flex-col items-center m-4 bg-yellow-400 min-w-[13.5rem] mt-12 md:mt-28 h-96 mr-72"
+    >
+      <h1 class="mt-20 text-center">Get 5% Cash Back on 1200 Rs</h1>
+      <p class="text-center">
+        Shopping is a bit of a relaxing hobby for me, which is sometimes
+        troubling for the bank balance.
+      </p>
+      <button>Learn More</button>
+    </div>
+  </div>
+</div>
+
+<!-- end of big baner -->
+<app-sm-category [category]="new"></app-sm-category>
+<!-- small banner -->
+<div class="min-h-[17rem] bg-yellow-300 my-6 md:my-28">
+  <div class="mx-auto max-w-7xl">
+    <div class="flex items-center justify-around mt-10">
+      <div>
+        <h1>Get 5% Cash Back</h1>
+        <p>on zauj.com</p>
+        <button>Learn More</button>
+      </div>
+      <div class="hidden md:block max-w-[12.5rem] max-h-[18.75rem]">
+        <img
+          src="../../../../assets/images/luis-felipe-lins-LG88A2XgIXY-unsplash.jpg"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<app-sm-category [category]="selling"></app-sm-category>
+<app-faq></app-faq>
+<app-footer></app-footer>

@@ -17,6 +17,8 @@ import { HeroSectionComponent } from './components/layouts/hero-section/hero-sec
 import { CategoriesComponent } from './components/layouts/categories/categories.component';
 import { SmCategoryComponent } from './components/layouts/sm-category/sm-category.component';
 import { BrandComponent } from './components/layouts/brand/brand.component';
+import { FaqComponent } from './components/layouts/faq/faq.component';
+import { FooterComponent } from './components/layouts/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { BrandComponent } from './components/layouts/brand/brand.component';
     CategoriesComponent,
     SmCategoryComponent,
     BrandComponent,
+    FaqComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
