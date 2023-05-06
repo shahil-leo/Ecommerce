@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sm-category',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class SmCategoryComponent {
 
+  productArray: any = []
+
+  constructor(private userService: UserService) {
+    this.userService.findCategory('women').subscribe({ next: (res) => { this.productArray = res, console.log(res) } })
+  }
 }

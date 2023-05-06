@@ -81,6 +81,17 @@ router.get('/Allcategory', async (req, res) => {
     } catch (e) {
         res.json(e)
     }
+})
+
+router.get('/findCategory/:category', async (req, res) => {
+    const category = req.params.category
+    try {
+        const findCategory = await productModel.find({ categories: category })
+        if (!findCategory) return res.status(500).json('no category found')
+        return res.status(200).json(findCategory)
+    } catch (error) {
+        res.send(500).json(error)
+    }
 
 })
 
