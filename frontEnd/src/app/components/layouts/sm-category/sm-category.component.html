@@ -1,28 +1,31 @@
 <div class="mx-auto max-w-[85rem]">
   <h1 class="px-5 mb-10 text-3xl font-semibold">Today Best Deals for you</h1>
-  <div class="px-5 h-[20rem] md:h-[25.75rem] overflow-auto">
-    <div class="flex gap-5 md:gap-10">
+
+  <div class="px-5 overflow-x-scroll h-96">
+    <div class="flex gap-5 md:gap-10 w-max">
       <div
-        class="w-[11.5rem] h-[20.25rem] sm:w-[22rem] lg:w-[26rem]"
+        class="w-[11.5rem] h-[14rem] sm:w-[22rem] lg:w-[22rem]"
         *ngFor="let product of productArray"
       >
-        <div
-          class="flex items-center justify-center mt-5 mb-5 overflow-hidden bg-green-500 rounded-xl"
-        >
-          <img
-            src="../../../../assets/images/luis-felipe-lins-LG88A2XgIXY-unsplash.jpg"
-            class="w-full transition-all hover:scale-125"
-          />
-        </div>
-        <div>
-          <div class="flex justify-between mb-5">
-            <h1>{{ product.title }}</h1>
-            <h1>{{ product.prize }}</h1>
+        <div class="">
+          <div
+            class="flex items-center justify-center mt-5 mb-5 rounded-xl h-[12.5rem]"
+          >
+            <img
+              src="../../../../assets/images/luis-felipe-lins-LG88A2XgIXY-unsplash.jpg"
+              class="w-full transition-all hover:scale-125"
+            />
           </div>
-          <p>{{ product.description }}</p>
-          <div class="flex justify-between mt-5">
-            <button>Add to cart</button>
-            <button>Add to Wishlist</button>
+          <div>
+            <div class="flex justify-between mb-5">
+              <h1>{{ product.title }}</h1>
+              <h1>{{ product.prize }}</h1>
+            </div>
+            <p>{{ product.description }}</p>
+            <div class="flex justify-between mt-5">
+              <button>Add to cart</button>
+              <button>Add to Wishlist</button>
+            </div>
           </div>
         </div>
       </div>

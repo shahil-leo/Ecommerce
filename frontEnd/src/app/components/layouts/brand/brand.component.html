@@ -3,21 +3,21 @@
     <h1 class="mb-10 text-3xl font-semibold">Choose by Brand</h1>
     <div class="flex flex-col flex-wrap gap-6 sm:flex-row md:gap-12">
       <div
-        class="flex justify-between max-w-[20.5rem] p-3 bg-gray-400 rounded-lg"
+        class="flex justify-between gap-5 max-w-[20.5rem] p-3 bg-gray-400 rounded-lg"
         *ngFor="let item of uniqueBrand"
       >
-        <div class="flex items-center w-24 gap-2 md:gap-6">
+        <div class="w-24 gap-2 md:gap-6">
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAkFBMVEX///8jHyAAAAAkHiDU0dIhHR6koqMYExTq6uodGBllY2QLAAPh4OFXVFUUDg8jICGDg4OurK0bFhe9u7zLy8vo5udGQ0QrKCn08vPIxcY/PT4OBgna2to1MjOZmZn49/eNi4uTj5CysrJQTE1fXF2al5h2dHXBwMGGgoMoKChtbGwwLy8YGBhtaWoTBQtUUVIOTkfeAAAH50lEQVR4nO2c62LqKhCFGxISEUtMYjSKNtZ7re6+/9sdCKBR0X073USd74+tqIVlYM0wpC8vAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAoFC3XPWgOM9p23YWm0OsjH/Vc96IR5CtEPI/MXfejCSxT5knQzHVPnLP2Ka60iPFn4bozbhkvkJJCQt9dd8clxYZGXg2Uu+6RO5IB906IntZee6PaDDGXxtB1r9ywupRC2GvfdbfcECL/UgwPJa775YaJ5crwntVee8gihkenrvvlhn1kUwN1XPfLCWNmEyNauO6XG6bcpsaTZq+FZ1tDych1v/4x2jIS6xr6XPZaTAdaDbDX8INznZ/a7ZVPnfbvH1KlJJhqA20/s7122iolMflph9kmyu4Z7LV4Z+ZKMAZqtVf/CbLX5IMergMyUc8VseXS8B/eXoP+yWppDNRmr/6D22trK8sBdWJjr+RSDQ8PHrfAViwjdr59YQz0ir1unHb4Gxl+UsvKwJ7TXsfIiy+He7BXm1Je+rD2eiU/Hf5K68NRDKxJyORWqzHfxyO8mZ/as1cauu3z9zHCllUD37bXj0fNXofWL59pA71ir123ff4+FlYD5WPVesVex277/L9T6oysY/3yD/bKbeabvrrr93cwnCAdWHe5d1lDi5/IXjsLhNlW/SwM1FJQxJ+HVosYpvUBKDYokpsTgfo1odbqqjbQB7dXc/xiZ0rrI6uB7rSBjqyXRvwQ2WvQP6Qc5uTa+qa93jbfeybfV9sXsf569Ze/SK1T4bHttVientUyJ9eu2KvOTzvWNeXe7TWbnA0ap/rk2h9krzFauxvJXzN+vTygxFaqzbr9+7Ps9Y7tNUGp5Wo3lYEr1dWb9ore3I3mLyk+bbHVYe+/b7NXj92019392uvt0vqfZK/sjrPXK9FTqVrt9noze/Xv2F5vl9Zza6vZ/pXme56++v492+sCWdF7/1Mmsldy0ZrpVvt77/fui1ZgJWzv9+3spYU8n7xetM5ka/hS2t97v/PkCgmKImGiUgzLiflAtt7xSvmbJDSWKbkUI7WIQX3/nm3jN0nEcG+J8Rgp6i9yEENwaQ+VGE93ZZTjTmd8WVV+ODHKPLfVfYpOLiOuhHq+ZRtPvEm2novRyi1BuPXJJtIK+3ICfHaDF0Q5MnepBt2BfHoeFjMlRgvxH8iU2DvTkWwdTfOAH8UoszYXzzJhxF+IcxWhlLMFrT7prfmFttCjVQ6GGdqKRF0Hja09Uuf5CB20iRYDG2stN4gTGXJinu7xQYxeH1UxO47QVx+LT5RiBCN99Icg3PQQrI18gY6txU+kEiP4YCak9rEYy6mbFH0uGxRy+MpNQkQOH0V88YqoI2eRfJJEkdAMN/zEV5vKYUWUcp2iV2J0GFHXCo1U8nYiRjGqsjLxJnMYtLoyZqJdxOuc0shTmkgxBiT2drvX1X7AxB9q9LGe6sRBSrZJtpzToxhVbYCPptmsO2AXYqy4SMlYvMmy6YQfxJDneITrfIVZ0o6IEUNm/qRfLRYb1uySdOsDxx7rq68r4UaMREwdj75XuXvRpmdiBFJAuq3soZxSI8ZWqkbVqhCoSosQI5Reo3a8crmKYifj/CXkfg4Z6Q0LVR6RYkzENKdL86I2OxVjFfm1u3rfuRKjI7U47AG3dliJseRyq1TtHQ7Xw2GDN4nlho0pIgq2USXGGJ3cSdPC+CQcFw84Ot7vLfcDxQIanoYbM6TEqB4xHazCXsMjjeITe+Tr+LucAEKMTIyL1tZ9cSnUxOjI5HV/bA15JUaXndaNqBKjUFtCOBXxx2DT5IS+JXoc1XKsUokhh1cfV8jrYvTEA6/Foz2VqLVTDw9qUdWcKDdZIu3QlTt1y5emckWMt5+KUQ/Og6MYk5oYX1qMlzfEtQELD0K1S6phyOIPqZ1hHSsx5Dw3u3mSzck0Gctpsjq2zpQYK7He0FoUIQOUSoyXznJEKWJpJUmDy2wLciwfC+S81wtobStXFlTOF1B8vAa+9AL64+S2rLVeQPVHBLPpwpN2G22/e0x/zButD7tnrFVWC4+R84p5J2LIG57Z4dIIuQrHx3LFZMaZ5NKs4gyBTtBy6Tu4uf9OId/JSHOhOrvGWIvxJlXhWo0uOgu6qnISX6mlMKwOuElPlTZNiCpF5/NIB10eElNETw25FpEGFw/eaez5DE/XveRVnVGRvS2rMjPth73hUp3iOQnHF2I2xWzwNhyGI1pVS6QYgYooFrNetmGq4CTEWLFYxCyV2uVIBOm8yf+eZy7ngPA8ROuJWlDV47GIDZglUcsHRLfyeqKmTJRQhEx1TYghi0t+it+zYTgRSXGzb8Ao9D1XvjzeiH1Pp/CZ0kYl6fg8hR8P5Lg8lfvL9EyFnt16zc2k8Mtqi0CozYnUYupwrD+nXIkvMpadx2gSY6zX02CCdFE+QiOCfXSyuZPPzb1aBI3EUqPj8ITz6qR5jDmZYKw2d0J0+KcKUcO1EARtVQmchCVPU2bC83Cint6PE7RLhRg5SlNuErRsrlrn6wBFKdVJSWvKqmd302LB0oirOGPD1WvpKrj8642jDLJseJlH5cNsHVyNn4thlvUudzXH62x9sS50xGuHTU5MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOA6/wEPXXKoxYCz9gAAAABJRU5ErkJggg=="
             alt="brand name"
             class="rounded-lg"
           />
-          <div class="flex flex-col text-center text-white">
-            <h1>{{ item }}</h1>
-            <p class="min-w-[5.25rem] md:min-w-[8rem] max-w-[14rem]">
-              Delivery within 24 hours
-            </p>
-          </div>
+        </div>
+        <div class="flex flex-col text-center text-white">
+          <h1>{{ item }}</h1>
+          <p class="min-w-[5.25rem] md:min-w-[8rem] max-w-[14rem]">
+            Delivery within 24 hours
+          </p>
         </div>
       </div>
     </div>
