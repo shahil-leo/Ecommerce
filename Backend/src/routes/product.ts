@@ -62,6 +62,7 @@ router.get('/all', async (req, res) => {
 })
 router.get('/single/:productId', async (req, res) => {
     const productId = req.params.productId
+    console.log(productId)
     try {
         const singleProduct = await productModel.findById(productId)
         if (!singleProduct) return res.status(500).json('there is no product')
@@ -90,6 +91,16 @@ router.get('/findCategory/:category', async (req, res) => {
         const findCategory = await productModel.find({ categories: category })
         if (!findCategory) return res.status(500).json('no category found')
         return res.status(200).json(findCategory)
+    } catch (error) {
+        res.send(500).json(error)
+    }
+})
+router.get('/findBrandProduct/:brand', async (req, res) => {
+    const brandName = req.params.brand
+    try {
+        const findBrand = await productModel.find({ brand: brandName })
+        if (!findBrand) return res.status(500).json('no brand product found')
+        return res.status(200).json(findBrand)
     } catch (error) {
         res.send(500).json(error)
     }

@@ -13,8 +13,7 @@ export class SmCategoryComponent implements OnInit {
 
   constructor(private userService: UserService) { }
   ngOnInit(): void {
-    console.log(this.category)
-    this.userService.findCategory(this.category).subscribe({ next: (res) => { this.productArray = res, console.log(res) } })
+    this.userService.findCategory(this.category).subscribe({ next: (res) => { this.productArray = res } })
   }
 
 }

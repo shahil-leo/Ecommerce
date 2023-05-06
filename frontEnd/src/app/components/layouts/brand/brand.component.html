@@ -5,6 +5,7 @@
       <div
         class="flex justify-between items-center gap-5 max-w-[16.5rem] p-3 bg-gray-400 rounded-lg"
         *ngFor="let item of uniqueBrand"
+        routerLink="/productsBrand/{{ item }}"
       >
         <div class="w-24 gap-2 md:gap-6">
           <img

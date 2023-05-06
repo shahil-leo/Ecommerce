@@ -25,4 +25,7 @@ export class UserService {
   getAllBrand() {
     return this.http.get('http://localhost:4000/product/findBrand')
   }
+  findBrand(brand: string) {
+    return this.http.get(`http://localhost:4000/product/findBrandProduct/${brand}`)
+  }
 }

@@ -19,6 +19,7 @@ import { SmCategoryComponent } from './components/layouts/sm-category/sm-categor
 import { BrandComponent } from './components/layouts/brand/brand.component';
 import { FaqComponent } from './components/layouts/faq/faq.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
+import { ProductsComponent } from './components/pages/products/products.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FooterComponent } from './components/layouts/footer/footer.component';
     BrandComponent,
     FaqComponent,
     FooterComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
