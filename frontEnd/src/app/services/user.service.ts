@@ -19,7 +19,10 @@ export class UserService {
   allCategory() {
     return this.http.get('http://localhost:4000/product/Allcategory')
   }
-  findCategory(category: string) {
+  findCategory(category: string | undefined) {
     return this.http.get(`http://localhost:4000/product/findCategory/${category}`)
+  }
+  getAllBrand() {
+    return this.http.get('http://localhost:4000/product/findBrand')
   }
 }

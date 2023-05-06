@@ -13,7 +13,8 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
         categories: req.body.categories,
         size: req.body.size,
         color: req.body.color,
-        prize: req.body.prize
+        prize: req.body.prize,
+        brand: req.body.brand
     })
     try {
         const savedProduct = await productData.save()
@@ -92,7 +93,18 @@ router.get('/findCategory/:category', async (req, res) => {
     } catch (error) {
         res.send(500).json(error)
     }
+})
 
+router.get('/findBrand', async (req, res) => {
+    try {
+        const brands = await productModel.aggregate([
+            { $group: { _id: "$brand" } },
+            { $project: { _id: 0, brand: "$_id" } }
+        ])
+        res.send(brands)
+    } catch (error) {
+
+    }
 })
 
 

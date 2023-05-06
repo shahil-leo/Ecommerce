@@ -20,6 +20,7 @@ export class CategoriesComponent implements OnInit {
         next: (res: any) => {
           this.categoriesArray = res
           this.categoriesArray.map((element: any) => {
+            console.log(element)
             element.categories.map((element: any) => {
               this.stringArray.push(element)
               this.uniqueArray = [...new Set(this.stringArray)]
@@ -27,8 +28,11 @@ export class CategoriesComponent implements OnInit {
           })
 
         },
-        error: (e: any) => console.log(e),
-        complete: () => { console.log('completed everything'), console.log(this.uniqueArray) }
+        error: (e: Error) => console.log(e),
+        complete: () => {
+          console.log('completed everything'),
+            console.log(this.uniqueArray)
+        }
       }
     )
   }

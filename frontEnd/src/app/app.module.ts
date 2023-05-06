@@ -16,6 +16,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { HeroSectionComponent } from './components/layouts/hero-section/hero-section.component';
 import { CategoriesComponent } from './components/layouts/categories/categories.component';
 import { SmCategoryComponent } from './components/layouts/sm-category/sm-category.component';
+import { BrandComponent } from './components/layouts/brand/brand.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SmCategoryComponent } from './components/layouts/sm-category/sm-categor
     HeroSectionComponent,
     CategoriesComponent,
     SmCategoryComponent,
+    BrandComponent,
   ],
   imports: [
     BrowserModule,

@@ -29,6 +29,10 @@ const productSchema = new mongoose.Schema<productInterface>({
     prize: {
         type: Number,
         required: true
+    },
+    brand: {
+        type: String,
+
     }
 }, { timestamps: true })
 

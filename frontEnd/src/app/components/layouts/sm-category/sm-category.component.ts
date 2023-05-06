@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -6,11 +6,15 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './sm-category.component.html',
   styleUrls: ['./sm-category.component.scss']
 })
-export class SmCategoryComponent {
+export class SmCategoryComponent implements OnInit {
 
   productArray: any = []
+  @Input() category?: string
 
-  constructor(private userService: UserService) {
-    this.userService.findCategory('women').subscribe({ next: (res) => { this.productArray = res, console.log(res) } })
+  constructor(private userService: UserService) { }
+  ngOnInit(): void {
+    console.log(this.category)
+    this.userService.findCategory(this.category).subscribe({ next: (res) => { this.productArray = res, console.log(res) } })
   }
+
 }
