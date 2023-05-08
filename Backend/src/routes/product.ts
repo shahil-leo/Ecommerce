@@ -28,7 +28,6 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
 router.put('/update/:productId', verifyTokenAndAdmin, async (req, res) => {
     const id = req.params.productId
     const data = req.body
-
     try {
         const updatedProduct = await productModel.findByIdAndUpdate(id,
             {
@@ -102,7 +101,7 @@ router.get('/findBrandProduct/:brand', async (req, res) => {
         if (!findBrand) return res.status(500).json('no brand product found')
         return res.status(200).json(findBrand)
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 
@@ -112,9 +111,9 @@ router.get('/findBrand', async (req, res) => {
             { $group: { _id: "$brand" } },
             { $project: { _id: 0, brand: "$_id" } }
         ])
-        res.send(brands)
+        res.status(200).json(brands)
     } catch (error) {
-
+        res.status(500).json(error)
     }
 })
 
