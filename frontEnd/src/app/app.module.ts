@@ -20,6 +20,7 @@ import { BrandComponent } from './components/layouts/brand/brand.component';
 import { FaqComponent } from './components/layouts/faq/faq.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
 import { ProductsComponent } from './components/pages/products/products.component';
+import { SingleProductComponent } from './components/pages/single-product/single-product.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ProductsComponent } from './components/pages/products/products.componen
     FaqComponent,
     FooterComponent,
     ProductsComponent,
+    SingleProductComponent,
   ],
   imports: [
     BrowserModule,

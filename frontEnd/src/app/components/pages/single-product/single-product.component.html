@@ -1,0 +1,185 @@
+<app-navbar></app-navbar>
+<section class="pt-6 pb-24 overflow-hidden bg-blueGray-100 rounded-b-10xl">
+  <div class="max-w-[85rem] px-4 mx-auto">
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full px-4 mb-16 lg:w-1/2 lg:mb-0">
+        <div
+          class="flex flex-wrap items-center justify-between -mx-4 lg:justify-start lg:items-start xl:items-center"
+        >
+          <div
+            class="flex items-center justify-center w-full px-4 text-center sm:w-auto min-w-max sm:flex-col"
+          >
+            <a
+              class="inline-block mr-4 transform -rotate-90 sm:mb-12 sm:mr-0 sm:transform-none hover:text-darkBlueGray-400"
+              href="#"
+            >
+              <svg
+                width="12"
+                height="8"
+                viewbox="0 0 12 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.54064 7.21015C1.18719 7.59662 0.615928 7.59662 0.265087 7.21015C-0.087058 6.82369 -0.0896663 6.19929 0.265087 5.81282L5.36206 0.289847C5.71421 -0.0966173 6.28416 -0.0966172 6.63892 0.289847L11.7359 5.81282C12.088 6.19785 12.088 6.82369 11.7359 7.21015C11.3824 7.59662 10.8112 7.59662 10.4603 7.21015L5.99853 2.68073L1.54064 7.21015Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </a>
+            <a class="block mb-4 mr-2 h-30 sm:mr-0" href="#">
+              <img class="w-full h-full" src="" alt="" />
+            </a>
+            <a class="hidden mb-4 mr-2 sm:block h-30 sm:mr-0" href="#">
+              <img class="w-full h-full" src="" alt="" />
+            </a>
+            <a
+              class="hidden mb-4 mr-2 border-2 sm:block h-30 sm:mr-0 rounded-xl border-blueGray-500"
+              href="#"
+            >
+              <img class="w-full h-full" src="" alt="" />
+            </a>
+            <a class="block mb-4 mr-4 h-30 sm:mb-12 sm:mr-0" href="#">
+              <img class="w-full h-full" src="" alt="" />
+            </a>
+            <a
+              class="inline-block transform -rotate-90 sm:transform-none hover:text-darkBlueGray-400"
+              href="#"
+            >
+              <svg
+                width="12"
+                height="8"
+                viewbox="0 0 12 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.4594 0.289849C10.8128 -0.0966154 11.3841 -0.0966154 11.7349 0.289849C12.0871 0.676313 12.0897 1.30071 11.7349 1.68718L6.63794 7.21015C6.28579 7.59662 5.71584 7.59662 5.36108 7.21015L0.264109 1.68718C-0.0880364 1.30215 -0.0880363 0.676312 0.264109 0.289848C0.617558 -0.096616 1.18882 -0.0966159 1.53966 0.289848L6.00147 4.81927L10.4594 0.289849Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </a>
+          </div>
+          <div class="w-full px-4 sm:w-9/12">
+            <img class="mb-5" src="" alt="sui" />
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-4 lg:w-1/2" *ngIf="this.singleProduct">
+        <div class="max-w-md mb-6">
+          <h2
+            class="mt-6 mb-4 text-4xl font-medium md:text-5xl lg:text-6xl font-heading"
+          >
+            {{ this.singleProduct.title }}
+          </h2>
+          <p class="flex items-center mb-6">
+            <span class="mr-2 text-sm font-medium text-blue-500">₹</span>
+            <span class="text-3xl font-medium text-blue-500">{{
+              this.singleProduct.prize
+            }}</span>
+          </p>
+          <p class="text-lg text-gray-400">
+            {{ this.singleProduct.description }}
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="mb-3 font-medium font-heading">
+            <span>Color:</span>
+            <span class="text-gray-400">{{ singleProduct.color }}</span>
+          </h4>
+          <button
+            class="inline-flex items-center justify-center p-1 border border-transparent rounded-full"
+          >
+            <div
+              class="w-6 h-6 rounded-full"
+              [ngStyle]="{
+                'background-color': singleProduct.color
+              }"
+            ></div>
+          </button>
+        </div>
+        <div class="mb-10">
+          <h4 class="mb-3 font-medium font-heading">Qty:</h4>
+          <input
+            class="w-24 px-3 py-2 text-center bg-white border-2 border-blue-500 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-xl"
+            type="text"
+            placeholder="1"
+          />
+        </div>
+        <div class="flex flex-wrap mb-12 -mx-2">
+          <div class="w-full px-2 mb-2 md:w-2/3 md:mb-0">
+            <a
+              class="block px-2 py-4 text-xl font-medium leading-8 tracking-tighter text-center text-white bg-blue-500 font-heading focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 hover:bg-blue-600 rounded-xl"
+              href="#"
+              >Add to Cart</a
+            >
+          </div>
+          <div class="w-full px-2 md:w-1/3">
+            <a
+              class="flex items-center justify-center w-full px-2 py-4 text-xl font-medium leading-8 tracking-tighter text-center bg-white font-heading focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50 hover:bg-opacity-60 rounded-xl"
+              href="#"
+            >
+              <span class="mr-2">Wishlist</span>
+              <svg
+                width="23"
+                height="22"
+                viewbox="0 0 23 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.3235 20.1324L2.52488 10.8515C1.75232 10.0706 1.24237 9.06367 1.06728 7.97339C0.8922 6.88311 1.06086 5.76477 1.54936 4.7768V4.7768C1.91837 4.03089 2.45739 3.3843 3.12201 2.89033C3.78663 2.39635 4.55781 2.06911 5.37203 1.93558C6.18626 1.80205 7.0202 1.86605 7.80517 2.1223C8.59013 2.37855 9.30364 2.81972 9.88691 3.40946L11.3235 4.86204L12.7601 3.40946C13.3434 2.81972 14.0569 2.37855 14.8419 2.1223C15.6269 1.86605 16.4608 1.80205 17.275 1.93558C18.0892 2.06911 18.8604 2.39635 19.525 2.89033C20.1897 3.3843 20.7287 4.03089 21.0977 4.7768V4.7768C21.5862 5.76477 21.7549 6.88311 21.5798 7.97339C21.4047 9.06367 20.8947 10.0706 20.1222 10.8515L11.3235 20.1324Z"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-6 font-medium font-heading">More information</h4>
+          <button
+            class="flex items-center justify-between w-full py-4 pl-6 pr-6 mb-4 leading-7 border-2 lg:pl-12 rounded-2xl border-blueGray-200 hover:border-blueGray-300"
+          >
+            <h3 class="text-lg font-medium font-heading">Product details</h3>
+            <span>
+              <svg
+                width="12"
+                height="8"
+                viewbox="0 0 12 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.4594 0.289848C10.8128 -0.096616 11.3841 -0.096616 11.7349 0.289848C12.0871 0.676312 12.0897 1.30071 11.7349 1.68718L6.63794 7.21015C6.28579 7.59662 5.71584 7.59662 5.36108 7.21015L0.264109 1.68718C-0.0880363 1.30215 -0.0880363 0.676312 0.264109 0.289848C0.617558 -0.096616 1.18882 -0.096616 1.53966 0.289848L6.00147 4.81927L10.4594 0.289848Z"
+                  fill="black"
+                ></path>
+              </svg>
+            </span>
+          </button>
+          <button
+            class="flex items-center justify-between w-full py-4 pl-6 pr-6 leading-7 border-2 lg:pl-12 rounded-2xl border-blueGray-200 hover:border-blueGray-300"
+          >
+            <h3 class="text-lg font-medium font-heading">Reviews</h3>
+            <span>
+              <svg
+                width="12"
+                height="8"
+                viewbox="0 0 12 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.4594 0.289848C10.8128 -0.096616 11.3841 -0.096616 11.7349 0.289848C12.0871 0.676312 12.0897 1.30071 11.7349 1.68718L6.63794 7.21015C6.28579 7.59662 5.71584 7.59662 5.36108 7.21015L0.264109 1.68718C-0.0880363 1.30215 -0.0880363 0.676312 0.264109 0.289848C0.617558 -0.096616 1.18882 -0.096616 1.53966 0.289848L6.00147 4.81927L10.4594 0.289848Z"
+                  fill="black"
+                ></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

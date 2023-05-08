@@ -8,6 +8,7 @@
       <div
         class="w-[11.5rem] h-[14rem] sm:w-[22rem] lg:w-[22rem]"
         *ngFor="let product of productArray"
+        routerLink="/single/{{ product._id }}"
       >
         <div class="">
           <div

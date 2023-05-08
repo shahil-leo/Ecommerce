@@ -28,4 +28,7 @@ export class UserService {
   findBrand(brand: string) {
     return this.http.get(`http://localhost:4000/product/findBrandProduct/${brand}`)
   }
+  findSingleProduct(id: string) {
+    return this.http.get(`http://localhost:4000/product/single/${id}`)
+  }
 }

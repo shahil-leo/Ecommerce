@@ -9,11 +9,25 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProductsComponent implements OnInit {
 
+  isCategory!: boolean
+
   constructor(
     private Router: ActivatedRoute,
     private userService: UserService
   ) {
-    this.Router.params.subscribe({ next: (res) => { this.category = res } })
+    this.Router.params.subscribe({
+      next: (res) => {
+        console.log(res)
+        if (res['category']) {
+          this.isCategory = true
+          this.category = res['category']
+        } else if (res['brand']) {
+          this.category = res['brand']
+        }
+
+
+      }
+    })
   }
 
   category!: any
@@ -21,22 +35,21 @@ export class ProductsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.category['category']) {
-      this.userService.findCategory(this.category['category']).subscribe({
-        next: (res: any) => { this.productsArray = res, console.log(this.productsArray) },
+    if (this.isCategory) {
+      this.userService.findCategory(this.category).subscribe({
+        next: (res: any) => { this.productsArray = res },
         error: (e) => { console.log(e) },
-        complete: () => { console.log('success') }
+        complete: () => { console.log('success cateogry') }
       })
 
     } else {
-      this.userService.findBrand(this.category['brand']).subscribe(
+      this.userService.findBrand(this.category).subscribe(
         {
           next: (res) => { this.productsArray = res },
           error: (e) => { console.log(e) },
-          complete: () => { console.log('completed') }
+          complete: () => { console.log('brand completed') }
         })
     }
-
   }
 
 }
