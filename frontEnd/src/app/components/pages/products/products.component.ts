@@ -24,8 +24,6 @@ export class ProductsComponent implements OnInit {
         } else if (res['brand']) {
           this.category = res['brand']
         }
-
-
       }
     })
   }

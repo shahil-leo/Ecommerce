@@ -21,6 +21,7 @@ import { FaqComponent } from './components/layouts/faq/faq.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
+import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SingleProductComponent } from './components/pages/single-product/single
     FooterComponent,
     ProductsComponent,
     SingleProductComponent,
+    AllProductsComponent,
   ],
   imports: [
     BrowserModule,

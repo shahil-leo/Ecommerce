@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map, mergeMap, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,31 +10,25 @@ import { UserService } from 'src/app/services/user.service';
 export class CategoriesComponent implements OnInit {
   constructor(private userService: UserService) { }
 
-  categoriesArray!: []
-  stringArray: string[] = []
-  filterArray: string[] = []
+
   uniqueArray: string[] = []
 
   ngOnInit(): void {
-    this.userService.allCategory().subscribe(
-      {
-        next: (res: any) => {
-          this.categoriesArray = res
-          this.categoriesArray.map((element: any) => {
-            console.log(element)
-            element.categories.map((element: any) => {
-              this.stringArray.push(element)
-              this.uniqueArray = [...new Set(this.stringArray)]
-            })
-          })
 
-        },
-        error: (e: Error) => console.log(e),
-        complete: () => {
-          console.log('completed everything'),
-            console.log(this.uniqueArray)
-        }
+    this.userService.allCategory().pipe(
+      mergeMap((response: any) => response),
+      map((item: any) => {
+        return item.categories
+      })
+    ).subscribe(
+      {
+        next: (res) => this.uniqueArray = res,
+        error: (e) => console.log(e),
+        complete: () => console.log('finished')
       }
     )
+
+
   }
 }
+
