@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/pages/register/register.componen
 import { HomeComponent } from './components/pages/home/home.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
+import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'products/:category', component: ProductsComponent },
   { path: 'productsBrand/:brand', component: ProductsComponent },
   { path: 'single/:id', component: SingleProductComponent },
+  { path: 'allProducts', component: AllProductsComponent },
 ];
 
 @NgModule({

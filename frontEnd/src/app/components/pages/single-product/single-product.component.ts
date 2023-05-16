@@ -27,4 +27,8 @@ export class SingleProductComponent implements OnInit {
     })
   }
 
+  cart(id: string) {
+    console.log(id)
+  }
+
 }

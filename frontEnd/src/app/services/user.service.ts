@@ -31,4 +31,10 @@ export class UserService {
   findSingleProduct(id: string) {
     return this.http.get(`http://localhost:4000/product/single/${id}`)
   }
+  allProducts() {
+    return this.http.get('http://localhost:4000/product/all')
+  }
+  addCart() {
+
+  }
 }

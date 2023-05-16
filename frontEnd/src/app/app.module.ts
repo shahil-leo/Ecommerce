@@ -22,6 +22,7 @@ import { FooterComponent } from './components/layouts/footer/footer.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
+import { CartsComponent } from './components/pages/carts/carts.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AllProductsComponent } from './components/pages/all-products/all-produc
     ProductsComponent,
     SingleProductComponent,
     AllProductsComponent,
+    CartsComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,30 +6,60 @@ import { cartInterface } from '../interfaces/cart';
 const router = express.Router();
 
 
-router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const id = req.params.id
+router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+    const id: string = req.params.id
+    const quantity = req.body.Number
+    // this is the new creation of the data using the userId and the userId is the id for the user and the products array contains of all the products in them
+    // this is the cart for the every new cart in the model everytime a user creates a new cart he will have a new cart like this
     const newCart = new cartModel<cartInterface>({
         userId: id,
         products: [
             {
-                productId: req.body.products[0].productId,
-                quantity: req.body.products[0].quantity
-            }
+                productId: req.params.productId,
+                quantity: 1,
+            },
         ]
     })
-    const newProduct = { productId: req.body.products[0].productId, quantity: req.body.products[0].quantity }
-    const cart = await cartModel.find({ userId: id })
-    try {
-        if (cart.length === 0) {
-            const cartCreate = await newCart.save()
+    // then after a cart is added then the next thing is new products we want to add into the new product section
+    const newProduct = {
+        productId: req.params.productId,
+        quantity: 1,
+    }
+    // then we are doing the logic  hear
+    // first we will check any cart is available for the user if there is then we will add new one  using the if condition if the cart is null we will create a new cart here
+    const cart = await cartModel.findOne({ userId: id, })
 
+    try {
+        if (cart === null) {
+            const cartCreate = await newCart.save()
             if (!cartCreate) return res.status(500).json('DB error cannot create cart')
             return res.status(200).json(cartCreate)
         } else {
-            const insertProduct = await cartModel.updateOne({ userId: id },
-                { $push: { products: newProduct } })
-            if (!insertProduct) res.status(500).json('products not addd')
-            return res.status(200).json(insertProduct)
+            // if the user have a cart already then we will go to the next condition that is we will check that the 
+            const product = await cartModel.findOne(
+                {
+                    userId: id,
+                    "products.productId": req.params.productId
+                },
+                {
+                    "products.$": 1
+                }
+            )
+            if (product) {
+                //  if there is a cart and one product inside this we will check it the productId is matching if the productId is matching we will increase the quantity
+                const updatedQuantity = await cartModel.updateOne(
+                    { "products.productId": req.params.productId },
+                    { $set: { "products.$.quantity": quantity } }
+                )
+                if (!updatedQuantity) return res.status(500).json('not updated quantity')
+                return res.status(200).json(updatedQuantity)
+            } else {
+                // if there is no product available then we will push we object into the products array as a new cart
+                const insertProduct = await cartModel.updateOne({ userId: id },
+                    { $push: { products: newProduct } })
+                if (!insertProduct) res.status(500).json('products not add')
+                return res.status(200).json(insertProduct)
+            }
         }
     } catch (error) {
         return res.status(500).json(error)
