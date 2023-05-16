@@ -61,7 +61,6 @@ router.get('/all', async (req, res) => {
 })
 router.get('/single/:productId', async (req, res) => {
     const productId = req.params.productId
-    console.log(productId)
     try {
         const singleProduct = await productModel.findById(productId)
         if (!singleProduct) return res.status(500).json('there is no product')

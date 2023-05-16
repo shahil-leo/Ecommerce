@@ -78,8 +78,7 @@ router.post('/delete/:id/:productId', verifyTokenAndAuthorization, async (req, r
 })
 
 
-router.post('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) => {
-    console.log(req.params.id)
+router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const deleteAll = await cartModel.deleteOne({ userId: req.params.id })
         if (!deleteAll) return res.status(502).json('cannot delete full array')
@@ -88,7 +87,14 @@ router.post('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) => {
         return res.status(500).json(error)
     }
 })
-
-
+router.get('/getCart', verifyTokenAndAuthorization, async (req, res) => {
+    try {
+        const getCart = await cartModel.find()
+        if (!getCart) return res.status(500).json(getCart)
+        res.status(200).json(getCart)
+    } catch (e) {
+        console.log(e)
+    }
+})
 
 export const cart = router

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { Login, RegisterUser } from '../models/register-user';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -34,7 +34,21 @@ export class UserService {
   allProducts() {
     return this.http.get('http://localhost:4000/product/all')
   }
-  addCart() {
-
+  addCart(userId: string, productId: string, accessToken: string, number: any) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: 1 }, { headers: headers })
+  }
+  getCart(accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.get('http://localhost:4000/cart/getCart', { headers: headers })
+  }
+  deleteAllCart(userId: string, accessToken: string) {
+    console.log({ userId, accessToken })
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`, { headers: headers })
+  }
+  deleteOneCart(userId: string, productId: string, accessToken: string) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
   }
 }

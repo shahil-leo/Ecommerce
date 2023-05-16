@@ -18,7 +18,6 @@ export class CategoriesComponent implements OnInit {
     this.userService.allCategory().pipe(
       mergeMap((response: any) => response),
       map((item: any) => {
-        console.log(item)
         return item.categories
       })
     ).subscribe(
@@ -30,4 +29,3 @@ export class CategoriesComponent implements OnInit {
     )
   }
 }
-
