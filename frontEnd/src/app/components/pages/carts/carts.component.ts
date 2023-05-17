@@ -21,119 +21,73 @@ export class CartsComponent implements OnInit {
   num!: number
   universal!: any
   fullAmount: number = 0
-  ngOnInit(): void {
+  accessToken = localStorage.getItem('accessToken')
+  userId: any = localStorage.getItem('userId')
 
+
+  ngOnInit(): void {
     this.universal = this.userService.number
-    const userId: any = localStorage.getItem('userId')
-    const accessToken = localStorage.getItem('accessToken')
-    console.log(accessToken)
-    this.userService.getCart(accessToken, userId).subscribe({
+    this.userService.getCart(this.accessToken, this.userId).subscribe({
       next: (res: any) => {
         this.allCart = res[0].products
-        if (this.allCart === undefined) return
         for (const products of this.allCart) {
           this.userService.findSingleProduct(products.productId).subscribe({
             next: (res) => {
               this.allProduct.push(res)
-
             }
           })
         }
       },
-      error: (e) => { console.log(e) },
+      error: (e: Error) => { console.log(e) },
       complete: () => { 'finished' }
     })
   }
-  fullDelete() {
-    const userId: any = localStorage.getItem('userId')
-    const accessToken: any = localStorage.getItem('accessToken')
-    this.userService.deleteAllCart(userId, accessToken).subscribe(() => {
-      this.allProduct = []
-      this.userService.getCart(accessToken, userId).subscribe({
-        next: (res: any) => {
-          this.allCart = res[0].products
-          if (this.allCart === undefined) return
-          for (const products of this.allCart) {
-            this.userService.findSingleProduct(products.productId).subscribe({
-              next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
-            })
-          }
-        },
-        error: (e) => { console.log(e) },
-        complete: () => { this.toaster.success('Cart cleared') }
-      })
+  fullDelete(): void {
+    this.userService.deleteAllCart(this.userId, this.accessToken).subscribe(() => {
+      this.getCart(this.accessToken, this.userId)
     })
 
   }
   deleteOne(productId: string) {
-    const userId: any = localStorage.getItem('userId')
-    const accessToken: any = localStorage.getItem('accessToken')
-    this.userService.deleteOneCart(userId, productId, accessToken).subscribe(() => {
-      this.allProduct = []
-      this.userService.getCart(accessToken, userId).subscribe({
-        next: (res: any) => {
-          this.allCart = res[0].products
-          if (this.allCart === undefined) return
-          for (const products of this.allCart) {
-            this.userService.findSingleProduct(products.productId).subscribe({
-              next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
-            })
-          }
-        },
-        error: (e) => { console.log(e) },
-        complete: () => { this.toaster.success('one Product deleted ') }
-      })
+    this.userService.deleteOneCart(this.userId, productId, this.accessToken).subscribe(() => {
+      this.getCart(this.accessToken, this.userId)
     })
   }
 
   add(productId: string, number: number) {
-    const accessToken = localStorage.getItem('accessToken')
-    const userId: any = localStorage.getItem('userId')
     number++
-    this.userService.updatedQuantity(productId, userId, number, accessToken).subscribe(() => {
-      this.allProduct = []
-      this.userService.getCart(accessToken, userId).subscribe({
-        next: (res: any) => {
-          this.allCart = res[0].products
-          if (this.allCart === undefined) return
-          for (const products of this.allCart) {
-            this.userService.findSingleProduct(products.productId).subscribe({
-              next: (res) => { this.allProduct.push(res) }
-            })
-          }
-        },
-        error: (e) => { console.log(e) },
-        complete: () => { }
-      })
+    this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe(() => {
+      this.getCart(this.accessToken, this.userId)
     })
   }
+
   minus(productId: string, number: number) {
-    const accessToken = localStorage.getItem('accessToken')
-    const userId: any = localStorage.getItem('userId')
     number--
-    console.log(number)
     if (number > 0) {
-      this.userService.updatedQuantity(productId, userId, number, accessToken).subscribe(() => {
-        this.allProduct = []
-        this.userService.getCart(accessToken, userId).subscribe({
-          next: (res: any) => {
-            this.allCart = res[0].products
-            if (this.allCart === undefined) return
-            for (const products of this.allCart) {
-              this.userService.findSingleProduct(products.productId).subscribe({
-                next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
-              })
-            }
-          },
-          error: (e) => { console.log(e) },
-          complete: () => { }
-        })
+      this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe(() => {
+        this.getCart(this.accessToken, this.userId)
       })
     } else {
-      console.log('suii')
+      console.log('one product to buy is minimum for the user')
     }
 
   }
 
+
+  getCart(accessToken: any, userId: string) {
+    this.allProduct = []
+    this.userService.getCart(accessToken, userId).subscribe({
+      next: (res: any) => {
+        this.allCart = res[0].products
+        for (const products of this.allCart) {
+          this.userService.findSingleProduct(products.productId).subscribe({
+            next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
+          })
+        }
+      },
+      error: (e) => { console.log(e) },
+      complete: () => { }
+    })
+  }
 
 }

@@ -10,7 +10,8 @@ export class UserService {
 
 
   constructor(private http: HttpClient) { }
-  number = new BehaviorSubject(1)
+  number: BehaviorSubject<number> = new BehaviorSubject(1)
+  length: BehaviorSubject<number> = new BehaviorSubject(0)
   num!: number
 
   registerUser(data: RegisterUser): Observable<RegisterUser> {
@@ -18,6 +19,7 @@ export class UserService {
     return this.http.post<RegisterUser>('http://localhost:4000/auth/register', others)
   }
   loginUser(Data: any): Observable<Login> {
+    console.log(Data)
     return this.http.post<Login>('http://localhost:4000/auth/login', Data)
   }
   allCategory() {
@@ -33,6 +35,7 @@ export class UserService {
     return this.http.get(`http://localhost:4000/product/findBrandProduct/${brand}`)
   }
   findSingleProduct(id: string) {
+    console.log(id)
     return this.http.get(`http://localhost:4000/product/single/${id}`)
   }
   allProducts() {
@@ -46,11 +49,11 @@ export class UserService {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.get(`http://localhost:4000/cart/getCart/${id}`, { headers: headers })
   }
-  deleteAllCart(userId: string, accessToken: string) {
+  deleteAllCart(userId: string, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`, { headers: headers })
   }
-  deleteOneCart(userId: string, productId: string, accessToken: string) {
+  deleteOneCart(userId: string, productId: string, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
   }
@@ -74,4 +77,3 @@ export class UserService {
     return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`, { Number: number }, { headers })
   }
 }
-// http://localhost:4000/product/updatedQuantity/64649036484d2ba287a99822/646396f78efc4c2ee565dba1
