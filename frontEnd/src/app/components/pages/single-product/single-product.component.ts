@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,8 +13,8 @@ export class SingleProductComponent implements OnInit {
 
   productId!: string
   singleProduct!: any
-  number = new BehaviorSubject(1)
-
+  universal!: Observable<number>
+  number: number = 10
   constructor(
     private Router: ActivatedRoute,
     private userService: UserService,
@@ -24,6 +24,7 @@ export class SingleProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.universal = this.userService.number
     this.userService.findSingleProduct(this.productId).subscribe({
       next: (res) => { this.singleProduct = res },
       error: (e) => { console.log(e) },
@@ -34,11 +35,18 @@ export class SingleProductComponent implements OnInit {
   cart(productId: string) {
     const userId: any = localStorage.getItem('userId')
     const accessToken: any = localStorage.getItem('accessToken')
+    this.universal.subscribe(res => { this.number = res })
     this.userService.addCart(userId, productId, accessToken, this.number).subscribe({
       next: (res => { console.log(res) }),
       error: (e) => { console.log(e) },
       complete: () => { this.toastr.success('Product added succesfully ') }
     })
+  }
+  add() {
+    this.userService.addQuantity()
+  }
+  minus() {
+    this.userService.minusQuantity()
   }
 
 }

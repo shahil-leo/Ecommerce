@@ -66,7 +66,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
     }
 })
 
-router.post('/delete/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+router.delete('/delete/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const deletedProduct = await cartModel.updateOne({ userId: req.params.id },
             { $pull: { products: { productId: req.params.productId } } })

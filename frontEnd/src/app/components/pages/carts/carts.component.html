@@ -4,14 +4,16 @@
 >
   <div class="w-full">
     <div class="flex items-center justify-between mt-10 md:mt-24">
-      <h1 class="font-medium text-2xl">Cart Section</h1>
-      <span class="text-3xl material-symbols-outlined" (click)="fullDelete()">
-        delete
-      </span>
+      <h1 class="text-2xl font-medium">Cart Section</h1>
+      <button>
+        <span class="text-3xl material-symbols-outlined" (click)="fullDelete()">
+          delete
+        </span>
+      </button>
     </div>
     <div>
       <div
-        class="flex justify-between items-center mt-5 md:mt-10 md:mb-10 w-full"
+        class="flex items-center justify-between w-full mt-5 md:mt-10 md:mb-10"
       >
         <div class="w-2/3">products</div>
         <div class="w-1/3">quantity</div>
@@ -19,9 +21,9 @@
       </div>
       <div
         *ngFor="let item of allProduct"
-        class="flex justify-between mt-5 w-full py-5 gap-2 md:gap-10"
+        class="flex justify-between w-full gap-2 py-5 mt-5 md:gap-10"
       >
-        <div class="flex w-2/3 flex-col">
+        <div class="flex flex-col w-2/3">
           <div class="flex gap-5">
             <div class="flex flex-col" routerLink="/single/{{ item._id }}">
               <div class="flex">
@@ -35,7 +37,7 @@
               <div class="flex flex-row pl-20 md:pl-28">
                 <h2>{{ item.color }}</h2>
                 <div
-                  class="w-6 h-6 rounded-full ml-1"
+                  class="w-6 h-6 ml-1 rounded-full"
                   [ngStyle]="{
                     'background-color': item.color
                   }"
@@ -45,11 +47,14 @@
             </div>
           </div>
         </div>
-        <div class="w-1/3 flex flex-col justify-between text-center">
+        <div
+          class="flex flex-col justify-between w-1/3 text-center"
+          *ngFor="let items of allCart"
+        >
           <div class="flex justify-between w-14 md:w-20">
-            <button class="md:text-3xl">-</button>
-            <span class="md:text-2xl">1</span>
-            <button class="md:text-3xl">+</button>
+            <button class="md:text-3xl" (click)="minus()">-</button>
+            <span class="md:text-2xl"> {{ items.quantity }} </span>
+            <button class="md:text-3xl" (click)="add()">+</button>
           </div>
           <div class="w-20">
             <button (click)="deleteOne(item._id)">
@@ -78,6 +83,6 @@
       <span>Grand Total</span>
       <span>300Rs</span>
     </div>
-    <button class="p-3 bg-black rounded-lg text-white">Checkout Now</button>
+    <button class="p-3 text-white bg-black rounded-lg">Checkout Now</button>
   </div>
 </section>

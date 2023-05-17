@@ -34,6 +34,7 @@ const productSchema = new mongoose.Schema<productInterface>({
         type: String,
 
     }
+
 }, { timestamps: true })
 
 export const productModel = mongoose.model('products', productSchema)

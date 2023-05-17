@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { Login, RegisterUser } from '../models/register-user';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+
+
   constructor(private http: HttpClient) { }
+  number = new BehaviorSubject(1)
+  num!: number
 
   registerUser(data: RegisterUser): Observable<RegisterUser> {
     const { confirmPassword, ...others } = data
@@ -34,9 +38,10 @@ export class UserService {
   allProducts() {
     return this.http.get('http://localhost:4000/product/all')
   }
-  addCart(userId: string, productId: string, accessToken: string, number: any) {
+  addCart(userId: string, productId: string, accessToken: string, number: number) {
+    console.log(number)
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: 1 }, { headers: headers })
+    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: number }, { headers: headers })
   }
   getCart(accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
@@ -48,7 +53,25 @@ export class UserService {
     return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`, { headers: headers })
   }
   deleteOneCart(userId: string, productId: string, accessToken: string) {
+    console.log({ userId, productId, accessToken })
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
+    return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
+  }
+  addQuantity() {
+    this.number.subscribe((res) => {
+      this.num = res
+    })
+    this.number.next(this.num + 1)
+    this.number.subscribe(console.log)
+  }
+  minusQuantity() {
+    this.number.subscribe((res) => {
+      this.num = res
+    })
+    if (this.num > 1) {
+      this.number.next(this.num - 1)
+      this.number.subscribe(console.log)
+    }
+
   }
 }
