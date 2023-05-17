@@ -33,14 +33,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(Data: 'email' | 'password') {
-    console.log(Data)
     this.userService.loginUser(Data).subscribe(
       {
         next: (res) => {
-          console.log(res._id)
           localStorage.setItem('accessToken', res.accessToken)
           localStorage.setItem('userId', res._id)
-          console.log(res)
         },
         error: (e) => { console.log(e) },
         complete: () => { this.router.navigate(['/home']) }

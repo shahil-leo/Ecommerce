@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import express from 'express'
-import { verifyTokenAndAuthorization } from '../middlewares/verify';
+import { verifyToken, verifyTokenAndAuthorization } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
 import { cartInterface } from '../interfaces/cart';
 import { productModel } from '../models/productSchema';
@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
     const id: string = req.params.id
-    console.log(req.params.productId)
     const quantity = req.body.Number
     // this is the new creation of the data using the userId and the userId is the id for the user and the products array contains of all the products in them
     // this is the cart for the every new cart in the model everytime a user creates a new cart he will have a new cart like this
@@ -47,7 +46,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
                     "products.$": 1
                 }
             )
-            console.log('shahil')
+            console.log(product)
             if (product) {
                 //  if there is a cart and one product inside this we will check it the productId is matching if the productId is matching we will increase the quantity
                 const updatedQuantity = await productModel.updateOne(
@@ -96,14 +95,16 @@ router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) =>
         return res.status(500).json(error)
     }
 })
-router.get('/getCart', verifyTokenAndAuthorization, async (req, res) => {
+router.get('/getCart/:id', verifyTokenAndAuthorization, async (req, res) => {
+    console.log(req.params.id)
     try {
-        const getCart = await cartModel.find()
+        const getCart = await cartModel.find({ userId: req.params.id })
         if (!getCart) return res.status(500).json(getCart)
         res.status(200).json(getCart)
     } catch (e) {
         console.log(e)
     }
 })
+
 
 export const cart = router

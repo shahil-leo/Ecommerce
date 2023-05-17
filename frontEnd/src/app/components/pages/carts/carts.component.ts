@@ -1,3 +1,4 @@
+import { json } from 'express';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, map, observable } from 'rxjs';
@@ -19,35 +20,36 @@ export class CartsComponent implements OnInit {
   public allProduct: any[] = []
   num!: number
   universal!: any
+  fullAmount: number = 0
   ngOnInit(): void {
 
     this.universal = this.userService.number
-    console.log(this.universal)
-
+    const userId: any = localStorage.getItem('userId')
     const accessToken = localStorage.getItem('accessToken')
     console.log(accessToken)
-    this.userService.getCart(accessToken).subscribe({
+    this.userService.getCart(accessToken, userId).subscribe({
       next: (res: any) => {
         this.allCart = res[0].products
         if (this.allCart === undefined) return
         for (const products of this.allCart) {
           this.userService.findSingleProduct(products.productId).subscribe({
-            next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
+            next: (res) => {
+              this.allProduct.push(res)
+
+            }
           })
         }
       },
       error: (e) => { console.log(e) },
       complete: () => { 'finished' }
     })
-    console.log(this.allProduct)
-
   }
   fullDelete() {
     const userId: any = localStorage.getItem('userId')
     const accessToken: any = localStorage.getItem('accessToken')
     this.userService.deleteAllCart(userId, accessToken).subscribe(() => {
       this.allProduct = []
-      this.userService.getCart(accessToken).subscribe({
+      this.userService.getCart(accessToken, userId).subscribe({
         next: (res: any) => {
           this.allCart = res[0].products
           if (this.allCart === undefined) return
@@ -66,10 +68,9 @@ export class CartsComponent implements OnInit {
   deleteOne(productId: string) {
     const userId: any = localStorage.getItem('userId')
     const accessToken: any = localStorage.getItem('accessToken')
-    console.log(accessToken)
     this.userService.deleteOneCart(userId, productId, accessToken).subscribe(() => {
       this.allProduct = []
-      this.userService.getCart(accessToken).subscribe({
+      this.userService.getCart(accessToken, userId).subscribe({
         next: (res: any) => {
           this.allCart = res[0].products
           if (this.allCart === undefined) return
@@ -85,11 +86,53 @@ export class CartsComponent implements OnInit {
     })
   }
 
-  add() {
-    this.userService.addQuantity()
+  add(productId: string, number: number) {
+    const accessToken = localStorage.getItem('accessToken')
+    const userId: any = localStorage.getItem('userId')
+    number++
+    this.userService.updatedQuantity(productId, userId, number, accessToken).subscribe(() => {
+      this.allProduct = []
+      this.userService.getCart(accessToken, userId).subscribe({
+        next: (res: any) => {
+          this.allCart = res[0].products
+          if (this.allCart === undefined) return
+          for (const products of this.allCart) {
+            this.userService.findSingleProduct(products.productId).subscribe({
+              next: (res) => { this.allProduct.push(res) }
+            })
+          }
+        },
+        error: (e) => { console.log(e) },
+        complete: () => { }
+      })
+    })
   }
-  minus() {
-    this.userService.minusQuantity()
+  minus(productId: string, number: number) {
+    const accessToken = localStorage.getItem('accessToken')
+    const userId: any = localStorage.getItem('userId')
+    number--
+    console.log(number)
+    if (number > 0) {
+      this.userService.updatedQuantity(productId, userId, number, accessToken).subscribe(() => {
+        this.allProduct = []
+        this.userService.getCart(accessToken, userId).subscribe({
+          next: (res: any) => {
+            this.allCart = res[0].products
+            if (this.allCart === undefined) return
+            for (const products of this.allCart) {
+              this.userService.findSingleProduct(products.productId).subscribe({
+                next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
+              })
+            }
+          },
+          error: (e) => { console.log(e) },
+          complete: () => { }
+        })
+      })
+    } else {
+      console.log('suii')
+    }
+
   }
 
 

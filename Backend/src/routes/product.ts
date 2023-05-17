@@ -1,8 +1,9 @@
 import express from 'express'
 const router = express.Router();
 import { productModel } from '../models/productSchema'
-import { verifyTokenAndAdmin } from '../middlewares/verify';
+import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
 import { productInterface } from '../interfaces/product';
+import { cartModel } from '../models/cartSchema';
 
 
 router.post('/create', verifyTokenAndAdmin, async (req, res) => {
@@ -117,5 +118,26 @@ router.get('/findBrand', async (req, res) => {
     }
 })
 
+router.post('/updatedQuantity/:id/:productId', verifyToken, async (req, res) => {
+    const productId = req.params.productId
+    const number = req.body.Number
+    console.log({ userId: req.params.id, productId: req.params.productId })
+    try {
+        console.log(req.params.id)
+        const definedCart: any = await cartModel.findOne({ userId: req.params.id })
+        definedCart.products.forEach((element: any) => {
+            if (element.productId === productId) {
+                checking()
+                async function checking() {
+                    const updatedQuantity = await productModel.updateOne({ _id: productId }, { $set: { quantity: number } })
+                    if (!updatedQuantity) return res.status(500).json('not updated')
+                    res.status(200).json(updatedQuantity)
+                }
+            }
+        });
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
 export const product = router

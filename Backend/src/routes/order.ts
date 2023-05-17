@@ -25,7 +25,6 @@ router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
 
 router.put('/update/:id', verifyTokenAndAdmin, async (req, res) => {
     const data = req.body
-    console.log(data)
     try {
         const updatedOrder = await orderModel.updateOne(
             { userId: req.params.id },

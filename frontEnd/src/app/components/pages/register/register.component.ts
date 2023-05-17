@@ -35,7 +35,6 @@ export class RegisterComponent {
     return this.form.controls
   }
   formSubmit(formData: RegisterUser) {
-    console.log(formData)
     if (!(formData.password === formData.confirmPassword)) return this.toaster.error('Password is not same')
     return this.userService.registerUser(formData).subscribe({
       next: (res) => { console.log(res) },

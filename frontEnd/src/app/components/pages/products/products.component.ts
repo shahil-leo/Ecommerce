@@ -17,7 +17,6 @@ export class ProductsComponent implements OnInit {
   ) {
     this.Router.params.subscribe({
       next: (res) => {
-        console.log(res)
         if (res['category']) {
           this.isCategory = true
           this.category = res['category']

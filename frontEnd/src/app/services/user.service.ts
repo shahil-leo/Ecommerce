@@ -39,21 +39,18 @@ export class UserService {
     return this.http.get('http://localhost:4000/product/all')
   }
   addCart(userId: string, productId: string, accessToken: string, number: number) {
-    console.log({ userId, productId, accessToken, number })
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: number }, { headers: headers })
   }
-  getCart(accessToken: any) {
+  getCart(accessToken: any, id: string) {
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.get('http://localhost:4000/cart/getCart', { headers: headers })
+    return this.http.get(`http://localhost:4000/cart/getCart/${id}`, { headers: headers })
   }
   deleteAllCart(userId: string, accessToken: string) {
-    console.log({ userId, accessToken })
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`, { headers: headers })
   }
   deleteOneCart(userId: string, productId: string, accessToken: string) {
-    console.log({ userId, productId, accessToken })
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
   }
@@ -62,7 +59,6 @@ export class UserService {
       this.num = res
     })
     this.number.next(this.num + 1)
-    this.number.subscribe(console.log)
   }
   minusQuantity() {
     this.number.subscribe((res) => {
@@ -70,8 +66,12 @@ export class UserService {
     })
     if (this.num > 1) {
       this.number.next(this.num - 1)
-      this.number.subscribe(console.log)
     }
-
+  }
+  updatedQuantity(productId: string, userId: any, number: number, accessToken: any) {
+    console.log({ productId, userId, number, accessToken })
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`, { Number: number }, { headers })
   }
 }
+// http://localhost:4000/product/updatedQuantity/64649036484d2ba287a99822/646396f78efc4c2ee565dba1
