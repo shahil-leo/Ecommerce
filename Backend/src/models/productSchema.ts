@@ -33,6 +33,10 @@ const productSchema = new mongoose.Schema<productInterface>({
     brand: {
         type: String,
 
+    },
+    quantity: {
+        type: Number,
+        default: 1
     }
 
 }, { timestamps: true })

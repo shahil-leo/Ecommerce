@@ -3,11 +3,13 @@ import express from 'express'
 import { verifyTokenAndAuthorization } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
 import { cartInterface } from '../interfaces/cart';
+import { productModel } from '../models/productSchema';
 const router = express.Router();
 
 
 router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
     const id: string = req.params.id
+    console.log(req.params.productId)
     const quantity = req.body.Number
     // this is the new creation of the data using the userId and the userId is the id for the user and the products array contains of all the products in them
     // this is the cart for the every new cart in the model everytime a user creates a new cart he will have a new cart like this
@@ -45,11 +47,12 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
                     "products.$": 1
                 }
             )
+            console.log('shahil')
             if (product) {
                 //  if there is a cart and one product inside this we will check it the productId is matching if the productId is matching we will increase the quantity
-                const updatedQuantity = await cartModel.updateOne(
-                    { "products.productId": req.params.productId },
-                    { $set: { "products.$.quantity": quantity } }
+                const updatedQuantity = await productModel.updateOne(
+                    { "_id": req.params.productId },
+                    { $set: { quantity: quantity } }
                 )
                 if (!updatedQuantity) return res.status(500).json('not updated quantity')
                 return res.status(200).json(updatedQuantity)
@@ -58,7 +61,13 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
                 const insertProduct = await cartModel.updateOne({ userId: id },
                     { $push: { products: newProduct } })
                 if (!insertProduct) res.status(500).json('products not add')
-                return res.status(200).json(insertProduct)
+                const updatedQuantity = await productModel.updateOne(
+                    { "_id": req.params.productId },
+                    { $set: { quantity: quantity } }
+                )
+                if (!updatedQuantity) return res.status(500).json('not updated quantity')
+                return res.status(200).json(updatedQuantity)
+
             }
         }
     } catch (error) {

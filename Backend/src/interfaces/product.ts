@@ -7,4 +7,5 @@ export interface productInterface {
     color: string
     prize: number
     brand: string
+    quantity: number
 }

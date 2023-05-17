@@ -39,7 +39,7 @@ export class UserService {
     return this.http.get('http://localhost:4000/product/all')
   }
   addCart(userId: string, productId: string, accessToken: string, number: number) {
-    console.log(number)
+    console.log({ userId, productId, accessToken, number })
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: number }, { headers: headers })
   }

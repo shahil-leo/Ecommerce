@@ -14,7 +14,8 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
         size: req.body.size,
         color: req.body.color,
         prize: req.body.prize,
-        brand: req.body.brand
+        brand: req.body.brand,
+        quantity: 1
     })
     try {
         const savedProduct = await productData.save()
