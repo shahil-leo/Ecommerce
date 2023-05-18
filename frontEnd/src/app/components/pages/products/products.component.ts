@@ -20,8 +20,10 @@ export class ProductsComponent implements OnInit {
         if (res['category']) {
           this.isCategory = true
           this.category = res['category']
+          console.log(this.category)
         } else if (res['brand']) {
           this.category = res['brand']
+          console.log(this.category)
         }
       }
     })

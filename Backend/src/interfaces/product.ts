@@ -11,4 +11,5 @@ export interface productInterface {
 }
 export interface categoryInterface {
     categories: string
+    categoryImg: string
 }

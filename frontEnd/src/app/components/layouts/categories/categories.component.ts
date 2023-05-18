@@ -12,10 +12,15 @@ export class CategoriesComponent implements OnInit {
 
 
   uniqueArray: string[] = []
+  allCategory: any[] = []
 
   ngOnInit(): void {
 
-    this.userService.allCategory().subscribe(console.log)
+    // this.userService.allCategory().subscribe(console.log)
+    const accessToken = localStorage.getItem('accessToken')
+
+    this.userService.allCategories(accessToken).subscribe(
+      { next: (res) => { this.allCategory = res, console.log(this.allCategory) } })
 
     this.userService.allCategory().pipe(
       mergeMap((response: any) => response),

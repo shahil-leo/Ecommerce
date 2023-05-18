@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyTokenAndAdmin } from "../middlewares/verify";
+import { verifyToken, verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
 import { categoryInterface } from "../interfaces/product";
 const router = Router()
@@ -7,7 +7,8 @@ const router = Router()
 router.post('/add', verifyTokenAndAdmin, async (req, res) => {
     try {
         const newCategory = new categoryModel<categoryInterface>({
-            categories: req.body.category
+            categories: req.body.category,
+            categoryImg: req.body.categoryImg
         })
         const newerCategory = await newCategory.save()
         if (!newerCategory) return res.status(500).json('category not added')
@@ -18,7 +19,7 @@ router.post('/add', verifyTokenAndAdmin, async (req, res) => {
 
 })
 
-router.get('/every', verifyTokenAndAdmin, async (req, res) => {
+router.get('/every', verifyToken, async (req, res) => {
     try {
         const everyCategory = await categoryModel.find()
         if (!everyCategory) return res.status(500).json('every category found')

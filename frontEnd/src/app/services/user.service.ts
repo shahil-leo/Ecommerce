@@ -24,6 +24,10 @@ export class UserService {
   allCategory(): Observable<any> {
     return this.http.get('http://localhost:4000/product/Allcategory')
   }
+  allCategories(token: any): Observable<any> {
+    const headers = new HttpHeaders({ token: token });
+    return this.http.get('http://localhost:4000/category/every', { headers })
+  }
   findCategory(category: string | undefined) {
     return this.http.get(`http://localhost:4000/product/findCategory/${category}`)
   }
@@ -74,4 +78,5 @@ export class UserService {
     return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`,
       { Number: number }, { headers })
   }
+
 }

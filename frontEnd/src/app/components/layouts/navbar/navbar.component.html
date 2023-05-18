@@ -20,11 +20,43 @@
     </div>
     <div class="hidden lg:block">
       <ul class="flex gap-10 text-base">
-        <div (click)="showCat()" class="flex items-center gap-2 cursor-pointer">
+        <div
+          (click)="showCat()"
+          class="relative flex items-center gap-2 cursor-pointer"
+        >
           <li>
-            <a class="pb-1 ease-out border-black hover:border-b-2">
+            <a
+              (mouseover)="categories($event)"
+              class="pb-1 ease-out border-black hover:border-b-2"
+            >
               Categories
             </a>
+            <div
+              *ngIf="tru"
+              class="absolute inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-400 top-12 h-72 rounded-md"
+            >
+              <h1 class="mt-5 text-2xl text-black">Top Categories</h1>
+              <hr class="my-5" />
+
+              <div class="flex flex-wrap gap-5">
+                <div
+                  class="flex flex-col flex-wrap gap-5 md:flex-row"
+                  *ngFor="let item of allFeatures"
+                >
+                  <div
+                    routerLink="/products/{{ item.categories }}"
+                    class="min-w-[15rem] items-center gap-4 flex p-2 rounded-md min-h-[5rem] bg-white"
+                  >
+                    <img
+                      class="object-center object-cover min-w-[5.25rem] rounded-md max-h-10"
+                      src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+                      alt="iimg"
+                    />
+                    <h1>{{ item.categories }}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <span *ngIf="!isTrue" class="material-symbols-outlined"
             ><a (click)="showCat()">expand_more</a>
@@ -38,6 +70,7 @@
         <li><a>Wishlist</a></li>
       </ul>
     </div>
+
     <div class="relative hidden lg:block">
       <a href=""
         ><span class="absolute right-4 material-symbols-outlined bottom-3">
