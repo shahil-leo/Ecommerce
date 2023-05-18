@@ -64,8 +64,10 @@ export class CartsComponent implements OnInit {
   minus(productId: string, number: number) {
     number--
     if (number > 0) {
-      this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe(() => {
-        this.getCart(this.accessToken, this.userId)
+      this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe({
+        next: (res) => { console.log(res) }
+        , error: (e) => { console.log(e) }
+        , complete: () => { this.getCart(this.accessToken, this.userId) }
       })
     } else {
       console.log('one product to buy is minimum for the user')
