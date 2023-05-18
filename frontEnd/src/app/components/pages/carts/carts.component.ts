@@ -1,7 +1,7 @@
 import { json } from 'express';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, map, observable } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, map, observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class CartsComponent implements OnInit {
   ) { }
 
   allCart?: any
-  public allProduct: any[] = []
+  allProduct: any[] = []
   num!: number
   universal!: any
   fullAmount: number = 0
@@ -27,23 +27,29 @@ export class CartsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.universal = this.userService.number
+    this.universal = this.userService.number;
     this.userService.getCart(this.accessToken, this.userId).subscribe({
       next: (res: any) => {
-        this.allCart = res[0].products
-        for (const products of this.allCart) {
-          this.userService.findSingleProduct(products.productId).subscribe({
-            next: (res) => {
-              this.allProduct.push(res)
-              this.calculateSum()
-            }
-          })
-        }
+        this.allCart = res[0].products;
+        const requests = this.allCart.map((product: any) =>
+          this.userService.findSingleProduct(product.productId)
+        );
+
+        forkJoin(requests).subscribe({
+          next: (res: any) => {
+            this.allProduct = res;
+            this.calculateSum();
+          },
+          error: (e: Error) => console.log(e),
+          complete: () => console.log('finished')
+        });
       },
-      error: (e: Error) => { console.log(e) },
-      complete: () => { 'finished' }
-    })
+      error: (e: Error) => console.log(e),
+      complete: () => console.log('finished')
+    });
   }
+
+
   fullDelete(): void {
     this.userService.deleteAllCart(this.userId, this.accessToken).subscribe(() => {
       this.getCart(this.accessToken, this.userId)
@@ -67,7 +73,7 @@ export class CartsComponent implements OnInit {
     number--
     if (number > 0) {
       this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe({
-        next: (res) => { console.log(res) }
+        next: (res) => { }
         , error: (e) => { console.log(e) }
         , complete: () => { this.getCart(this.accessToken, this.userId) }
       })
@@ -99,6 +105,9 @@ export class CartsComponent implements OnInit {
       const productTotal = product.prize * product.quantity;
       return total + productTotal;
     }, 0);
+    this.quantity = this.allProduct.reduce((total, product) => {
+      const quantity = +product.quantity
+      return total + quantity
+    }, 0)
   }
-
 }
