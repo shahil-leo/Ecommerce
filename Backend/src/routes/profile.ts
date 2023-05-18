@@ -28,8 +28,8 @@ router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
         const profileDeleted = await UserModel.findByIdAndDelete(req.params.id)
         if (!profileDeleted) return res.status(500).json('No user deleted')
         return res.status(200).json(profileDeleted)
-    } catch (error) {
-        return res.status(500).json(error)
+    } catch (errors) {
+        return res.status(500).json(errors)
     }
 })
 
