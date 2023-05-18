@@ -8,6 +8,7 @@ import { product } from './routes/product'
 import { cart } from './routes/cart'
 import { order } from './routes/order'
 import { category } from './routes/category'
+import { profile } from './routes/profile'
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -30,3 +31,4 @@ app.use('/product', product)
 app.use('/cart', cart)
 app.use('/order', order)
 app.use('/category', category)
+app.use('/profile', profile)

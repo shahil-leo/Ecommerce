@@ -48,8 +48,4 @@ export class NavbarComponent implements OnInit {
     this.tru = !this.tru
   }
 
-  allCategory() {
-
-  }
-
 }

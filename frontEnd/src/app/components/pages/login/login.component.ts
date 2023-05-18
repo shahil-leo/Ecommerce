@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(Data).subscribe(
       {
         next: (res) => {
+          console.log(res)
           localStorage.setItem('accessToken', res.accessToken)
           localStorage.setItem('userId', res._id)
         },
