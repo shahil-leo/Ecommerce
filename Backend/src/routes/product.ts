@@ -63,7 +63,6 @@ router.get('/all', async (req, res) => {
 })
 router.get('/single/:productId', async (req, res) => {
     const productId = req.params.productId
-    console.log(productId)
     try {
         const singleProduct = await productModel.findById(productId)
         if (!singleProduct) return res.status(500).json('no product available')
@@ -122,9 +121,7 @@ router.get('/findBrand', async (req, res) => {
 router.post('/updatedQuantity/:id/:productId', verifyToken, async (req, res) => {
     const productId = req.params.productId
     const number = req.body.Number
-    console.log({ userId: req.params.id, productId: req.params.productId })
     try {
-        console.log(req.params.id)
         const definedCart: any = await cartModel.findOne({ userId: req.params.id })
         definedCart.products.forEach((element: any) => {
             if (element.productId === productId) {

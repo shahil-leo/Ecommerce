@@ -26,7 +26,6 @@ export function verifyToken(req: any, res: Response, next: NextFunction) {
 
 export function verifyTokenAndAuthorization(req: any, res: Response, next: NextFunction) {
     verifyToken(req, res, () => {
-        console.log(req.params)
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next()
         } else {

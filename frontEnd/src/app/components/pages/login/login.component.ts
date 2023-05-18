@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginData } from 'src/app/models/register-user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls
   }
 
-  login(Data: 'email' | 'password') {
+  login(Data: LoginData) {
     this.userService.loginUser(Data).subscribe(
       {
         next: (res) => {

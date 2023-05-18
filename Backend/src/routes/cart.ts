@@ -46,7 +46,6 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
                     "products.$": 1
                 }
             )
-            console.log(product)
             if (product) {
                 //  if there is a cart and one product inside this we will check it the productId is matching if the productId is matching we will increase the quantity
                 const updatedQuantity = await productModel.updateOne(
@@ -96,7 +95,6 @@ router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) =>
     }
 })
 router.get('/getCart/:id', verifyTokenAndAuthorization, async (req, res) => {
-    console.log(req.params.id)
     try {
         const getCart = await cartModel.find({ userId: req.params.id })
         if (!getCart) return res.status(500).json(getCart)

@@ -64,11 +64,9 @@ router.post('/forgot', async (req, res) => {
     const emailId = req.body.email
     try {
         const user: any = await UserModel.findOne({ email: emailId })
-        console.log(user)
         if (!user) return res.status(500).json('not user found')
         // code generation for unique user
         code = generateCode()
-        console.log(code)
         const transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {

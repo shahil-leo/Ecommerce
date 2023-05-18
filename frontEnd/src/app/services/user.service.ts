@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
-import { Login, RegisterUser } from '../models/register-user';
+import { Login, LoginData, RegisterUser } from '../models/register-user';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,10 @@ export class UserService {
     const { confirmPassword, ...others } = data
     return this.http.post<RegisterUser>('http://localhost:4000/auth/register', others)
   }
-  loginUser(Data: any): Observable<Login> {
-    console.log(Data)
+  loginUser(Data: LoginData): Observable<Login> {
     return this.http.post<Login>('http://localhost:4000/auth/login', Data)
   }
-  allCategory() {
+  allCategory(): Observable<any> {
     return this.http.get('http://localhost:4000/product/Allcategory')
   }
   findCategory(category: string | undefined) {
@@ -72,8 +71,8 @@ export class UserService {
     }
   }
   updatedQuantity(productId: string, userId: any, number: number, accessToken: any) {
-    console.log({ productId, userId, number, accessToken })
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`, { Number: number }, { headers })
+    return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`,
+      { Number: number }, { headers })
   }
 }

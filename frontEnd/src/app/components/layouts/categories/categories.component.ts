@@ -15,6 +15,8 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.userService.allCategory().subscribe(console.log)
+
     this.userService.allCategory().pipe(
       mergeMap((response: any) => response),
       map((item: any) => {

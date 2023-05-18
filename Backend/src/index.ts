@@ -7,6 +7,7 @@ import { user } from './routes/user'
 import { product } from './routes/product'
 import { cart } from './routes/cart'
 import { order } from './routes/order'
+import { category } from './routes/category'
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -28,3 +29,4 @@ app.use('/user', user)
 app.use('/product', product)
 app.use('/cart', cart)
 app.use('/order', order)
+app.use('/category', category)

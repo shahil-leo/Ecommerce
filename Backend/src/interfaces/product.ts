@@ -9,3 +9,6 @@ export interface productInterface {
     brand: string
     quantity: number
 }
+export interface categoryInterface {
+    categories: string
+}
