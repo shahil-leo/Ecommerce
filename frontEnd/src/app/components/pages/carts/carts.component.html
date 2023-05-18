@@ -73,19 +73,23 @@
     </div>
   </div>
   <div
-    class="bg-gray-200 max-h-80 flex gap-5 flex-col mt-10 md:mt-40 min-w-[15.75rem] p-3 rounded-lg md:ml-10"
+    class="bg-gray-200 max-h-96 flex gap-5 flex-col mt-10 md:mt-40 min-w-[15.75rem] p-3 rounded-lg md:ml-10"
   >
     <div class="flex justify-between">
       <span>SubTotal</span>
-      <span>1220 Rs</span>
+      <span>{{ fullAmount }} Rs</span>
     </div>
     <div class="flex justify-between">
       <span>Discount</span>
-      <span>220Rs</span>
+      <span>100 Rs</span>
     </div>
-    <div class="flex justify-between mt-20">
+    <div class="flex justify-between">
+      <span>Quantity</span>
+      <span>{{ quantity }}</span>
+    </div>
+    <div class="flex justify-between mt-28">
       <span>Grand Total</span>
-      <span>{{ fullAmount }}</span>
+      <span>{{ fullAmount - 100 }} Rs</span>
     </div>
     <button class="p-3 text-white bg-black rounded-lg">Checkout Now</button>
   </div>

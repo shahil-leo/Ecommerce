@@ -21,6 +21,7 @@ export class CartsComponent implements OnInit {
   num!: number
   universal!: any
   fullAmount: number = 0
+  quantity: number = 0
   accessToken = localStorage.getItem('accessToken')
   userId: any = localStorage.getItem('userId')
 
@@ -34,6 +35,7 @@ export class CartsComponent implements OnInit {
           this.userService.findSingleProduct(products.productId).subscribe({
             next: (res) => {
               this.allProduct.push(res)
+              this.calculateSum()
             }
           })
         }
@@ -83,13 +85,20 @@ export class CartsComponent implements OnInit {
         this.allCart = res[0].products
         for (const products of this.allCart) {
           this.userService.findSingleProduct(products.productId).subscribe({
-            next: (res) => { this.allProduct.push(res), console.log(this.allProduct) }
+            next: (res) => { this.allProduct.push(res), this.calculateSum() }
           })
         }
       },
       error: (e) => { console.log(e) },
       complete: () => { }
     })
+  }
+
+  calculateSum() {
+    this.fullAmount = this.allProduct.reduce((total, product) => {
+      const productTotal = product.prize * product.quantity;
+      return total + productTotal;
+    }, 0);
   }
 
 }
