@@ -1,0 +1,376 @@
+<app-navbar></app-navbar>
+<section>
+  <h1 class="sr-only">Checkout</h1>
+
+  <div class="grid grid-cols-1 mx-auto max-w-[85rem] md:grid-cols-2">
+    <div class="py-12">
+      <div class="max-w-xl px-4 mx-auto space-y-8 lg:px-8">
+        <div class="flex items-center gap-4">
+          <span
+            class="w-10 h-10 bg-blue-700 border rounded-full border-black/20"
+          ></span>
+
+          <h2 class="font-medium text-gray-900">Zauj Footwear</h2>
+        </div>
+
+        <div>
+          <p class="text-2xl font-medium tracking-tight text-gray-900">
+            Total: {{ this.totalAmount }} Rs
+          </p>
+
+          <p class="mt-1 text-sm text-gray-600">
+            Quantity :{{ totalQuantity }}
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-10">
+          <div class="flow-root" *ngFor="let item of productArray">
+            <ul class="-my-4 divide-y divide-gray-100">
+              <li class="flex items-center gap-4 py-4">
+                <img
+                  routerLink="/single/{{ item._id }}"
+                  src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
+                  alt=""
+                  class="object-cover w-40 rounded h-36"
+                />
+
+                <div>
+                  <h3 class="text-xl text-gray-900">{{ item.title }}</h3>
+
+                  <div class="mt-1 text-gray-600">
+                    <div>
+                      <p class="inline text-xs">Size:</p>
+                      <p class="inline text-xs">{{ item.size }}</p>
+                    </div>
+
+                    <div>
+                      <dt class="inline text-xs">Color:</dt>
+                      <dd class="inline text-xs">{{ item.color }}</dd>
+                    </div>
+                    <div>
+                      <p class="inline text-xs">Quantity</p>
+                      <p class="inline text-xs">{{ item.quantity }}</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- forms -->
+    <div class="py-12 bg-white" (submit)="submit()">
+      <div class="max-w-[85rem] px-4 mx-auto">
+        <form class="grid grid-cols-6 gap-4" [formGroup]="forms">
+          <div class="col-span-3">
+            <label
+              for="FirstName"
+              class="block text-xs font-medium text-gray-700"
+            >
+              First Name
+            </label>
+
+            <input
+              formControlName="firstName"
+              type="text"
+              id="FirstName"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['firstName'].touched && fc['firstName'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['firstName'].errors?.['required']"
+              >
+                First Name is required
+              </p>
+              <p
+                class="text-red-600"
+                *ngIf="fc['firstName'].errors?.['minlength']"
+              >
+                enter at least 2 letters
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label
+              for="LastName"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Last Name
+            </label>
+
+            <input
+              type="text"
+              id="LastName"
+              formControlName="lastName"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['lastName'].touched && fc['lastName'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['lastName'].errors?.['required']"
+              >
+                last name is required
+              </p>
+              <p
+                class="text-red-600"
+                *ngIf="fc['lastName'].errors?.['minlength']"
+              >
+                enter at least 2 letters
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-6">
+            <label for="Email" class="block text-xs font-medium text-gray-700">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="Email"
+              formControlName="email"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['email'].touched && fc['email'].invalid"
+            >
+              <p class="text-red-600" *ngIf="fc['email'].errors?.['required']">
+                email is required
+              </p>
+              <p class="text-red-600" *ngIf="fc['email'].errors?.['email']">
+                Enter a valid email
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-6">
+            <label for="Phone" class="block text-xs font-medium text-gray-700">
+              Phone
+            </label>
+
+            <input
+              type="number"
+              id="Phone"
+              formControlName="phone"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['phone'].touched && fc['phone'].invalid"
+            >
+              <p class="text-red-600" *ngIf="fc['phone'].errors?.['required']">
+                phone number is required
+              </p>
+              <p class="text-red-600" *ngIf="fc['phone'].errors?.['pattern']">
+                Enter a valid number
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label
+              for="pincode"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Pincode
+            </label>
+            <input
+              type="number"
+              id="pincode"
+              formControlName="pincode"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['pincode'].touched && fc['pincode'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['pincode'].errors?.['required']"
+              >
+                pincode is required
+              </p>
+              <p
+                class="text-red-600"
+                *ngIf="fc['pincode'].errors?.['maxlength']"
+              >
+                maximum letter is 7
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label
+              for="locality"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Locality
+            </label>
+
+            <input
+              type="text"
+              id="locality"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              formControlName="locality"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['locality'].touched && fc['locality'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['locality'].errors?.['required']"
+              >
+                locality is required
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-6">
+            <label
+              for="locality"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Address (Area and street)
+            </label>
+            <textarea
+              formControlName="Address"
+              rows="4"
+              id="locality"
+              class="w-full px-6 py-4 mt-1 border rounded-md shadow-sm border-black/20 p sm:text-sm"
+            >
+            </textarea>
+            <div
+              class="mt-2"
+              *ngIf="fc['Address'].touched && fc['Address'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['Address'].errors?.['required']"
+              >
+                Address is required
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label for="city" class="block text-xs font-medium text-gray-700">
+              City/District/Town
+            </label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div class="mt-2" *ngIf="fc['city'].touched && fc['city'].invalid">
+              <p class="text-red-600" *ngIf="fc['city'].errors?.['required']">
+                city is required
+              </p>
+              <p class="text-red-600" *ngIf="fc['city'].errors?.['minlength']">
+                enter at least 2 letters
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label for="state" class="block text-xs font-medium text-gray-700">
+              State
+            </label>
+
+            <input
+              type="text"
+              id="state"
+              formControlName="state"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['state'].touched && fc['state'].invalid"
+            >
+              <p class="text-red-600" *ngIf="fc['state'].errors?.['required']">
+                last name is required
+              </p>
+              <p class="text-red-600" *ngIf="fc['state'].errors?.['minlength']">
+                enter at least 2 letters
+              </p>
+            </div>
+          </div>
+          <div class="col-span-3">
+            <label
+              for="landmark"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Landmark (optional)
+            </label>
+            <input
+              type="text"
+              id="landmark"
+              formControlName="landmark"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="fc['landmark'].touched && fc['landmark'].invalid"
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['landmark'].errors?.['minlength']"
+              >
+                enter at least 3 letters
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label
+              for="alternative"
+              class="block text-xs font-medium text-gray-700"
+            >
+              Alternative Phone (optional)
+            </label>
+
+            <input
+              type="number"
+              id="alternative"
+              formControlName="alternativePhone"
+              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+            />
+            <div
+              class="mt-2"
+              *ngIf="
+                fc['alternativePhone'].touched && fc['alternativePhone'].invalid
+              "
+            >
+              <p
+                class="text-red-600"
+                *ngIf="fc['alternativePhone'].errors?.['pattern']"
+              >
+                Enter a valid phone number
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-6">
+            <button
+              [disabled]="forms.invalid"
+              class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
+            >
+              Pay Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

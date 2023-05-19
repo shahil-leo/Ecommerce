@@ -7,6 +7,7 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 import { CartsComponent } from './components/pages/carts/carts.component';
+import { AddressComponent } from './components/pages/address/address.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'single/:id', component: SingleProductComponent },
   { path: 'allProducts', component: AllProductsComponent },
   { path: 'carts', component: CartsComponent },
+  { path: 'address', component: AddressComponent }
 ];
 
 @NgModule({

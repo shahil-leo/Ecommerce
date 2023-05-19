@@ -23,6 +23,7 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 import { CartsComponent } from './components/pages/carts/carts.component';
+import { AddressComponent } from './components/pages/address/address.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { CartsComponent } from './components/pages/carts/carts.component';
     SingleProductComponent,
     AllProductsComponent,
     CartsComponent,
+    AddressComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,9 @@ export class UserService {
   number: BehaviorSubject<number> = new BehaviorSubject(1)
   length: BehaviorSubject<number> = new BehaviorSubject(0)
   num!: number
+  productArray: any
+  totalAmount!: number
+  quantity!: number
 
   registerUser(data: RegisterUser): Observable<RegisterUser> {
     const { confirmPassword, ...others } = data
@@ -77,6 +80,17 @@ export class UserService {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`,
       { Number: number }, { headers })
+  }
+
+  profileOne(id: string, accessToken: any): Observable<any> {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.get(`http://localhost:4000/profile/get/${id}`, { headers })
+  }
+  checkout(productArray: any, amount: number, quantity: number) {
+    this.productArray = productArray
+    this.totalAmount = amount
+    this.quantity = quantity
+    console.log(this.productArray, this.totalAmount, this.quantity)
   }
 
 }

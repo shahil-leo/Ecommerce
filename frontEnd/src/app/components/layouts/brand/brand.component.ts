@@ -13,7 +13,7 @@ export class BrandComponent {
   constructor(private userService: UserService) {
 
 
-    userService.getAllBrand().subscribe({
+    this.userService.getAllBrand().subscribe({
       next: (res: any) => {
         this.brandsRes = res
         this.brandsRes.map((element: any) => {

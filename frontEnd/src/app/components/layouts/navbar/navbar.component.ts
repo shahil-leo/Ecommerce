@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -10,7 +10,10 @@ import { UserService } from 'src/app/services/user.service';
 export class NavbarComponent implements OnInit {
 
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   isTrue: boolean = false
   tru: boolean = false
@@ -20,13 +23,40 @@ export class NavbarComponent implements OnInit {
   allProduct: any[] = []
   length: number = 0
   allFeatures: any[] = []
+  isProfile: boolean = false
+  currentUser!: any
 
-  showCat() {
+
+
+  ngOnInit(): void {
+    this.oneProfile()
+    this.everyCategory()
+    this.gettingCart()
+  }
+  categories($event: Event) {
+    this.tru = false
     this.isTrue = !this.isTrue
   }
-  ngOnInit(): void {
-    const accessToken = localStorage.getItem('accessToken')
-    this.userService.allCategories(accessToken).subscribe({ next: (res) => { this.allFeatures = res } })
+  categoriesLeave($event: Event) {
+    this.tru = true
+    this.isTrue = !this.isTrue
+  }
+
+  everyCategory() {
+    this.userService.allCategories(this.accessToken).subscribe({
+      next: (res) => { this.allFeatures = res },
+      error: (e) => { console.log(e) },
+      complete: () => { console.log('finished the all category') }
+    })
+  }
+  oneProfile() {
+    this.userService.profileOne(this.userId, this.accessToken).subscribe({
+      next: (res) => { this.currentUser = res },
+      error: (e) => { console.log(e) },
+      complete: () => { console.log('finished the profile') }
+    })
+  }
+  gettingCart() {
     this.userService.getCart(this.accessToken, this.userId).subscribe({
       next: (res: any) => {
         this.allCart = res[0].products
@@ -44,8 +74,11 @@ export class NavbarComponent implements OnInit {
       complete: () => { console.log('finished') }
     })
   }
-  categories($event: Event) {
-    this.tru = !this.tru
+
+  logout() {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('userId')
+    this.router.navigate(['/login'])
   }
 
 }

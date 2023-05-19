@@ -22,17 +22,5 @@ export class CategoriesComponent implements OnInit {
     this.userService.allCategories(accessToken).subscribe(
       { next: (res) => { this.allCategory = res, console.log(this.allCategory) } })
 
-    this.userService.allCategory().pipe(
-      mergeMap((response: any) => response),
-      map((item: any) => {
-        return item.categories
-      })
-    ).subscribe(
-      {
-        next: (res) => this.uniqueArray = res,
-        error: (e) => console.log(e),
-        complete: () => console.log('finished')
-      }
-    )
   }
 }

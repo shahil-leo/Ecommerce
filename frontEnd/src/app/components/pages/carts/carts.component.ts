@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, forkJoin, map, observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carts',
@@ -13,7 +14,8 @@ export class CartsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private router: Router
   ) { }
 
   allCart?: any
@@ -24,6 +26,7 @@ export class CartsComponent implements OnInit {
   quantity: number = 0
   accessToken = localStorage.getItem('accessToken')
   userId: any = localStorage.getItem('userId')
+
 
 
   ngOnInit(): void {
@@ -110,4 +113,10 @@ export class CartsComponent implements OnInit {
       return total + quantity
     }, 0)
   }
+
+  checkout() {
+    this.userService.checkout(this.allProduct, this.fullAmount, this.quantity)
+    this.router.navigate(['/address'])
+  }
+
 }

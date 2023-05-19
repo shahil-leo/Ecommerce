@@ -72,6 +72,7 @@
       </div>
     </div>
   </div>
+
   <div
     class="bg-gray-200 max-h-96 flex gap-5 flex-col mt-10 md:mt-40 min-w-[17.75rem] p-3 rounded-lg md:ml-10"
   >
@@ -91,7 +92,10 @@
       <span>Grand Total</span>
       <span>{{ fullAmount - 100 }} Rs</span>
     </div>
-    <button class="p-3 mt-2 text-white bg-black rounded-lg">
+    <button
+      (click)="checkout()"
+      class="p-3 text-white bg-black rounded-lg mt-7"
+    >
       Checkout Now
     </button>
   </div>
