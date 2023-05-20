@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import Stripe from 'stripe'
 import { auth } from './routes/auth'
 import { user } from './routes/user'
 import { product } from './routes/product'
@@ -10,7 +11,8 @@ import { order } from './routes/order'
 import { category } from './routes/category'
 import { profile } from './routes/profile'
 const app = express()
-app.use(cors())
+app.use(cors({ origin: true, credentials: true }))
+app.use(express.static("public"))
 app.use(express.json())
 dotenv.config()
 const mongoPass = process.env.mongoPass

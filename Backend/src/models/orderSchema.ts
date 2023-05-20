@@ -24,37 +24,3 @@ const orderSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 export const orderModel = mongoose.model('orders', orderSchema)
-
-// Address
-// : 
-// "Asherikandi parambu p.o arakkinar"
-// alternativePhone
-// : 
-// ""
-// city
-// : 
-// "Kozhikode"
-// email
-// : 
-// "shahilkv123@proton.me"
-// firstName
-// : 
-// "muhamme"
-// landmark
-// : 
-// ""
-// lastName
-// : 
-// "k.v"
-// locality
-// : 
-// "Asherikandi parambu p.o arakkinar"
-// phone
-// : 
-// 9846786928
-// pincode
-// : 
-// 673028
-// state
-// : 
-// "kerala"
