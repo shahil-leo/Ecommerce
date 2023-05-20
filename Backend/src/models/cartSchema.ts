@@ -1,25 +1,22 @@
 import { cartInterface } from '../interfaces/cart';
 import mongoose from "mongoose";
 
-const cartSchema = new mongoose.Schema<cartInterface>({
+const cartSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
     },
-    products: [
+    carts: [
         {
-
-            productId: {
-                type: String,
-                unique: true,
-                required: true,
-            },
-
-            quantity: {
-                type: Number,
-                default: 1,
-                required: true
-            }
+            title: { type: String, required: true },
+            description: { type: String, required: true },
+            image: { type: String, required: true },
+            categories: { type: Array, required: true },
+            size: { type: Number, required: true },
+            color: { type: String, required: true },
+            prize: { type: Number, required: true },
+            brand: { type: String, required: true },
+            quantity: { type: Number, required: true }
         }
     ]
 }, { timestamps: true })
