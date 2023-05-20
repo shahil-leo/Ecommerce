@@ -46,13 +46,14 @@ export class UserService {
   allProducts() {
     return this.http.get('http://localhost:4000/product/all')
   }
-  addCart(userId: string, productId: string, accessToken: string, number: number) {
+  addCart(item: any, userId: string, accessToken: string, productId: string) {
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { Number: number }, { headers: headers })
+    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { item: item }, { headers: headers })
   }
-  getCart(accessToken: any, id: string) {
+  getCart(accessToken: any, userId: string) {
+    console.log(accessToken, userId)
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.get(`http://localhost:4000/cart/getCart/${id}`, { headers: headers })
+    return this.http.get(`http://localhost:4000/cart/getCart/${userId}`, { headers: headers })
   }
   deleteAllCart(userId: string, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
@@ -78,8 +79,8 @@ export class UserService {
   }
   updatedQuantity(productId: string, userId: any, number: number, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/product/updatedQuantity/${userId}/${productId}`,
-      { Number: number }, { headers })
+    return this.http.post(`http://localhost:4000/cart/updateNumber/${userId}/${productId}`,
+      { number: number }, { headers })
   }
 
   profileOne(id: string, accessToken: any): Observable<any> {

@@ -31,44 +31,28 @@ export class CartsComponent implements OnInit {
 
   ngOnInit(): void {
     this.universal = this.userService.number;
-    this.userService.getCart(this.accessToken, this.userId).subscribe({
-      next: (res: any) => {
-        this.allCart = res[0].products;
-        const requests = this.allCart.map((product: any) =>
-          this.userService.findSingleProduct(product.productId)
-        );
-
-        forkJoin(requests).subscribe({
-          next: (res: any) => {
-            this.allProduct = res;
-            this.calculateSum();
-          },
-          error: (e: Error) => console.log(e),
-          complete: () => console.log('finished')
-        });
-      },
-      error: (e: Error) => console.log(e),
-      complete: () => console.log('finished')
-    });
+    this.getCart()
   }
 
 
   fullDelete(): void {
     this.userService.deleteAllCart(this.userId, this.accessToken).subscribe(() => {
-      this.getCart(this.accessToken, this.userId)
+      location.reload()
     })
 
   }
   deleteOne(productId: string) {
     this.userService.deleteOneCart(this.userId, productId, this.accessToken).subscribe(() => {
-      this.getCart(this.accessToken, this.userId)
+      this.getCart()
     })
   }
 
-  add(productId: string, number: number) {
+  add(itemId: any, number: number) {
+    console.log(itemId)
     number++
-    this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe(() => {
-      this.getCart(this.accessToken, this.userId)
+    console.log(number)
+    this.userService.updatedQuantity(itemId, this.userId, number, this.accessToken).subscribe(() => {
+      this.getCart()
     })
   }
 
@@ -76,38 +60,30 @@ export class CartsComponent implements OnInit {
     number--
     if (number > 0) {
       this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe({
-        next: (res) => { }
+        next: (res) => { console.log(res) }
         , error: (e) => { console.log(e) }
-        , complete: () => { this.getCart(this.accessToken, this.userId) }
+        , complete: () => { this.getCart() }
       })
     } else {
       console.log('one product to buy is minimum for the user')
     }
-
   }
 
 
-  getCart(accessToken: any, userId: string) {
-    this.allProduct = []
-    this.userService.getCart(accessToken, userId).subscribe({
-      next: (res: any) => {
-        this.allCart = res[0].products
-        for (const products of this.allCart) {
-          this.userService.findSingleProduct(products.productId).subscribe({
-            next: (res) => { this.allProduct.push(res), this.calculateSum() }
-          })
-        }
-      },
-      error: (e) => { console.log(e) },
-      complete: () => { }
+  getCart() {
+    this.userService.getCart(this.accessToken, this.userId).subscribe({
+      next: (res: any) => { console.log(res.carts), this.allProduct = res.carts, this.calculateSum(), console.log(this.allProduct) },
+      error: (error: Error) => { console.log(error) },
     })
   }
 
   calculateSum() {
+    console.log('calculate sum')
     this.fullAmount = this.allProduct.reduce((total, product) => {
       const productTotal = product.prize * product.quantity;
       return total + productTotal;
     }, 0);
+    console.log(this.fullAmount)
     this.quantity = this.allProduct.reduce((total, product) => {
       const quantity = +product.quantity
       return total + quantity

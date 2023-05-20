@@ -46,32 +46,21 @@ export class NavbarComponent implements OnInit {
     this.userService.allCategories(this.accessToken).subscribe({
       next: (res) => { this.allFeatures = res },
       error: (e) => { console.log(e) },
-      complete: () => { console.log('finished the all category') }
+      complete: () => { }
     })
   }
   oneProfile() {
     this.userService.profileOne(this.userId, this.accessToken).subscribe({
       next: (res) => { this.currentUser = res },
       error: (e) => { console.log(e) },
-      complete: () => { console.log('finished the profile') }
+      complete: () => { }
     })
   }
   gettingCart() {
     this.userService.getCart(this.accessToken, this.userId).subscribe({
-      next: (res: any) => {
-        this.allCart = res[0].products
-        for (const products of this.allCart) {
-          this.userService.findSingleProduct(products.productId).subscribe({
-            next: (res) => {
-              this.allProduct.push(res)
-              this.userService.length.next(this.allProduct.length)
-              this.userService.length.subscribe((res) => { this.length = res })
-            }
-          })
-        }
-      },
+      next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
       error: (e: Error) => { console.log(e) },
-      complete: () => { console.log('finished') }
+      complete: () => { }
     })
   }
 

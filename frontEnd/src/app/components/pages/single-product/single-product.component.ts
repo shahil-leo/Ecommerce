@@ -32,14 +32,21 @@ export class SingleProductComponent implements OnInit {
     })
   }
 
-  cart(productId: string) {
+  cart(product: any) {
+    console.log(product)
     const userId: any = localStorage.getItem('userId')
     const accessToken: any = localStorage.getItem('accessToken')
     this.universal.subscribe(res => { this.number = res })
-    this.userService.addCart(userId, productId, accessToken, this.number).subscribe({
+    console.log(product._id)
+    console.log(userId, accessToken, this.number)
+    this.userService.addCart(product, userId, accessToken, this.productId).subscribe({
       next: (res => { console.log(res) }),
       error: (e) => { console.log(e) },
-      complete: () => { this.toastr.success('Product added succesfully ') }
+      complete: () => {
+        this.userService.updatedQuantity(this.productId, userId, this.number, accessToken).subscribe(() => {
+        })
+        this.toastr.success('Product added succesfully ')
+      }
     })
   }
   add() {
