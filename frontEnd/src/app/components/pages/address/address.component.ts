@@ -1,7 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-
+import { loadStripe } from '@stripe/stripe-js'
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -43,12 +44,20 @@ export class AddressComponent implements OnInit {
     this.productArray = this.userService.productArray
     this.totalAmount = this.userService.totalAmount
     this.totalQuantity = this.userService.quantity
-    console.log(this.productArray, this.totalAmount, this.totalQuantity)
   }
 
   submit() {
-    console.log('su')
     console.log(this.forms.value)
+    const userId: any = localStorage.getItem('userId')
+    const accessToken: any = localStorage.getItem('accessToken')
+    this.userService.stripe(userId, accessToken).subscribe(async (res: any) => {
+      console.log(res)
+      let stripe = await loadStripe('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
+      stripe?.redirectToCheckout({
+        sessionId: res?.id
+      })
+      console.log(stripe)
+    })
   }
 
 }

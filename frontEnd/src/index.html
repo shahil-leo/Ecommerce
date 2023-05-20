@@ -13,6 +13,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' https://js.stripe.com 'nonce-random-generated-nonce-value'"
+    />
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -28,5 +33,6 @@
   <body>
     <app-root></app-root>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://js.stripe.com/v3"></script>
   </body>
 </html>

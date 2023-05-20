@@ -90,7 +90,10 @@ export class UserService {
     this.productArray = productArray
     this.totalAmount = amount
     this.quantity = quantity
-    console.log(this.productArray, this.totalAmount, this.quantity)
+  }
+  stripe(userId: string, accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: this.productArray }, { headers })
   }
 
 }
