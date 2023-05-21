@@ -1,17 +1,17 @@
 import { ObjectId } from 'mongodb';
 import express from 'express'
-import { verifyToken, verifyTokenAndAuthorization } from '../middlewares/verify';
+import { verifyTokenAndAuthorization } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
-import { productModel } from '../models/productSchema';
+import { CartInterface } from '../interfaces/cart';
 const router = express.Router();
 
+// creating a cart
 router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
-    console.log(req.body.item)
-    const newC = new cartModel({
+    const newC = new cartModel<CartInterface>({
         userId: req.params.id,
         carts: req.body.item
     })
-    const isCart: any = await cartModel.find({ userId: req.params.id })
+    const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
     if (isCart.length === 0) {
         console.log('else creating new')
         try {
@@ -22,17 +22,14 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
             return res.status(500).json(error)
         }
     } else {
-        console.log('shahil ')
         const findUserCart: any = await cartModel.findOne(
             { "userId": new ObjectId(req.params.id), "carts._id": new ObjectId(req.params.productId) },
             { "carts.$": 1 }
         )
         if (findUserCart) {
-            const quantity = findUserCart.carts[0].quantity
-            console.log(quantity)
             const updateUser = await cartModel.updateOne(
                 { "userId": new ObjectId(req.params.id), "carts._id": new ObjectId(req.params.productId) },
-                { $set: { "carts.$.quantity": quantity + 1 } }
+                { $inc: { "carts.$.quantity": 1 } }
             )
             if (!updateUser) return res.status(500).json('no cart found')
             return res.status(200).json(updateUser)
@@ -56,11 +53,9 @@ router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (
             { "carts.$": 1 }
         )
         if (findUserCart) {
-            const quantity = findUserCart.carts[0].quantity
-            console.log(quantity)
             const updateUser = await cartModel.updateOne(
                 { "userId": new ObjectId(userId), "carts._id": new ObjectId(productId) },
-                { $set: { "carts.$.quantity": quantity + 1 } }
+                { $inc: { "carts.$.quantity": 1 } }
             )
             if (!updateUser) return res.status(500).json('no cart found')
             return res.status(200).json(updateUser)

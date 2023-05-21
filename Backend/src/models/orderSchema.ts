@@ -20,12 +20,7 @@ const orderSchema: Schema<orderInterface> = new mongoose.Schema({
             title: { type: String, required: true },
             description: { type: String, requried: true },
             image: { type: String, requried: true },
-            categories: [
-                {
-                    categories: { type: String, required: true },
-                    categoryImg: { type: String, required: true },
-                }
-            ],
+            categories: [],
             size: { type: Number },
             color: { type: String },
             prize: { type: Number },

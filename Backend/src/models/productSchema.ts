@@ -1,7 +1,7 @@
 import { productInterface } from '../interfaces/product';
-import mongoose from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 
-const productSchema = new mongoose.Schema<productInterface>({
+const productSchema: Schema<productInterface> = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema<productInterface>({
         required: true
     },
     categories: {
-        type: [],
+        type: [String],
         required: true
     },
     size: {
@@ -41,4 +41,4 @@ const productSchema = new mongoose.Schema<productInterface>({
 
 }, { timestamps: true })
 
-export const productModel = mongoose.model('products', productSchema)
+export const productModel: Model<productInterface> = mongoose.model<productInterface>('products', productSchema)

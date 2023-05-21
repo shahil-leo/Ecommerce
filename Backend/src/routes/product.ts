@@ -8,14 +8,14 @@ import { cartModel } from '../models/cartSchema';
 
 router.post('/create', verifyTokenAndAdmin, async (req, res) => {
     const productData = new productModel<productInterface>({
-        title: req.body.title,
-        description: req.body.description,
-        image: req.body.image,
-        categories: req.body.categories,
-        size: req.body.size,
-        color: req.body.color,
-        prize: req.body.prize,
-        brand: req.body.brand,
+        title: req.body.title as string,
+        description: req.body.description as string,
+        image: req.body.image as string,
+        categories: req.body.categories as string[],
+        size: req.body.size as number,
+        color: req.body.color as string,
+        prize: req.body.prize as number,
+        brand: req.body.brand as string,
         quantity: 1
     })
     try {

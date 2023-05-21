@@ -1,10 +1,9 @@
-import { Document } from "mongoose"
 
 export interface productInterface {
     title: string
     description: string
     image: string
-    categories: []
+    categories: string[]
     size: number
     color: string
     prize: number

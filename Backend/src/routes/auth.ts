@@ -1,46 +1,48 @@
 
-import express, { json, text } from 'express'
+import express from 'express'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
 import { ObjectId } from 'mongodb'
-const router = express.Router()
 import bcrypt from 'bcrypt'
 import { UserModel } from "../models/userSchema";
 import { checkEmail } from '../middlewares/verify';
 import dotenv from 'dotenv'
-import { User, fullUser, recoveryUser } from '../interfaces/user';
+import { User, fullUser, recoveryUser, registerUser } from '../interfaces/user';
 import jwt from 'jsonwebtoken'
+import { recovery } from '../interfaces/All'
 dotenv.config()
 
+const router = express.Router()
 let code: string
-
+// generating random codes for reset  password and send the code to mail
 function generateCode(): string {
     const code = crypto.randomBytes(3).toString('hex');
     return code;
 }
-
+// creating user 
 router.post('/register', checkEmail, async (req, res) => {
     const saltRounds = await bcrypt.genSalt(10)
     const encryptedPass = await bcrypt.hash(req.body.password, saltRounds)
-    const user = new UserModel({
-        firstName: req.body.password,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: encryptedPass,
+    const { firstName, lastName, email } = req.body
+    const user = new UserModel<registerUser>({
+        firstName: firstName as string,
+        lastName: lastName as string,
+        email: email as string,
+        password: encryptedPass as string,
     })
     try {
         const users = await user.save()
-        res.status(200).send(users)
-
+        if (!users) return res.status(500).json('failed to create user problem in DB')
+        return res.status(200).send(users)
     } catch (e) {
         if (!user) return res.status(504).json(e)
     }
 })
-
-function emailAndPassForRecover(email: string, password: string) {
+// todo do the recovery of password for every user using this 
+function emailAndPassForRecover(email: string, password: string): recovery {
     return { email, password }
 }
-
+// login user
 router.post('/login', async (req, res) => {
     const { error } = req.body
     // const recoveryData = emailAndPassForRecover()
@@ -59,11 +61,11 @@ router.post('/login', async (req, res) => {
     res.status(200).json({ ...others, accessToken })
 })
 
-// forgot password
+// forgot password sending code using node mailer and checking the code is same or not
 router.post('/forgot', async (req, res) => {
     const emailId = req.body.email
     try {
-        const user: any = await UserModel.findOne({ email: emailId })
+        const user: User | any = await UserModel.findOne({ email: emailId })
         if (!user) return res.status(500).json('not user found')
         // code generation for unique user
         code = generateCode()
@@ -104,9 +106,11 @@ router.post('/forgot', async (req, res) => {
     }
 
 })
+// check the user recovery code from the DB and the code saved locally if the 2 is same then we are updating the user
 router.post('/check', async (req, res) => {
-    const emailId = req.body.email
-    const code = req.body.code
+    const { email, codes } = req.body
+    const emailId = email
+    const code = codes
     const user: any = await UserModel.findOne<recoveryUser>({ email: emailId })
     if (!user) return res.status(500).json('not user found')
     if (code === user.recoveryCode) {

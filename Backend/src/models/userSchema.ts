@@ -1,8 +1,8 @@
 import { User } from "../interfaces/user";
-import mongoose from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 
 
-const UserSchema = new mongoose.Schema<User>({
+const UserSchema: Schema<User> = new mongoose.Schema({
     firstName: {
         type: String,
         required: true
@@ -30,4 +30,4 @@ const UserSchema = new mongoose.Schema<User>({
 },
     { timestamps: true })
 
-export const UserModel = mongoose.model('Users', UserSchema);
+export const UserModel: Model<User> = mongoose.model<User>('Users', UserSchema);

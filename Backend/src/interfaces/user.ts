@@ -1,3 +1,4 @@
+
 export interface User {
     id?: string
     firstName: string,
@@ -5,7 +6,15 @@ export interface User {
     email: string,
     password: string,
     isAdmin: Boolean,
+    createdAt?: number
+    updatedAt?: number
     recoveryCode?: string
+}
+export interface registerUser {
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
 }
 
 export interface token {

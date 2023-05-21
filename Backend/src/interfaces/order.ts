@@ -1,6 +1,5 @@
-import { Document } from "mongoose"
 
-export interface orderInterface extends Document {
+export interface orderInterface {
     userId: string,
     orders: orderArray[]
     products: productsArray[]
@@ -11,7 +10,7 @@ interface productsArray {
     title: string,
     description: string,
     image: string,
-    categories: category[]
+    categories: []
     size: number,
     color: string,
     prize: number,
@@ -31,8 +30,4 @@ interface orderArray {
     state: string,
     landmark: String,
     alternativePhone: Number,
-}
-interface category {
-    categories: string,
-    categoryImg: string
 }
