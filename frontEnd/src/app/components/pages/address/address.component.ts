@@ -19,7 +19,8 @@ export class AddressComponent implements OnInit {
 
   forms: FormGroup
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  constructor(
+    private userService: UserService, private fb: FormBuilder) {
     this.forms = this.fb.group<any>({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -67,11 +68,12 @@ export class AddressComponent implements OnInit {
       const userId: any = localStorage.getItem('userId')
       const accessToken: any = localStorage.getItem('accessToken')
       this.userService.stripe(userId, accessToken, this.productArray).subscribe(async (res: any) => {
+        console.log(res)
         let stripe = await loadStripe('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
         stripe?.redirectToCheckout({
           sessionId: res?.id
         })
-        if (stripe) {
+        if (res) {
           this.userService.addOrder(userId, accessToken, this.forms.value, this.productArray, this.totalAmount).subscribe(console.log)
         }
       })

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { RegisterUser } from 'src/app/models/register-user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -34,11 +33,11 @@ export class RegisterComponent {
   get fc() {
     return this.form.controls
   }
-  formSubmit(formData: RegisterUser) {
+  formSubmit(formData: any) {
     if (!(formData.password === formData.confirmPassword)) return this.toaster.error('Password is not same')
     return this.userService.registerUser(formData).subscribe({
-      next: (res) => { console.log(res) },
-      error: (e) => { this.toaster.error(e.error) },
+      next: (res: any) => { console.log(res) },
+      error: (e: any) => { this.toaster.error(e.error) },
       complete: () => {
         this.toaster.success('Created successfully')
         this.form.reset()

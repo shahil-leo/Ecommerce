@@ -13,8 +13,6 @@ const stripe = new Stripe(stripeKey, {
 
 
 router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
-    console.log(req.body.orders)
-    console.log(req.body.products)
     const userId = req.params.id;
     const orders = new orderModel({
         userId: userId, // Replace with the appropriate user ID
@@ -101,7 +99,6 @@ router.get('/all', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
-    console.log(req.body)
     try {
         const session = await stripe.checkout.sessions.create({
 

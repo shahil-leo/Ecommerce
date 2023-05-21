@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
-import { Login, LoginData, RegisterUser } from '../models/register-user';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -16,12 +15,12 @@ export class UserService {
   userId: any = localStorage.getItem('userId')
   num!: number
 
-  registerUser(data: RegisterUser): Observable<RegisterUser> {
+  registerUser(data: any): any {
     const { confirmPassword, ...others } = data
-    return this.http.post<RegisterUser>('http://localhost:4000/auth/register', others)
+    return this.http.post('http://localhost:4000/auth/register', others)
   }
-  loginUser(Data: LoginData): Observable<Login> {
-    return this.http.post<Login>('http://localhost:4000/auth/login', Data)
+  loginUser(Data: any): any {
+    return this.http.post('http://localhost:4000/auth/login', Data)
   }
   allCategory(): Observable<any> {
     return this.http.get('http://localhost:4000/product/Allcategory')

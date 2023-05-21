@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginData } from 'src/app/models/register-user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -33,15 +32,15 @@ export class LoginComponent implements OnInit {
     return this.form.controls
   }
 
-  login(Data: LoginData) {
+  login(Data: any) {
     this.userService.loginUser(Data).subscribe(
       {
-        next: (res) => {
+        next: (res: any) => {
           console.log(res)
           localStorage.setItem('accessToken', res.accessToken)
           localStorage.setItem('userId', res._id)
         },
-        error: (e) => { console.log(e) },
+        error: (e: Error) => { console.log(e) },
         complete: () => { this.router.navigate(['/home']) }
       },
     )

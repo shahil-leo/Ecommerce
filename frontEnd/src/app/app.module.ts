@@ -12,7 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoadingComponent } from './components/layouts/loading/loading.component'
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { HeroSectionComponent } from './components/layouts/hero-section/hero-section.component';
 import { CategoriesComponent } from './components/layouts/categories/categories.component';
 import { SmCategoryComponent } from './components/layouts/sm-category/sm-category.component';
