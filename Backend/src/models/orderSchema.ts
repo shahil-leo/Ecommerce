@@ -1,7 +1,8 @@
-import { orderInterface } from '../interfaces/order';
-import mongoose from 'mongoose'
+import { orderInterface } from './../interfaces/order';
 
-const orderSchema = new mongoose.Schema({
+import mongoose, { Model, Schema } from 'mongoose'
+
+const orderSchema: Schema<orderInterface> = new mongoose.Schema({
     userId: { type: String, required: true },
     orders: [{
         firstName: { type: String },
@@ -16,10 +17,15 @@ const orderSchema = new mongoose.Schema({
         landmark: String,
         alternativePhone: Number,
         products: [{
-            title: { type: String },
-            description: { type: String },
-            image: { type: String },
-            categories: [{ type: String }],
+            title: { type: String, required: true },
+            description: { type: String, requried: true },
+            image: { type: String, requried: true },
+            categories: [
+                {
+                    categories: { type: String, required: true },
+                    categoryImg: { type: String, required: true },
+                }
+            ],
             size: { type: Number },
             color: { type: String },
             prize: { type: Number },
@@ -35,4 +41,4 @@ const orderSchema = new mongoose.Schema({
     status: { type: String, required: true, default: 'pending' },
 }, { timestamps: true })
 
-export const orderModel = mongoose.model('orders', orderSchema)
+export const orderModel: Model<orderInterface> = mongoose.model<orderInterface>('orders', orderSchema)

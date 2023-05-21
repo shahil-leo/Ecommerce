@@ -1,7 +1,7 @@
-
+import { Document } from "mongoose";
 
 export interface CartInterface extends Document {
-    userId: string;
+    userId: string,
     carts: CartItem[];
 }
 interface CartItem {
@@ -15,4 +15,6 @@ interface CartItem {
     brand: string;
     quantity: number;
 }
+
+
 

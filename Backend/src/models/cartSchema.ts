@@ -1,6 +1,6 @@
 import { CartInterface } from './../interfaces/cart';
-import mongoose from "mongoose";
-const cartSchema = new mongoose.Schema<CartInterface>({
+import mongoose, { Model, Schema } from "mongoose";
+const cartSchema: Schema<CartInterface> = new mongoose.Schema({
     userId: {
         type: String,
         required: true
@@ -20,4 +20,4 @@ const cartSchema = new mongoose.Schema<CartInterface>({
     ]
 }, { timestamps: true })
 
-export const cartModel = mongoose.model<CartInterface>('cart', cartSchema)
+export const cartModel: Model<CartInterface> = mongoose.model<CartInterface>('cart', cartSchema)

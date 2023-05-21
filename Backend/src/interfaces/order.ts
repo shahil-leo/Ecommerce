@@ -1,10 +1,38 @@
-export interface orderInterface {
+import { Document } from "mongoose"
+
+export interface orderInterface extends Document {
     userId: string,
-    products: [{
-        productId: string,
-        quantity: number
-    }]
+    orders: orderArray[]
+    products: productsArray[]
     amount: number,
-    address: object,
     status: string
+}
+interface productsArray {
+    title: string,
+    description: string,
+    image: string,
+    categories: category[]
+    size: number,
+    color: string,
+    prize: number,
+    brand: string,
+    quantity: number
+    _id: string
+}
+interface orderArray {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: number,
+    pincode: number,
+    locality: string,
+    address: string,
+    city: string,
+    state: string,
+    landmark: String,
+    alternativePhone: Number,
+}
+interface category {
+    categories: string,
+    categoryImg: string
 }

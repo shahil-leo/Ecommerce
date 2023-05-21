@@ -2,7 +2,6 @@ import { ObjectId } from 'mongodb';
 import express from 'express'
 import { verifyToken, verifyTokenAndAuthorization } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
-import { cartInterface } from '../interfaces/cart';
 import { productModel } from '../models/productSchema';
 const router = express.Router();
 

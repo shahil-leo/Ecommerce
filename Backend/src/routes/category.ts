@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { verifyToken, verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
-import { categoryInterface } from "../interfaces/product";
 const router = Router()
 
 router.post('/add', verifyTokenAndAdmin, async (req, res) => {
     try {
-        const newCategory = new categoryModel<categoryInterface>({
-            categories: req.body.category,
-            categoryImg: req.body.categoryImg
+        const newCategory = new categoryModel({
+            categories: req.body.category as string,
+            categoryImg: req.body.categoryImg as string,
         })
         const newerCategory = await newCategory.save()
         if (!newerCategory) return res.status(500).json('category not added')

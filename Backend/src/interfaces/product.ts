@@ -1,3 +1,5 @@
+import { Document } from "mongoose"
+
 export interface productInterface {
     title: string
     description: string
@@ -9,7 +11,8 @@ export interface productInterface {
     brand: string
     quantity: number
 }
-export interface categoryInterface {
+export interface categoryInterface extends Document {
     categories: string
     categoryImg: string
 }
+
