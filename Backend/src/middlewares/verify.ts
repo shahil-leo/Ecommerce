@@ -1,16 +1,17 @@
-import { NextFunction, Request, Response, } from "express";
+import { NextFunction, Request, Response, response, } from "express";
 import { UserModel } from "../models/userSchema";
 import jwt from "jsonwebtoken";
+import { User } from "../interfaces/user";
 
 
-export async function checkEmail(req: Request, res: Response, next: NextFunction) {
-    const UserEmail = req.body.email
-    const user = await UserModel.findOne({ email: UserEmail })
+export async function checkEmail(req: any, res: Response, next: NextFunction) {
+    const UserEmail: string = req.body.email
+    const user: User | null = await UserModel.findOne({ email: UserEmail })
     if (user) return res.status(502).send('Email id already existed')
     next()
 }
 
-export function verifyToken(req: any, res: Response, next: NextFunction) {
+export function verifyToken(req: any, res: Response, next: NextFunction): void {
     const authHeader = req.headers.token as string
     const jwtKey = process.env.jwtKey as string
     if (authHeader) {
@@ -20,25 +21,25 @@ export function verifyToken(req: any, res: Response, next: NextFunction) {
             next()
         })
     } else {
-        return res.status(500).json('No token')
+        res.status(500).json('No token')
     }
 }
 
-export function verifyTokenAndAuthorization(req: any, res: Response, next: NextFunction) {
+export function verifyTokenAndAuthorization(req: any, res: Response, next: NextFunction): void {
     verifyToken(req, res, () => {
-        if (req.user.id === req.params.id || req.user.isAdmin) {
+        if (req.user && (req.user.id === req.params.id || req.user.isAdmin)) {
             next()
         } else {
-            return res.status(500).json('token and id is not matching the same user')
+            res.status(500).json('token and id is not matching the same user')
         }
     })
 }
-export function verifyTokenAndAdmin(req: any, res: Response, next: NextFunction) {
+export function verifyTokenAndAdmin(req: any, res: Response, next: NextFunction): void {
     verifyToken(req, res, () => {
         if (req.user.isAdmin) {
             next()
         } else {
-            return res.status(500).json('you are not a admin')
+            res.status(500).json('you are not a admin')
         }
     })
 }
