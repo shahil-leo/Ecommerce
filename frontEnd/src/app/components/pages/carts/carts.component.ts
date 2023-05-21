@@ -91,7 +91,6 @@ export class CartsComponent implements OnInit {
   }
 
   checkout() {
-    this.userService.checkout(this.allProduct, this.fullAmount, this.quantity)
     this.router.navigate(['/address'])
   }
 

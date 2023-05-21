@@ -13,21 +13,50 @@ const stripe = new Stripe(stripeKey, {
 
 
 router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const { amount } = req.body
-    const userId = req.params.id
-    const create: any = new orderModel({
-        userId: userId,
-        orders: req.body.orders,
-        amount: amount
-    })
+    console.log(req.body.orders)
+    console.log(req.body.products)
+    const userId = req.params.id;
+    const orders = new orderModel({
+        userId: userId, // Replace with the appropriate user ID
+        orders: [
+            {
+                firstName: req.body.orders.firstName,
+                lastName: req.body.orders.lastName,
+                email: req.body.orders.email,
+                phone: req.body.orders.phone,
+                pincode: req.body.orders.pincode,
+                locality: req.body.orders.locality,
+                address: req.body.orders.Address,
+                city: req.body.orders.city,
+                state: req.body.orders.state,
+                landmark: req.body.orders.landmark,
+                alternativePhone: req.body.orders.alternativePhone,
+                products: req.body.products.map((product: any) => ({
+                    title: product.title,
+                    description: product.description,
+                    image: product.image,
+                    categories: product.categories,
+                    size: product.size,
+                    color: product.color,
+                    prize: product.prize,
+                    brand: product.brand,
+                    quantity: product.quantity,
+                    _id: product._id,
+                })),
+            },
+        ],
+        amount: req.body.amount, // Replace with your logic to calculate the total amount
+        status: 'pending',
+    });
+
     try {
-        const order = await create.save()
-        if (!order) return res.status(500).json('Order not done')
-        return res.status(200).json(order)
+        const order = await orders.save();
+        if (!order) return res.status(500).json('Order not done');
+        return res.status(200).json(order);
     } catch (error) {
-        return res.status(500).json(error)
+        return res.status(500).json(error);
     }
-})
+});
 
 
 router.put('/update/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
@@ -133,7 +162,6 @@ router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
             success_url: 'http://localhost:4000/success.html',
             cancel_url: 'http://localhost:4000/cancel.html',
         });
-        console.log(session)
         return res.status(200).json(session)
     } catch (error) {
         return res.status(500).json(error)

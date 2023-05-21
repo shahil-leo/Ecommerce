@@ -14,7 +14,19 @@ const orderSchema = new mongoose.Schema({
         city: { type: String, requried: true },
         state: { type: String, requried: true },
         landmark: String,
-        alternativePhone: Number
+        alternativePhone: Number,
+        products: [{
+            title: { type: String },
+            description: { type: String },
+            image: { type: String },
+            categories: [{ type: String }],
+            size: { type: Number },
+            color: { type: String },
+            prize: { type: Number },
+            brand: { type: String },
+            quantity: { type: Number },
+            _id: { type: String },
+        }]
     }],
     amount: {
         type: Number,

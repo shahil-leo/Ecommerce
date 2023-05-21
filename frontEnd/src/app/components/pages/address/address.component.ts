@@ -41,9 +41,24 @@ export class AddressComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.productArray = this.userService.productArray
-    this.totalAmount = this.userService.totalAmount
-    this.totalQuantity = this.userService.quantity
+    const accessToken = localStorage.getItem('accessToken')
+    const userId: any = localStorage.getItem('userId')
+    this.userService.getCart(accessToken, userId).subscribe({
+      next: (res: any) => { console.log(res.carts), this.productArray = res.carts, this.calculateSum(), console.log(this.productArray) },
+      error: (error: Error) => { console.log(error) },
+    })
+  }
+  calculateSum() {
+    console.log('calculate sum')
+    this.totalAmount = this.productArray.reduce((total: any, product: any) => {
+      const productTotal = product.prize * product.quantity;
+      return total + productTotal;
+    }, 0);
+    console.log(this.totalAmount)
+    this.totalQuantity = this.productArray.reduce((total: any, product: any) => {
+      const quantity = +product.quantity
+      return total + quantity
+    }, 0)
   }
 
   submit() {
@@ -51,14 +66,16 @@ export class AddressComponent implements OnInit {
       console.log(this.forms.value)
       const userId: any = localStorage.getItem('userId')
       const accessToken: any = localStorage.getItem('accessToken')
-      this.userService.stripe(userId, accessToken).subscribe(async (res: any) => {
-        console.log(res)
+      this.userService.stripe(userId, accessToken, this.productArray).subscribe(async (res: any) => {
         let stripe = await loadStripe('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
         stripe?.redirectToCheckout({
           sessionId: res?.id
         })
-        console.log(stripe)
+        if (stripe) {
+          this.userService.addOrder(userId, accessToken, this.forms.value, this.productArray, this.totalAmount).subscribe(console.log)
+        }
       })
+
     }
   }
 }

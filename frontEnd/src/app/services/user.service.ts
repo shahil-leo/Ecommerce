@@ -12,10 +12,9 @@ export class UserService {
   constructor(private http: HttpClient) { }
   number: BehaviorSubject<number> = new BehaviorSubject(1)
   length: BehaviorSubject<number> = new BehaviorSubject(0)
+  accessToken: any = localStorage.getItem('accessToken')
+  userId: any = localStorage.getItem('userId')
   num!: number
-  productArray: any
-  totalAmount!: number
-  quantity!: number
 
   registerUser(data: RegisterUser): Observable<RegisterUser> {
     const { confirmPassword, ...others } = data
@@ -87,14 +86,15 @@ export class UserService {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.get(`http://localhost:4000/profile/get/${id}`, { headers })
   }
-  checkout(productArray: any, amount: number, quantity: number) {
-    this.productArray = productArray
-    this.totalAmount = amount
-    this.quantity = quantity
-  }
-  stripe(userId: string, accessToken: any) {
+
+  stripe(userId: string, accessToken: any, productArray: any) {
     const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: this.productArray }, { headers })
+    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: productArray }, { headers })
   }
 
+  addOrder(userId: string, accessToken: any, formValue: any, productArray: any, totalAmount: any) {
+    console.log(productArray)
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/order/create/${userId}`, { orders: formValue, products: productArray, amount: totalAmount }, { headers: headers })
+  }
 }
