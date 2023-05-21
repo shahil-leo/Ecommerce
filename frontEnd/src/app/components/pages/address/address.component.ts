@@ -74,6 +74,7 @@ export class AddressComponent implements OnInit {
           sessionId: res?.id
         })
         if (res) {
+          console.log(this.forms.value)
           this.userService.addOrder(userId, accessToken, this.forms.value, this.productArray, this.totalAmount).subscribe(console.log)
         }
       })

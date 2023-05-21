@@ -1,35 +1,48 @@
 import Stripe from 'stripe'
 import express from 'express'
-const router = express.Router()
 import { orderModel } from '../models/orderSchema'
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify'
-import { orderInterface } from '../interfaces/order'
 import dotenv from 'dotenv'
+import { orderInterface, productsArray } from '../interfaces/order'
 dotenv.config()
-const stripeKey: any = process.env.stripe_key
+
+const router = express.Router()
+const stripeKey = process.env.stripe_key as string
 const stripe = new Stripe(stripeKey, {
     apiVersion: '2022-08-01'
 });
 
-
 router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
     const userId = req.params.id;
-    const orders = new orderModel({
-        userId: userId, // Replace with the appropriate user ID
+    const {
+        firstName,
+        lastName, email,
+        phone,
+        pincode,
+        locality,
+        Address,
+        city,
+        state,
+        landmark,
+        alternativePhone
+    } = req.body.orders
+
+    const orders = new orderModel<orderInterface>({
+        userId: userId,
         orders: [
             {
-                firstName: req.body.orders.firstName,
-                lastName: req.body.orders.lastName,
-                email: req.body.orders.email,
-                phone: req.body.orders.phone,
-                pincode: req.body.orders.pincode,
-                locality: req.body.orders.locality,
-                address: req.body.orders.Address,
-                city: req.body.orders.city,
-                state: req.body.orders.state,
-                landmark: req.body.orders.landmark,
-                alternativePhone: req.body.orders.alternativePhone,
-                products: req.body.products.map((product: any) => ({
+                firstName,
+                lastName,
+                email,
+                phone,
+                pincode,
+                locality,
+                address: Address as string,
+                city,
+                state,
+                landmark,
+                alternativePhone: alternativePhone as number,
+                products: req.body.products.map((product: productsArray) => ({
                     title: product.title,
                     description: product.description,
                     image: product.image,
@@ -43,7 +56,7 @@ router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
                 })),
             },
         ],
-        amount: req.body.amount, // Replace with your logic to calculate the total amount
+        amount: req.body.amount,
         status: 'pending',
     });
 
@@ -59,7 +72,7 @@ router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
 
 router.put('/update/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
     const data = 'success'
-    const id = req.params.orderId
+    const { id } = req.params
     try {
         const updatedOrder = await orderModel.findByIdAndUpdate(id, { $set: { status: data } })
         if (!updatedOrder) return res.status(500).json('order not changed to approved')
@@ -70,8 +83,9 @@ router.put('/update/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
 })
 
 router.delete('/delete/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
+    const { orderId } = req.params
     try {
-        const deletedOrder = await orderModel.findByIdAndDelete(req.params.orderId)
+        const deletedOrder = await orderModel.findByIdAndDelete(orderId)
         if (!deletedOrder) return res.status(500).json('did not deleted the order')
         return res.status(200).json(deletedOrder)
     } catch (error) {
@@ -80,8 +94,9 @@ router.delete('/delete/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
 })
 
 router.get('/user/:id', verifyTokenAndAuthorization, async (req, res) => {
+    const { id } = req.params
     try {
-        const getOneUser = await orderModel.find({ userId: req.params.id })
+        const getOneUser = await orderModel.find({ userId: id })
         if (!getOneUser) return res.status(500).json('no orders')
         return res.status(200).json(getOneUser)
     } catch (error) {
@@ -144,12 +159,12 @@ router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
                     },
                 },
             ],
-            line_items: req.body.productArray.map((item: any) => ({
+            line_items: req.body.productArray.map((item: productsArray) => ({
                 price_data: {
                     currency: 'inr',
                     product_data: {
                         name: item.title,
-                        images: [item.product]
+                        images: [item.image]
                     },
                     unit_amount: item.prize * 100
                 },

@@ -10,7 +10,7 @@ export interface productInterface {
     brand: string
     quantity: number
 }
-export interface categoryInterface extends Document {
+export interface categoryInterface {
     categories: string
     categoryImg: string
 }

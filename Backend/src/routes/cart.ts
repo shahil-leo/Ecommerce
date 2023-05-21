@@ -12,8 +12,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
         carts: req.body.item
     })
     const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
-    if (isCart.length === 0) {
-        console.log('else creating new')
+    if (!(isCart.length)) {
         try {
             const newCart = await newC.save()
             if (!newCart) return res.status(500).json('cart not added to the db')
@@ -44,16 +43,16 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
 })
 
 router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
-    const updatedQuantity = req.body.number
+    const updatedQuantity: number | undefined = req.body.number
     const productId = req.params.productId
     const userId = req.params.id
     if (!(req.body.number)) {
-        const findUserCart: any = await cartModel.findOne(
+        const findUserCart: CartInterface | null = await cartModel.findOne<CartInterface>(
             { "userId": new ObjectId(userId), "carts._id": new ObjectId(productId) },
             { "carts.$": 1 }
         )
         if (findUserCart) {
-            const updateUser = await cartModel.updateOne(
+            const updateUser = await cartModel.updateOne<CartInterface>(
                 { "userId": new ObjectId(userId), "carts._id": new ObjectId(productId) },
                 { $inc: { "carts.$.quantity": 1 } }
             )
@@ -61,7 +60,7 @@ router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (
             return res.status(200).json(updateUser)
         }
     } else {
-        const updateUser = await cartModel.updateOne(
+        const updateUser = await cartModel.updateOne<CartInterface>(
             { "userId": new ObjectId(userId), "carts._id": new ObjectId(productId) },
             { $set: { "carts.$.quantity": updatedQuantity } }
         )
@@ -93,7 +92,7 @@ router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) =>
 
 router.get('/getCart/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
-        const getCart = await cartModel.findOne({ userId: req.params.id })
+        const getCart = await cartModel.findOne<CartInterface>({ userId: req.params.id })
         if (!getCart) return res.status(500).json(getCart)
         res.status(200).json(getCart)
     } catch (e) {
