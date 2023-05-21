@@ -1,68 +1,78 @@
 import express from 'express'
 const router = express.Router();
 import { productModel } from '../models/productSchema'
-import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
+import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verify';
 import { productInterface } from '../interfaces/product';
 import { cartModel } from '../models/cartSchema';
 
 
 router.post('/create', verifyTokenAndAdmin, async (req, res) => {
+    const {
+        title,
+        description,
+        image,
+        categories,
+        size,
+        color,
+        prize,
+        brand,
+    } = req.body
     const productData = new productModel<productInterface>({
-        title: req.body.title as string,
-        description: req.body.description as string,
-        image: req.body.image as string,
-        categories: req.body.categories as string[],
-        size: req.body.size as number,
-        color: req.body.color as string,
-        prize: req.body.prize as number,
-        brand: req.body.brand as string,
+        title,
+        description,
+        image,
+        categories: categories as string[],
+        size,
+        color,
+        prize,
+        brand,
         quantity: 1
     })
     try {
         const savedProduct = await productData.save()
         if (!savedProduct) return res.status(500).json('Products not saved to cart')
-        res.status(200).send(savedProduct)
+        return res.status(200).send(savedProduct)
     } catch (error) {
-        res.status(501).json(error)
+        return res.status(501).json(error)
     }
 })
 
 router.put('/update/:productId', verifyTokenAndAdmin, async (req, res) => {
-    const id = req.params.productId
-    const data = req.body
+    const { productId } = req.params
+    const { data } = req.body
     try {
-        const updatedProduct = await productModel.findByIdAndUpdate(id,
+        const updatedProduct = await productModel.findByIdAndUpdate(productId,
             {
                 $set: data
             }, { new: true })
         if (!updatedProduct) return res.status(500).json('server problem updating data ')
-        res.status(200).send(updatedProduct)
+        return res.status(200).send(updatedProduct)
     } catch (error) {
-        res.status(502).json(error)
+        return res.status(502).json(error)
     }
 })
 
 router.delete('/delete/:productId', verifyTokenAndAdmin, async (req, res) => {
-    const productId = req.params.productId
+    const { productId } = req.params
     try {
         const deletedProduct = await productModel.findByIdAndDelete(productId)
         if (!deletedProduct) return res.status(500).json('server problem cannot delete product')
-        res.status(200).json('Product deleted successfully')
+        return res.status(200).json('Product deleted successfully')
     } catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 })
 router.get('/all', async (req, res) => {
     try {
         const allProducts = await productModel.find();
         if (!allProducts) return res.status(500).json('server not getting all products')
-        res.status(200).json(allProducts)
+        return res.status(200).json(allProducts)
     } catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 })
 router.get('/single/:productId', async (req, res) => {
-    const productId = req.params.productId
+    const { productId } = req.params
     try {
         const singleProduct = await productModel.findById(productId)
         if (!singleProduct) return res.status(500).json('no product available')
@@ -86,7 +96,7 @@ router.get('/Allcategory', async (req, res) => {
 })
 
 router.get('/findCategory/:category', async (req, res) => {
-    const category = req.params.category
+    const { category } = req.params
     try {
         const findCategory = await productModel.find({ categories: category })
         if (!findCategory) return res.status(500).json('no category found')

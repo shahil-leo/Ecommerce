@@ -10,6 +10,7 @@ import { cart } from './routes/cart'
 import { order } from './routes/order'
 import { category } from './routes/category'
 import { profile } from './routes/profile'
+import { wishlist } from './routes/wishlist'
 const app = express()
 app.use(cors({ origin: true, credentials: true }))
 app.use(express.static("public"))
@@ -34,3 +35,4 @@ app.use('/cart', cart)
 app.use('/order', order)
 app.use('/category', category)
 app.use('/profile', profile)
+app.use('/wishlist', wishlist)

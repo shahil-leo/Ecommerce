@@ -36,4 +36,20 @@ export class SmCategoryComponent implements OnInit {
     })
   }
 
+  addToWishList(item: any, itemId: string) {
+    const userId: any = localStorage.getItem('userId')
+    const accessToken: any = localStorage.getItem('accessToken')
+    this.userService.addWishList(item, userId, accessToken, itemId).subscribe({
+      next(value) {
+        console.log(value)
+      },
+      error: (e) => {
+        this.toaster.error(e.error)
+      },
+      complete: () => {
+        this.toaster.success('Added to wishlist ')
+      }
+    })
+  }
+
 }

@@ -48,10 +48,19 @@ export class UserService {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { item: item }, { headers: headers })
   }
+  addWishList(item: any, userId: string, accessToken: string, productId: string) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.post(`http://localhost:4000/wishlist/create/${userId}/${productId}`, { item: item }, { headers: headers })
+  }
   getCart(accessToken: any, userId: string) {
     console.log(accessToken, userId)
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.get(`http://localhost:4000/cart/getCart/${userId}`, { headers: headers })
+  }
+  getWishlist(accessToken: any, userId: string) {
+    console.log(accessToken, userId)
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.get(`http://localhost:4000/wishlist/get/${userId}`, { headers: headers })
   }
   deleteAllCart(userId: string, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
@@ -60,6 +69,14 @@ export class UserService {
   deleteOneCart(userId: string, productId: string, accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken });
     return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
+  }
+  deleteAllWishList(userId: string, accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.delete(`http://localhost:4000/wishlist/deleteAll/${userId}`, { headers: headers })
+  }
+  deleteOneWishList(userId: string, productId: string, accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken });
+    return this.http.delete(`http://localhost:4000/wishlist/delete/${userId}/${productId}`, { headers: headers })
   }
   addQuantity() {
     this.number.subscribe((res) => {

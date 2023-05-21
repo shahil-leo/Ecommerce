@@ -6,7 +6,7 @@ import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares
 router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
     const { error } = req.body
     if (error) return res.status(500).json(error)
-    const id = req.params.id
+    const { id } = req.params
     const data = req.body
 
     try {
@@ -20,7 +20,7 @@ router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
 })
 
 router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const id = req.params.id
+    const { id } = req.params
     const { error } = req.body
     if (error) return res.status(500).json(error[0].message)
     try {
@@ -33,7 +33,7 @@ router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
 })
 
 router.get('/singleUser/:id', verifyTokenAndAdmin, async (req, res) => {
-    const id = req.params.id
+    const { id } = req.params
     try {
         const singleUser = await UserModel.findById(id)
         if (!singleUser) return res.status(500).json('there is no user with this id')

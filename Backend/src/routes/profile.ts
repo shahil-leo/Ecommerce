@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middlewares/verify";
+import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middlewares/verify";
 import { UserModel } from "../models/userSchema";
 
 const router = Router()
@@ -24,8 +24,9 @@ router.get('/getAll/', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
+    const { id } = req.params
     try {
-        const profileDeleted = await UserModel.findByIdAndDelete(req.params.id)
+        const profileDeleted = await UserModel.findByIdAndDelete(id)
         if (!profileDeleted) return res.status(500).json('No user deleted')
         return res.status(200).json(profileDeleted)
     } catch (errors) {
@@ -43,8 +44,9 @@ router.delete('/deleteEvery', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
+    const { id } = req.params
     try {
-        const updated = await UserModel.findByIdAndUpdate(req.params.id, { $set: { email: req.body.email } })
+        const updated = await UserModel.findByIdAndUpdate(id, { $set: { email: req.body.email } })
         if (!updated) return res.status(500).json('every user cannot delete')
         return res.status(200).json(updated)
     } catch (error) {

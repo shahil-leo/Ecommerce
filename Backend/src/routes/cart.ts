@@ -12,7 +12,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
         carts: req.body.item
     })
     const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
-    if (!(isCart.length)) {
+    if (!(isCart)) {
         try {
             const newCart = await newC.save()
             if (!newCart) return res.status(500).json('cart not added to the db')
@@ -70,9 +70,10 @@ router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (
 })
 
 router.delete('/delete/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+    const { id, productId } = req.params
     try {
-        const deletedProduct = await cartModel.updateOne({ "userId": new ObjectId(req.params.id) },
-            { $pull: { "carts": { "_id": new ObjectId(req.params.productId) } } })
+        const deletedProduct = await cartModel.updateOne({ "userId": new ObjectId(id) },
+            { $pull: { "carts": { "_id": new ObjectId(productId) } } })
         if (!deletedProduct) return res.status(500).json('no cart is deleted')
         return res.status(200).json(deletedProduct)
     } catch (error) {
@@ -81,8 +82,9 @@ router.delete('/delete/:id/:productId', verifyTokenAndAuthorization, async (req,
 })
 
 router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) => {
+    const { id } = req.params
     try {
-        const deleteAll = await cartModel.deleteOne({ userId: req.params.id })
+        const deleteAll = await cartModel.deleteOne({ userId: id })
         if (!deleteAll) return res.status(502).json('cannot delete full array')
         return res.status(200).json(deleteAll)
     } catch (error) {
@@ -91,8 +93,9 @@ router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) =>
 })
 
 router.get('/getCart/:id', verifyTokenAndAuthorization, async (req, res) => {
+    const { id } = req.params
     try {
-        const getCart = await cartModel.findOne<CartInterface>({ userId: req.params.id })
+        const getCart = await cartModel.findOne<CartInterface>({ userId: id })
         if (!getCart) return res.status(500).json(getCart)
         res.status(200).json(getCart)
     } catch (e) {
