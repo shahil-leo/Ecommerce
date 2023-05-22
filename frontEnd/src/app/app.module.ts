@@ -24,6 +24,7 @@ import { SingleProductComponent } from './components/pages/single-product/single
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 import { CartsComponent } from './components/pages/carts/carts.component';
 import { AddressComponent } from './components/pages/address/address.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AddressComponent } from './components/pages/address/address.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AdminModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
