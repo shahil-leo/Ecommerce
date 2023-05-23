@@ -52,7 +52,4 @@ router.get('/allUser', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
-
-
-
 export const user = router;

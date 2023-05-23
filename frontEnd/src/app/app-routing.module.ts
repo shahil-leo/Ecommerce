@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'featured', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: 'products/:category', component: ProductsComponent },
   { path: 'productsBrand/:brand', component: ProductsComponent },
   { path: 'single/:id', component: SingleProductComponent },

@@ -29,6 +29,18 @@ router.get('/every', verifyToken, async (req, res) => {
         res.send(500).json(error)
     }
 })
+router.get('/everySome', verifyToken, async (req, res) => {
+    try {
+        const everyCategory = await categoryModel.find().limit(3)
+        if (!everyCategory) return res.status(500).json('no category found')
+        return res.status(200).json(everyCategory)
+    } catch (error) {
+        res.send(500).json(error)
+    }
+})
+
+
+
 router.put('/update/:id', verifyTokenAndAdmin, async (req, res) => {
     const { id } = req.params;
     const { category } = req.body;

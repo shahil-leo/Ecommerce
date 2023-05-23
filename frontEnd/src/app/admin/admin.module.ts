@@ -7,6 +7,8 @@ import { NavbarComponent } from './components/layouts/navbar/navbar.component';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { AdminComponent } from './admin.component';
+import { SideBarComponent } from './components/layouts/side-bar/side-bar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,10 +18,12 @@ import { AdminComponent } from './admin.component';
     DashboardComponent,
     ProductsComponent,
     AdminComponent,
+    SideBarComponent,
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    HttpClientModule
   ]
 })
 export class AdminModule { }

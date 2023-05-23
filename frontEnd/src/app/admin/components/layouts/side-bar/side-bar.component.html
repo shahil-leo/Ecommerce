@@ -1,0 +1,124 @@
+<!-- sidenav  -->
+<div
+  class="fixed inset-y-0 flex-wrap items-center justify-between block p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl w dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+  aria-expanded="false"
+>
+  <div class="h-19">
+    <i
+      class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
+      sidenav-close
+    ></i>
+    <a
+      class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+      target="_blank"
+    >
+      <img
+        src=""
+        class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
+        alt="main_logo"
+      />
+      <span
+        class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"
+        >Zauj Dashboard</span
+      >
+    </a>
+  </div>
+
+  <hr
+    class="h-[1px] mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40"
+  />
+
+  <div
+    class="items-center block w-auto max-h-screen mx-5 overflow-auto h-sidenav grow basis-full"
+  >
+    <ul class="flex flex-col pl-0 mb-0">
+      <li class="mt-0.5 w-full">
+        <button
+          class="py-2.7 mt-5 min-h-[3rem] w-full focus:bg-blue-500/40 text-sm ease-nav-brand flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+          >
+            <i
+              class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"
+            ></i>
+          </div>
+          <span
+            class="ml-1 duration-300 opacity-100 ease"
+            routerLink="/adminDashboard"
+            >Dashboard</span
+          >
+        </button>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <button
+          class="py-2.7 min-w-[12rem] min-h-[3rem] rounded-lg text-sm focus:bg-blue-500/40 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+          >
+            <i
+              class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"
+            ></i>
+          </div>
+          <span
+            class="ml-1 duration-300 opacity-100 ease"
+            routerLink="/adminProducts"
+            >Products</span
+          >
+        </button>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <button
+          class="py-2.7 min-w-[12rem] min-h-[3rem] rounded-lg text-sm focus:bg-blue-500/40 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+          >
+            <i
+              class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"
+            ></i>
+          </div>
+          <span class="ml-1 duration-300 opacity-100 ease">Categories</span>
+        </button>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <button
+          class="py-2.7 min-w-[12rem] min-h-[3rem] rounded-lg text-sm focus:bg-blue-500/40 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+          >
+            <i
+              class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"
+            ></i>
+          </div>
+          <span class="ml-1 duration-300 opacity-100 ease">Orders</span>
+        </button>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <button
+          class="py-2.7 min-w-[12rem] min-h-[3rem] rounded-lg text-sm focus:bg-blue-500/40 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+          >
+            <i
+              class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"
+            ></i>
+          </div>
+          <span class="ml-1 duration-300 opacity-100 ease">Users</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="max-w-xs py-3 mx-5 text-center text-white bg-blue-600 rounded-md mt-[30rem]"
+  >
+    Logout
+  </div>
+</div>

@@ -113,6 +113,15 @@ router.get('/all', verifyTokenAndAdmin, async (req, res) => {
         return res.status(500).json(error)
     }
 })
+router.get('/allSome', verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const allOrders = await orderModel.find().limit(3)
+        if (!allOrders) return res.status(400).json('no orders found')
+        return res.status(200).json(allOrders)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
 router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.create({
