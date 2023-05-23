@@ -1,0 +1,184 @@
+<section class="xl:ml-72">
+  <app-navbar></app-navbar>
+  <div class="w-full px-6 py-6 mx-auto">
+    <!-- table 1 -->
+
+    <div class="flex flex-wrap -mx-3">
+      <div class="flex-none w-full max-w-full px-3">
+        <div
+          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+        >
+          <div
+            (click)="open()"
+            class="flex justify-between p-4 mb-0 border-b-0 cursor-pointer border-b-solid rounded-t-2xl border-b-transparent"
+          >
+            <h6 class="text-blue-600">Add a Category</h6>
+            <span class="material-symbols-outlined"> add </span>
+          </div>
+          <div class="flex-auto px-0 pt-0 pb-2">
+            <div class="p-0 overflow-x-auto">
+              <div
+                *ngIf="isTrue"
+                class="py-12 transition-all bg-white rounded-lg"
+                (submit)="submit()"
+              >
+                <div class="max-w-[55rem] px-4 mx-auto">
+                  <form class="grid grid-cols-6 gap-4" [formGroup]="forms">
+                    <div class="col-span-6">
+                      <label
+                        for="title"
+                        class="block text-base font-medium text-gray-700"
+                      >
+                        category title
+                      </label>
+
+                      <input
+                        formControlName="category"
+                        type="text"
+                        id="title"
+                        class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+                      />
+                      <div
+                        class="mt-2"
+                        *ngIf="fc['category'].touched && fc['category'].invalid"
+                      >
+                        <p
+                          class="text-red-600"
+                          *ngIf="fc['category'].errors?.['required']"
+                        >
+                          category title is required
+                        </p>
+                        <p
+                          class="text-red-600"
+                          *ngIf="fc['category'].errors?.['minlength']"
+                        >
+                          enter at least 2 letters
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="col-span-6">
+                      <label
+                        for="image"
+                        class="block text-base font-medium text-gray-700"
+                      >
+                        category image
+                      </label>
+
+                      <input
+                        type="file"
+                        id="image"
+                        class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+                        formControlName="categoryImg"
+                      />
+                      <div
+                        class="mt-2"
+                        *ngIf="
+                          fc['categoryImg'].touched && fc['categoryImg'].invalid
+                        "
+                      >
+                        <p
+                          class="text-red-600"
+                          *ngIf="fc['categoryImg'].errors?.['required']"
+                        >
+                          category image is required
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-span-6">
+                      <button
+                        [disabled]="forms.invalid"
+                        class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
+                      >
+                        Create new category
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap -mx-3">
+      <div class="flex-none w-full max-w-full px-3">
+        <div
+          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+        >
+          <div
+            class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+          >
+            <h6 class="dark:text-white">Projects table</h6>
+          </div>
+          <div class="flex-auto px-0 pt-0 pb-2">
+            <div class="p-0 overflow-x-auto">
+              <table
+                class="items-center justify-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500"
+              >
+                <thead class="align-bottom">
+                  <tr>
+                    <th
+                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                    >
+                      category title
+                    </th>
+                    <th
+                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                    >
+                      category image
+                    </th>
+                    <th
+                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="border-t">
+                  <tr *ngFor="let item of allCategory">
+                    <td
+                      class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                    >
+                      <div class="flex px-2">
+                        <div class="my-auto">
+                          <h6
+                            class="mb-0 text-sm leading-normal dark:text-white"
+                          >
+                            {{ item.categories }}
+                          </h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                    >
+                      <div class="flex px-2">
+                        <div class="my-auto">
+                          <img src="{{ item.categoryImg }}" alt="suii" />
+                        </div>
+                      </div>
+                    </td>
+
+                    <button class="p-3" (click)="deleteOne(item._id)">
+                      <span class="text-red-600 material-symbols-outlined">
+                        delete
+                      </span>
+                    </button>
+                    <button class="p-3" (click)="edit(item._id)">
+                      <span class="text-green-600 material-symbols-outlined">
+                        edit
+                      </span>
+                    </button>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</section>

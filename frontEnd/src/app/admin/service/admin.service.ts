@@ -8,8 +8,6 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-
-
   getTotalUser(accessToken: any) {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.get('http://localhost:4000/user/allUser', { headers })
@@ -46,6 +44,34 @@ export class AdminService {
   addOneProduct(accessToken: any, formValue: any) {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.post(`http://localhost:4000/product/create`, { formValue }, { headers })
+  }
+  addOneCategory(accessToken: any, CategoryData: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.post('http://localhost:4000/category/add', { CategoryData }, { headers })
+  }
+  deleteOneCategory(accessToken: any, productId: string) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.delete(`http://localhost:4000/category/delete/${productId}`, { headers })
+  }
+  getOneCategory(accessToken: any, productId: string) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get(`http://localhost:4000/category/single/${productId}`, { headers })
+  }
+  updateOneCategory(accessToken: any, productId: string, Data: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.put(`http://localhost:4000/category/update/${productId}`, { Data }, { headers })
+  }
+  getAllOrder(accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get('http://localhost:4000/order/all', { headers })
+  }
+  getAllUsers(accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get('http://localhost:4000/user/allUser', { headers })
+  }
+  deleteOneUser(accessToken: any, userId: string) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.delete(`http://localhost:4000/user/delete/${userId}`, { headers })
   }
 
 

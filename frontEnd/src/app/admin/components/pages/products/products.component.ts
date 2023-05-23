@@ -52,7 +52,7 @@ export class ProductsComponent implements OnInit {
       error: (e) => { console.log(e) },
       complete: () => { this.everyFunction(), console.log('Added a product') }
     })
-    this.everyFunction()
+    this.forms.reset()
   }
 
   open() {

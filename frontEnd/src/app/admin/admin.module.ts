@@ -11,6 +11,9 @@ import { SideBarComponent } from './components/layouts/side-bar/side-bar.compone
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { CategoryComponent } from './components/pages/category/category.component';
+import { OrdersComponent } from './components/pages/orders/orders.component';
+import { UsersComponent } from './components/pages/users/users.component';
 
 
 @NgModule({
@@ -21,6 +24,9 @@ import { FormsModule } from '@angular/forms';
     ProductsComponent,
     AdminComponent,
     SideBarComponent,
+    CategoryComponent,
+    OrdersComponent,
+    UsersComponent,
   ],
   imports: [
     CommonModule,
