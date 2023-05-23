@@ -30,6 +30,23 @@ export class AdminService {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.get('http://localhost:4000/category/everySome', { headers })
   }
+  getAllCategory(accessToken: any) {
+    console.log(accessToken)
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get('http://localhost:4000/category/every', { headers })
+  }
+  getAllProduct(accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get('http://localhost:4000/product/all', { headers })
+  }
+  deleteOneProduct(productId: string, accessToken: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.delete(`http://localhost:4000/product/delete/${productId}`, { headers })
+  }
+  addOneProduct(accessToken: any, formValue: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.post(`http://localhost:4000/product/create`, { formValue }, { headers })
+  }
 
 
 }

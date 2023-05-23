@@ -9,6 +9,8 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { AdminComponent } from './admin.component';
 import { SideBarComponent } from './components/layouts/side-bar/side-bar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

@@ -14,9 +14,9 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
         categories,
         size,
         color,
-        prize,
+        price,
         brand,
-    } = req.body
+    } = req.body.formValue
     const productData = new productModel<productInterface>({
         title,
         description,
@@ -24,7 +24,7 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
         categories: categories as string[],
         size,
         color,
-        prize,
+        prize: price,
         brand,
         quantity: 1
     })
