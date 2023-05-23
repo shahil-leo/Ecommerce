@@ -5,7 +5,7 @@ import { categoryInterface } from "../interfaces/product";
 const router = Router()
 
 router.post('/add', verifyTokenAndAdmin, async (req, res) => {
-    const { category, categoryImg } = req.body
+    const { category, categoryImg } = req.body.CategoryData
     try {
         const newCategory = new categoryModel<categoryInterface>({
             categories: category as string,
@@ -43,7 +43,7 @@ router.get('/everySome', verifyToken, async (req, res) => {
 
 router.put('/update/:id', verifyTokenAndAdmin, async (req, res) => {
     const { id } = req.params;
-    const { category } = req.body;
+    const { category } = req.body.Data;
     try {
         const updatedCategory = await categoryModel.
             findByIdAndUpdate<categoryInterface>(id, { $set: { categories: category } })
@@ -64,5 +64,17 @@ router.delete('/delete/:id', verifyTokenAndAdmin, async (req, res) => {
         res.send(500).json(error)
     }
 })
+router.get('/single/:id', verifyTokenAndAdmin, async (req, res) => {
+
+    const { id } = req.params
+    try {
+        const singleCategory = await categoryModel.findById(id)
+        if (!singleCategory) return res.status(500).json('cannot delete category')
+        return res.status(200).json(singleCategory)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
+
 
 export const category = router
