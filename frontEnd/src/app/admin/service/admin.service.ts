@@ -73,6 +73,8 @@ export class AdminService {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.delete(`http://localhost:4000/user/delete/${userId}`, { headers })
   }
-
-
+  getOneOrder(accessToken: any, id: string) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get(`http://localhost:4000/order/oneProduct/${id}`, { headers })
+  }
 }

@@ -11,12 +11,20 @@ export class OrdersComponent implements OnInit {
   isTrue: boolean = false
   product!: any
   accessToken = localStorage.getItem('accessToken')
+  ordersArray!: any
+  singleOrder!: any
+  productShow: boolean = false
 
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.adminService.getAllOrder(this.accessToken).subscribe(console.log)
+    this.adminService.getAllOrder(this.accessToken).subscribe({
+      next: (res) => { this.ordersArray = res },
+      error: (e) => { console.log(e) },
+      complete: () => { console.log('got all the product'), console.log(this.ordersArray) }
+    })
   }
+
 
   deleteProduct(productId: string) {
     console.log(productId)
@@ -27,10 +35,12 @@ export class OrdersComponent implements OnInit {
     })
   }
 
-
-
-
-
-
-
+  productsArray(id: string) {
+    this.productShow = !this.productShow
+    this.adminService.getOneOrder(this.accessToken, id).subscribe({
+      next: (res: any) => { this.singleOrder = res.orders[0].products, console.log(this.singleOrder) },
+      error: (e) => { console.log(e) },
+      complete: () => { console.log(this.singleOrder) }
+    })
+  }
 }

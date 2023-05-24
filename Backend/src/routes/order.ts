@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import Stripe from 'stripe'
 import express from 'express'
 import { orderModel } from '../models/orderSchema'
@@ -97,6 +98,16 @@ router.get('/user/:id', verifyTokenAndAuthorization, async (req, res) => {
     const { id } = req.params
     try {
         const getOneUser = await orderModel.find({ userId: id })
+        if (!getOneUser) return res.status(500).json('no orders')
+        return res.status(200).json(getOneUser)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
+router.get('/oneProduct/:id', verifyTokenAndAdmin, async (req, res) => {
+    const { id } = req.params
+    try {
+        const getOneUser = await orderModel.findOne({ _id: new ObjectId(id) })
         if (!getOneUser) return res.status(500).json('no orders')
         return res.status(200).json(getOneUser)
     } catch (error) {
