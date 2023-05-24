@@ -1,11 +1,9 @@
-import { ObjectId } from 'mongodb';
-import express from 'express'
-const router = express.Router();
-import { productModel } from '../models/productSchema'
-import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verify';
+import express from 'express';
 import { productInterface } from '../interfaces/product';
+import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
-
+import { productModel } from '../models/productSchema';
+const router = express.Router();
 
 router.post('/create', verifyTokenAndAdmin, async (req, res) => {
     const {

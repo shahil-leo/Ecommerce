@@ -14,6 +14,7 @@ export class ProductsComponent implements OnInit {
   category!: any
   product!: any
   editProduct: string = 'Add'
+  selectedFile?: string
 
   accessToken = localStorage.getItem('accessToken')
 
@@ -48,7 +49,6 @@ export class ProductsComponent implements OnInit {
 
   submit() {
     if (!(this.editProduct === 'Edit')) {
-
       console.log(this.forms.value)
       this.adminService.addOneProduct(this.accessToken, this.forms.value).subscribe({
         next: (res) => { console.log(res), this.everyFunction() },
@@ -65,6 +65,9 @@ export class ProductsComponent implements OnInit {
     this.isTrue = !this.isTrue
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0]
+  }
 
   get fc() {
     return this.forms.controls

@@ -35,7 +35,7 @@ router.get('/everySome', verifyToken, async (req, res) => {
         if (!everyCategory) return res.status(500).json('no category found')
         return res.status(200).json(everyCategory)
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 
