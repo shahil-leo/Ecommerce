@@ -77,4 +77,8 @@ export class AdminService {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.get(`http://localhost:4000/order/oneProduct/${id}`, { headers })
   }
+  getOneProductEdit(accessToken: any, id: string) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.get(`http://localhost:4000/product/singleProduct/${id}`, { headers })
+  }
 }

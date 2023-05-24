@@ -13,6 +13,7 @@ export class ProductsComponent implements OnInit {
   isTrue: boolean = false
   category!: any
   product!: any
+  editProduct: string = 'Add'
 
   accessToken = localStorage.getItem('accessToken')
 
@@ -46,13 +47,18 @@ export class ProductsComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.forms.value)
-    this.adminService.addOneProduct(this.accessToken, this.forms.value).subscribe({
-      next: (res) => { console.log(res), this.everyFunction() },
-      error: (e) => { console.log(e) },
-      complete: () => { this.everyFunction(), console.log('Added a product') }
-    })
-    this.forms.reset()
+    if (!(this.editProduct === 'Edit')) {
+
+      console.log(this.forms.value)
+      this.adminService.addOneProduct(this.accessToken, this.forms.value).subscribe({
+        next: (res) => { console.log(res), this.everyFunction() },
+        error: (e) => { console.log(e) },
+        complete: () => { this.everyFunction(), console.log('Added a product') }
+      })
+      this.forms.reset()
+    } else {
+      console.log(this.forms.value)
+    }
   }
 
   open() {
@@ -75,6 +81,25 @@ export class ProductsComponent implements OnInit {
       error: (e) => { console.log(e) },
       complete: () => { console.log('completed the all product') }
     })
+  }
+
+  editProducts(id: string) {
+    this.editProduct = 'Edit'
+    this.isTrue = !this.isTrue
+    this.adminService.getOneProductEdit(this.accessToken, id).subscribe({
+      next: (res: any) => {
+        const { title, description, size, color, prize, brand } = res
+        this.fc['title'].setValue(title)
+        this.fc['description'].setValue(description)
+        this.fc['size'].setValue(size)
+        this.fc['color'].setValue(color)
+        this.fc['price'].setValue(prize)
+        this.fc['brand'].setValue(brand)
+      },
+      error: (e) => { console.log(e) },
+      complete: () => { this.everyFunction(), console.log('got the Product') }
+    })
+
   }
 
 

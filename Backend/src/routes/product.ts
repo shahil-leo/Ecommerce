@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import express from 'express'
 const router = express.Router();
 import { productModel } from '../models/productSchema'
@@ -82,6 +83,18 @@ router.get('/single/:productId', async (req, res) => {
         res.status(600).json(error)
     }
 })
+
+router.get('/singleProduct/:id', verifyTokenAndAdmin, async (req, res) => {
+    const { id } = req.params
+    try {
+        const oneProduct = await productModel.findOne({ _id: id })
+        if (!oneProduct) return res.status(500).json('not find any')
+        return res.status(200).json(oneProduct)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
+
 router.get('/Allcategory', async (req, res) => {
     try {
         const everyCategory = await productModel.aggregate([
