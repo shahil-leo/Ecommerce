@@ -11,7 +11,6 @@ export class CategoryComponent implements OnInit {
 
   forms!: FormGroup
   isTrue: boolean = false
-  accessToken = localStorage.getItem('accessToken')
   allCategory!: any
   Edit!: string
   singleCategory!: any
@@ -42,14 +41,14 @@ export class CategoryComponent implements OnInit {
   submit() {
     if (!this.Edit) {
       console.log(this.forms.value)
-      this.adminService.addOneCategory(this.accessToken, this.forms.value).subscribe({
+      this.adminService.addOneCategory(this.forms.value).subscribe({
         next: (res) => { console.log(res), this.everyFunction() },
         error: (e) => { console.log(e) },
         complete: () => { console.log('submited the form') }
       })
       this.forms.reset()
     } else {
-      this.adminService.updateOneCategory(this.accessToken, this.productId, this.forms.value).subscribe({
+      this.adminService.updateOneCategory(this.productId, this.forms.value).subscribe({
         next: (res) => { console.log(res) },
         error: (e) => { console.log(e) },
         complete: () => { this.everyFunction(), console.log('updated the  Product') }
@@ -58,14 +57,14 @@ export class CategoryComponent implements OnInit {
 
   }
   everyFunction() {
-    this.adminService.getAllCategory(this.accessToken).subscribe({
+    this.adminService.getAllCategory().subscribe({
       next: (res) => { this.allCategory = res },
       error: (e) => { console.log(e) },
       complete: () => { console.log('getting every category') }
     })
   }
   deleteOne(productId: string) {
-    this.adminService.deleteOneCategory(this.accessToken, productId).subscribe({
+    this.adminService.deleteOneCategory(productId).subscribe({
       next: (res) => { console.log(res) },
       error: (e) => { console.log(e) },
       complete: () => { this.everyFunction(), console.log('deleted the Product') }
@@ -75,7 +74,7 @@ export class CategoryComponent implements OnInit {
     this.Edit = 'Edit'
     this.productId = productId
     this.isTrue = !this.isTrue
-    this.adminService.getOneCategory(this.accessToken, productId).subscribe({
+    this.adminService.getOneCategory(productId).subscribe({
       next: (res: any) => {
         this.fc['category'].setValue(res.categories)
       },

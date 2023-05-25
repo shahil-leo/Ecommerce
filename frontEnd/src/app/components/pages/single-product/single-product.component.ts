@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -35,15 +35,13 @@ export class SingleProductComponent implements OnInit {
   cart(product: any) {
     console.log(product)
     const userId: any = localStorage.getItem('userId')
-    const accessToken: any = localStorage.getItem('accessToken')
     this.universal.subscribe(res => { this.number = res })
     console.log(product._id)
-    console.log(userId, accessToken, this.number)
-    this.userService.addCart(product, userId, accessToken, this.productId).subscribe({
+    this.userService.addCart(product, userId, this.productId).subscribe({
       next: (res => { console.log(res) }),
       error: (e) => { console.log(e) },
       complete: () => {
-        this.userService.updatedQuantity(this.productId, userId, this.number, accessToken).subscribe(() => {
+        this.userService.updatedQuantity(this.productId, userId, this.number).subscribe(() => {
         })
         this.toastr.success('Product added succesfully ')
       }

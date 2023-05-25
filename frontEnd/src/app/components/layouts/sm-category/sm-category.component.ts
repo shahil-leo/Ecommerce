@@ -1,5 +1,5 @@
-import { ToastrService } from 'ngx-toastr';
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,8 +22,7 @@ export class SmCategoryComponent implements OnInit {
 
   addToCart(item: any, itemId: string) {
     const userId: any = localStorage.getItem('userId')
-    const accessToken: any = localStorage.getItem('accessToken')
-    this.userService.addCart(item, userId, accessToken, itemId).subscribe({
+    this.userService.addCart(item, userId, itemId).subscribe({
       next(value) {
         console.log(value)
       },
@@ -38,8 +37,7 @@ export class SmCategoryComponent implements OnInit {
 
   addToWishList(item: any, itemId: string) {
     const userId: any = localStorage.getItem('userId')
-    const accessToken: any = localStorage.getItem('accessToken')
-    this.userService.addWishList(item, userId, accessToken, itemId).subscribe({
+    this.userService.addWishList(item, userId, itemId).subscribe({
       next(value) {
         console.log(value)
       },

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,81 +8,61 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getTotalUser(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/user/allUser', { headers })
+  getTotalUser() {
+    return this.http.get('http://localhost:4000/user/allUser')
   }
-  getTotalProducts(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/product/all', { headers })
+  getTotalProducts() {
+    return this.http.get('http://localhost:4000/product/all')
   }
-  getTotalOrders(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/order/all', { headers })
+  getTotalOrders() {
+    return this.http.get('http://localhost:4000/order/all')
   }
-  getSomeOrders(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/order/allSome', { headers })
+  getSomeOrders() {
+    return this.http.get('http://localhost:4000/order/allSome')
   }
-  getSomeCategory(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/category/everySome', { headers })
+  getSomeCategory() {
+    return this.http.get('http://localhost:4000/category/everySome')
   }
-  getAllCategory(accessToken: any) {
-    console.log(accessToken)
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/category/every', { headers })
+  getAllCategory() {
+    return this.http.get('http://localhost:4000/category/every',)
   }
-  getAllProduct(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/product/all', { headers })
+  getAllProduct() {
+    return this.http.get('http://localhost:4000/product/all')
   }
-  deleteOneProduct(productId: string, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.delete(`http://localhost:4000/product/delete/${productId}`, { headers })
+  deleteOneProduct(productId: string,) {
+    return this.http.delete(`http://localhost:4000/product/delete/${productId}`)
   }
-  addOneProduct(accessToken: any, formValue: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.post(`http://localhost:4000/product/create`, { formValue }, { headers })
+  addOneProduct(formValue: any) {
+    return this.http.post(`http://localhost:4000/product/create`, { formValue })
   }
-  addOneCategory(accessToken: any, CategoryData: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.post('http://localhost:4000/category/add', { CategoryData }, { headers })
+  addOneCategory(CategoryData: any) {
+    return this.http.post('http://localhost:4000/category/add', { CategoryData },)
   }
-  deleteOneCategory(accessToken: any, productId: string) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.delete(`http://localhost:4000/category/delete/${productId}`, { headers })
+  deleteOneCategory(productId: string) {
+    return this.http.delete(`http://localhost:4000/category/delete/${productId}`,)
   }
-  getOneCategory(accessToken: any, productId: string) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get(`http://localhost:4000/category/single/${productId}`, { headers })
+  getOneCategory(productId: string) {
+    return this.http.get(`http://localhost:4000/category/single/${productId}`,)
   }
-  updateOneCategory(accessToken: any, productId: string, Data: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.put(`http://localhost:4000/category/update/${productId}`, { Data }, { headers })
+  updateOneCategory(productId: string, Data: any) {
+    return this.http.put(`http://localhost:4000/category/update/${productId}`, { Data },)
   }
-  getAllOrder(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/order/all', { headers })
+  getAllOrder() {
+    return this.http.get('http://localhost:4000/order/all')
   }
-  getAllUsers(accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get('http://localhost:4000/user/allUser', { headers })
+  getAllUsers() {
+    return this.http.get('http://localhost:4000/user/allUser')
   }
-  deleteOneUser(accessToken: any, userId: string) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.delete(`http://localhost:4000/user/delete/${userId}`, { headers })
+  deleteOneUser(userId: string) {
+    return this.http.delete(`http://localhost:4000/user/delete/${userId}`)
   }
-  getOneOrder(accessToken: any, id: string) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get(`http://localhost:4000/order/oneProduct/${id}`, { headers })
+  getOneOrder(id: string) {
+    return this.http.get(`http://localhost:4000/order/oneProduct/${id}`)
   }
-  getOneProductEdit(accessToken: any, id: string) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.get(`http://localhost:4000/product/singleProduct/${id}`, { headers })
+  getOneProductEdit(id: string) {
+    return this.http.get(`http://localhost:4000/product/singleProduct/${id}`)
   }
-  updateOneProduct(accessToken: any, id: string, formData: any) {
-    const headers = new HttpHeaders({ token: accessToken })
-    return this.http.put(`http://localhost:4000/product/update/${id}`, { formData }, { headers })
+  updateOneProduct(id: string, formData: any) {
+    return this.http.put(`http://localhost:4000/product/update/${id}`, { formData })
   }
 }

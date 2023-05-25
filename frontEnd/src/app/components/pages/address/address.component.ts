@@ -1,8 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { loadStripe } from '@stripe/stripe-js';
 import { UserService } from 'src/app/services/user.service';
-import { loadStripe } from '@stripe/stripe-js'
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -42,9 +41,8 @@ export class AddressComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const accessToken = localStorage.getItem('accessToken')
     const userId: any = localStorage.getItem('userId')
-    this.userService.getCart(accessToken, userId).subscribe({
+    this.userService.getCart(userId).subscribe({
       next: (res: any) => { console.log(res.carts), this.productArray = res.carts, this.calculateSum(), console.log(this.productArray) },
       error: (error: Error) => { console.log(error) },
     })
@@ -66,16 +64,14 @@ export class AddressComponent implements OnInit {
     if (!(this.productArray === undefined)) {
       console.log(this.forms.value)
       const userId: any = localStorage.getItem('userId')
-      const accessToken: any = localStorage.getItem('accessToken')
-      this.userService.stripe(userId, accessToken, this.productArray).subscribe(async (res: any) => {
+      this.userService.stripe(userId, this.productArray).subscribe(async (res: any) => {
         console.log(res)
         let stripe = await loadStripe('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
         stripe?.redirectToCheckout({
           sessionId: res?.id
         })
         if (res) {
-          console.log(this.forms.value)
-          this.userService.addOrder(userId, accessToken, this.forms.value, this.productArray, this.totalAmount).subscribe(console.log)
+          this.userService.addOrder(userId, this.forms.value, this.productArray, this.totalAmount).subscribe(console.log)
         }
       })
 

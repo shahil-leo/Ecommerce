@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -44,39 +44,29 @@ export class UserService {
   allProducts() {
     return this.http.get('http://localhost:4000/product/all')
   }
-  addCart(item: any, userId: string, accessToken: string, productId: string) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { item: item }, { headers: headers })
+  addCart(item: any, userId: string, productId: string) {
+    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { item: item },)
   }
-  addWishList(item: any, userId: string, accessToken: string, productId: string) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/wishlist/create/${userId}/${productId}`, { item: item }, { headers: headers })
+  addWishList(item: any, userId: string, productId: string) {
+    return this.http.post(`http://localhost:4000/wishlist/create/${userId}/${productId}`, { item: item })
   }
-  getCart(accessToken: any, userId: string) {
-    console.log(accessToken, userId)
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.get(`http://localhost:4000/cart/getCart/${userId}`, { headers: headers })
+  getCart(userId: string) {
+    return this.http.get(`http://localhost:4000/cart/getCart/${userId}`)
   }
-  getWishlist(accessToken: any, userId: string) {
-    console.log(accessToken, userId)
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.get(`http://localhost:4000/wishlist/get/${userId}`, { headers: headers })
+  getWishlist(userId: string) {
+    return this.http.get(`http://localhost:4000/wishlist/get/${userId}`)
   }
-  deleteAllCart(userId: string, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`, { headers: headers })
+  deleteAllCart(userId: string) {
+    return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`)
   }
-  deleteOneCart(userId: string, productId: string, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`, { headers: headers })
+  deleteOneCart(userId: string, productId: string) {
+    return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`)
   }
-  deleteAllWishList(userId: string, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.delete(`http://localhost:4000/wishlist/deleteAll/${userId}`, { headers: headers })
+  deleteAllWishList(userId: string) {
+    return this.http.delete(`http://localhost:4000/wishlist/deleteAll/${userId}`)
   }
-  deleteOneWishList(userId: string, productId: string, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.delete(`http://localhost:4000/wishlist/delete/${userId}/${productId}`, { headers: headers })
+  deleteOneWishList(userId: string, productId: string) {
+    return this.http.delete(`http://localhost:4000/wishlist/delete/${userId}/${productId}`)
   }
   addQuantity() {
     this.number.subscribe((res) => {
@@ -92,25 +82,20 @@ export class UserService {
       this.number.next(this.num - 1)
     }
   }
-  updatedQuantity(productId: string, userId: any, number: number, accessToken: any) {
-    const headers = new HttpHeaders({ token: accessToken });
+  updatedQuantity(productId: string, userId: any, number: number) {
     return this.http.post(`http://localhost:4000/cart/updateNumber/${userId}/${productId}`,
-      { number: number }, { headers })
+      { number: number })
   }
 
-  profileOne(id: string, accessToken: any): Observable<any> {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.get(`http://localhost:4000/profile/get/${id}`, { headers })
+  profileOne(id: string): Observable<any> {
+    return this.http.get(`http://localhost:4000/profile/get/${id}`)
   }
 
-  stripe(userId: string, accessToken: any, productArray: any) {
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: productArray }, { headers })
+  stripe(userId: string, productArray: any) {
+    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: productArray })
   }
 
-  addOrder(userId: string, accessToken: any, formValue: any, productArray: any, totalAmount: any) {
-    console.log(productArray)
-    const headers = new HttpHeaders({ token: accessToken });
-    return this.http.post(`http://localhost:4000/order/create/${userId}`, { orders: formValue, products: productArray, amount: totalAmount }, { headers: headers })
+  addOrder(userId: string, formValue: any, productArray: any, totalAmount: any) {
+    return this.http.post(`http://localhost:4000/order/create/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
   }
 }

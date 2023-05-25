@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -50,14 +49,14 @@ export class NavbarComponent implements OnInit {
     })
   }
   oneProfile() {
-    this.userService.profileOne(this.userId, this.accessToken).subscribe({
+    this.userService.profileOne(this.userId).subscribe({
       next: (res) => { this.currentUser = res },
       error: (e) => { console.log(e) },
       complete: () => { }
     })
   }
   gettingCart() {
-    this.userService.getCart(this.accessToken, this.userId).subscribe({
+    this.userService.getCart(this.accessToken).subscribe({
       next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
       error: (e: Error) => { console.log(e) },
       complete: () => { }

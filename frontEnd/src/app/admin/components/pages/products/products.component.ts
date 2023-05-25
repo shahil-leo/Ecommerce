@@ -17,7 +17,6 @@ export class ProductsComponent implements OnInit {
   selectedFile?: string
   editSingleProductId!: any
 
-  accessToken = localStorage.getItem('accessToken')
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +40,7 @@ export class ProductsComponent implements OnInit {
 
   deleteProduct(productId: string) {
     console.log(productId)
-    this.adminService.deleteOneProduct(productId, this.accessToken).subscribe({
+    this.adminService.deleteOneProduct(productId,).subscribe({
       next: (res) => { console.log(res) },
       error: (e) => { console.log(e) },
       complete: () => { this.everyFunction(), console.log('deleted the Product') }
@@ -51,7 +50,7 @@ export class ProductsComponent implements OnInit {
   submit() {
     if (!(this.editProduct === 'Edit')) {
       console.log(this.forms.value)
-      this.adminService.addOneProduct(this.accessToken, this.forms.value).subscribe({
+      this.adminService.addOneProduct(this.forms.value).subscribe({
         next: (res) => { console.log(res), this.everyFunction() },
         error: (e) => { console.log(e) },
         complete: () => { this.everyFunction(), console.log('Added a product') }
@@ -61,7 +60,7 @@ export class ProductsComponent implements OnInit {
       console.log('edit')
       console.log(this.forms.value)
       console.log(this.editSingleProductId)
-      this.adminService.updateOneProduct(this.accessToken, this.editSingleProductId, this.forms.value).subscribe({ next: (res) => { console.log(res) }, error: (e) => { console.log(e) }, complete: () => { this.everyFunction() } })
+      this.adminService.updateOneProduct(this.editSingleProductId, this.forms.value).subscribe({ next: (res) => { console.log(res) }, error: (e) => { console.log(e) }, complete: () => { this.everyFunction() } })
     }
   }
 
@@ -78,12 +77,12 @@ export class ProductsComponent implements OnInit {
   }
 
   everyFunction() {
-    this.adminService.getAllCategory(this.accessToken).subscribe({
+    this.adminService.getAllCategory().subscribe({
       next: (res) => { this.category = res },
       error: (e) => { console.log(e) },
       complete: () => { console.log('completed the category') }
     })
-    this.adminService.getAllProduct(this.accessToken).subscribe({
+    this.adminService.getAllProduct().subscribe({
       next: (res) => { this.product = res, console.log(this.product) },
       error: (e) => { console.log(e) },
       complete: () => { console.log('completed the all product') }
@@ -94,7 +93,7 @@ export class ProductsComponent implements OnInit {
     this.editProduct = 'Edit'
     this.isTrue = !this.isTrue
     this.editSingleProductId = id
-    this.adminService.getOneProductEdit(this.accessToken, id).subscribe({
+    this.adminService.getOneProductEdit(id).subscribe({
       next: (res: any) => {
         const { title, description, size, color, prize, brand, image } = res
         this.fc['title'].setValue(title)

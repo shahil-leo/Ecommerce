@@ -1,9 +1,7 @@
-import { json } from 'express';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, forkJoin, map, observable } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-carts',
@@ -36,13 +34,13 @@ export class CartsComponent implements OnInit {
 
 
   fullDelete(): void {
-    this.userService.deleteAllCart(this.userId, this.accessToken).subscribe(() => {
+    this.userService.deleteAllCart(this.userId).subscribe(() => {
       location.reload()
     })
 
   }
   deleteOne(productId: string) {
-    this.userService.deleteOneCart(this.userId, productId, this.accessToken).subscribe(() => {
+    this.userService.deleteOneCart(this.userId, productId).subscribe(() => {
       this.getCart()
     })
   }
@@ -51,7 +49,7 @@ export class CartsComponent implements OnInit {
     console.log(itemId)
     number++
     console.log(number)
-    this.userService.updatedQuantity(itemId, this.userId, number, this.accessToken).subscribe(() => {
+    this.userService.updatedQuantity(itemId, this.userId, number).subscribe(() => {
       this.getCart()
     })
   }
@@ -59,7 +57,7 @@ export class CartsComponent implements OnInit {
   minus(productId: string, number: number) {
     number--
     if (number > 0) {
-      this.userService.updatedQuantity(productId, this.userId, number, this.accessToken).subscribe({
+      this.userService.updatedQuantity(productId, this.userId, number,).subscribe({
         next: (res) => { console.log(res) }
         , error: (e) => { console.log(e) }
         , complete: () => { this.getCart() }
@@ -71,7 +69,7 @@ export class CartsComponent implements OnInit {
 
 
   getCart() {
-    this.userService.getCart(this.accessToken, this.userId).subscribe({
+    this.userService.getCart(this.userId).subscribe({
       next: (res: any) => { console.log(res.carts), this.allProduct = res.carts, this.calculateSum(), console.log(this.allProduct) },
       error: (error: Error) => { console.log(error) },
     })
