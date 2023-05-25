@@ -1,7 +1,7 @@
 import { Router } from "express";
+import { categoryInterface } from "../interfaces/product";
 import { verifyToken, verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
-import { categoryInterface } from "../interfaces/product";
 const router = Router()
 
 router.post('/add', verifyTokenAndAdmin, async (req, res) => {
@@ -26,7 +26,7 @@ router.get('/every', verifyToken, async (req, res) => {
         if (!everyCategory) return res.status(500).json('no category found')
         return res.status(200).json(everyCategory)
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 router.get('/everySome', verifyToken, async (req, res) => {

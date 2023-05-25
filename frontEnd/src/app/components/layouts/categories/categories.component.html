@@ -1,16 +1,26 @@
-<section class="p-5">
-  <div class="max-w-[85rem] mx-auto mt-2 md:mt-16">
-    <h1 class="text-3xl font-bold">Shop our Top Categories</h1>
+<section class="p-5 font-inter">
+  <div class="max-w-[83rem] mx-auto mt-2 md:mt-16">
+    <h1 class="text-3xl font-semibold">Shop our Top Categories</h1>
 
     <div class="flex flex-wrap my-10 gap-7">
       <div
-        class="min-h-[10rem] min-w-[10rem] lg:min-w-[12rem] lg:min-h-[12rem] bg-green-400 rounded-lg"
         *ngFor="let category of allCategory"
         routerLink="/products/{{ category.categories }}"
       >
-        <h1 class="px-2 py-2 text-xl font-medium text-center top-2">
-          {{ category.categories }}
-        </h1>
+        <div
+          class="min-h-[10rem] relative min-w-[10rem] lg:min-w-[12rem] lg:min-h-[15rem] bg-green-400 rounded-lg overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 h-full transition-all ease-in bg-contain hover:scale-125"
+          >
+            <img src="{{ category.categoryImg }}" alt="" />
+          </div>
+          <h1
+            class="relative px-2 py-2 text-2xl font-semibold text-center text-white shadow-sm top-2"
+          >
+            {{ category.categories }}
+          </h1>
+        </div>
       </div>
     </div>
   </div>

@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
     })
   }
   gettingCart() {
-    this.userService.getCart(this.accessToken).subscribe({
+    this.userService.getCart(this.userId).subscribe({
       next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
       error: (e: Error) => { console.log(e) },
       complete: () => { }
