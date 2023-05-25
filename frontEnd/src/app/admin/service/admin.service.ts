@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -80,5 +80,9 @@ export class AdminService {
   getOneProductEdit(accessToken: any, id: string) {
     const headers = new HttpHeaders({ token: accessToken })
     return this.http.get(`http://localhost:4000/product/singleProduct/${id}`, { headers })
+  }
+  updateOneProduct(accessToken: any, id: string, formData: any) {
+    const headers = new HttpHeaders({ token: accessToken })
+    return this.http.put(`http://localhost:4000/product/update/${id}`, { formData }, { headers })
   }
 }

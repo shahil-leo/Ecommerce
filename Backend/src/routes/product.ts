@@ -38,11 +38,11 @@ router.post('/create', verifyTokenAndAdmin, async (req, res) => {
 
 router.put('/update/:productId', verifyTokenAndAdmin, async (req, res) => {
     const { productId } = req.params
-    const { data } = req.body
+    const { formData } = req.body
     try {
         const updatedProduct = await productModel.findByIdAndUpdate(productId,
             {
-                $set: data
+                $set: formData
             }, { new: true })
         if (!updatedProduct) return res.status(500).json('server problem updating data ')
         return res.status(200).send(updatedProduct)

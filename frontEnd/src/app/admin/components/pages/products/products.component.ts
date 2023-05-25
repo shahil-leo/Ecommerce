@@ -15,6 +15,7 @@ export class ProductsComponent implements OnInit {
   product!: any
   editProduct: string = 'Add'
   selectedFile?: string
+  editSingleProductId!: any
 
   accessToken = localStorage.getItem('accessToken')
 
@@ -57,7 +58,10 @@ export class ProductsComponent implements OnInit {
       })
       this.forms.reset()
     } else {
+      console.log('edit')
       console.log(this.forms.value)
+      console.log(this.editSingleProductId)
+      this.adminService.updateOneProduct(this.accessToken, this.editSingleProductId, this.forms.value).subscribe({ next: (res) => { console.log(res) }, error: (e) => { console.log(e) }, complete: () => { this.everyFunction() } })
     }
   }
 
@@ -89,9 +93,10 @@ export class ProductsComponent implements OnInit {
   editProducts(id: string) {
     this.editProduct = 'Edit'
     this.isTrue = !this.isTrue
+    this.editSingleProductId = id
     this.adminService.getOneProductEdit(this.accessToken, id).subscribe({
       next: (res: any) => {
-        const { title, description, size, color, prize, brand } = res
+        const { title, description, size, color, prize, brand, image } = res
         this.fc['title'].setValue(title)
         this.fc['description'].setValue(description)
         this.fc['size'].setValue(size)
