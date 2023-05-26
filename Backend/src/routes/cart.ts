@@ -12,7 +12,6 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
         carts: req.body.item
     })
     const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
-    console.log(isCart.length)
     if (isCart.length === 0) {
         try {
             const newCart = await newC.save()
