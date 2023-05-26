@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,23 +12,26 @@ export class SmCategoryComponent implements OnInit {
 
   productArray: any = []
   @Input() category?: string
+  accessToken: any = localStorage.getItem('accessToken')
 
   constructor(
     private userService: UserService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private router: Router
   ) { }
   ngOnInit(): void {
     this.userService.findCategory(this.category).subscribe({ next: (res) => { this.productArray = res } })
   }
 
   addToCart(item: any, itemId: string) {
+    if (!(this.accessToken)) {
+      return this.router.navigate(['/login'])
+    }
     const userId: any = localStorage.getItem('userId')
-    this.userService.addCart(item, userId, itemId).subscribe({
+    return this.userService.addCart(item, userId, itemId).subscribe({
       next(value) {
-        console.log(value)
       },
       error: (e) => {
-        console.log(e)
       },
       complete: () => {
         this.toaster.success('Added to cart ')

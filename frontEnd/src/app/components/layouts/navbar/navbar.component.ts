@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavbarComponent implements OnInit {
 
+  acessToken: any = localStorage.getItem('accessToken')
 
   constructor(
     private userService: UserService,
@@ -49,14 +50,20 @@ export class NavbarComponent implements OnInit {
     })
   }
   oneProfile() {
-    this.userService.profileOne(this.userId).subscribe({
+    if (!(this.accessToken)) {
+      return 'no user is here'
+    }
+    return this.userService.profileOne(this.userId).subscribe({
       next: (res) => { this.currentUser = res },
       error: (e) => { console.log(e) },
       complete: () => { }
     })
   }
   gettingCart() {
-    this.userService.getCart(this.userId).subscribe({
+    if (!(this.accessToken)) {
+      return 'no user is here'
+    }
+    return this.userService.getCart(this.userId).subscribe({
       next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
       error: (e: Error) => { console.log(e) },
       complete: () => { }

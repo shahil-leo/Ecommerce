@@ -46,10 +46,12 @@ export class CartsComponent implements OnInit {
   }
 
   add(itemId: any, number: number) {
-    console.log(itemId)
+    if (!(this.accessToken)) {
+      console.log('no user available')
+      return this.router.navigate(['/login'])
+    }
     number++
-    console.log(number)
-    this.userService.updatedQuantity(itemId, this.userId, number).subscribe(() => {
+    return this.userService.updatedQuantity(itemId, this.userId, number).subscribe(() => {
       this.getCart()
     })
   }
@@ -58,7 +60,7 @@ export class CartsComponent implements OnInit {
     number--
     if (number > 0) {
       this.userService.updatedQuantity(productId, this.userId, number,).subscribe({
-        next: (res) => { console.log(res) }
+        next: (res) => { }
         , error: (e) => { console.log(e) }
         , complete: () => { this.getCart() }
       })
@@ -69,19 +71,20 @@ export class CartsComponent implements OnInit {
 
 
   getCart() {
-    this.userService.getCart(this.userId).subscribe({
-      next: (res: any) => { console.log(res.carts), this.allProduct = res.carts, this.calculateSum(), console.log(this.allProduct) },
+    if (!(this.accessToken)) {
+      return this.router.navigate(['/login'])
+    }
+    return this.userService.getCart(this.userId).subscribe({
+      next: (res: any) => { this.allProduct = res.carts, this.calculateSum() },
       error: (error: Error) => { console.log(error) },
     })
   }
 
   calculateSum() {
-    console.log('calculate sum')
     this.fullAmount = this.allProduct.reduce((total, product) => {
       const productTotal = product.prize * product.quantity;
       return total + productTotal;
     }, 0);
-    console.log(this.fullAmount)
     this.quantity = this.allProduct.reduce((total, product) => {
       const quantity = +product.quantity
       return total + quantity
