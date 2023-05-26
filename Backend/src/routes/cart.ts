@@ -1,8 +1,8 @@
+import express from 'express';
 import { ObjectId } from 'mongodb';
-import express from 'express'
+import { CartInterface } from '../interfaces/cart';
 import { verifyTokenAndAuthorization } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
-import { CartInterface } from '../interfaces/cart';
 const router = express.Router();
 
 // creating a cart
@@ -12,6 +12,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
         carts: req.body.item
     })
     const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
+    console.log(isCart.length)
     if (!(isCart)) {
         try {
             const newCart = await newC.save()

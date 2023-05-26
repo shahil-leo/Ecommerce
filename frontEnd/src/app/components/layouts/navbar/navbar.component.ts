@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
   }
 
   everyCategory() {
-    this.userService.allCategories(this.accessToken).subscribe({
+    this.userService.allCategories().subscribe({
       next: (res) => { this.allFeatures = res },
       error: (e) => { console.log(e) },
       complete: () => { }
