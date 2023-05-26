@@ -1,36 +1,42 @@
-<div class="mx-auto max-w-[85rem]">
+<div class="mx-auto max-w-[85rem] font-inter">
   <h1 class="px-5 mb-10 text-3xl font-semibold">
-    Today {{ category }} Deals for you
+    {{ category }} Deals for you
   </h1>
 
-  <div class="px-5 overflow-x-scroll h-[27rem]">
-    <div class="flex gap-5 md:gap-10 w-max">
+  <div class="overflow-x-scroll h-[32rem]">
+    <div class="flex gap-1 md:gap-5 w-max">
       <div
-        class="w-[11.5rem] h-[14rem] sm:w-[22rem] lg:w-[22rem]"
+        class="w-[13.5rem] relative h-[14rem] lg:w-[25rem]"
         *ngFor="let product of productArray"
       >
-        <div class="">
+        <div class="px-3 snap-x">
           <div
-            class="flex items-center justify-center mt-5 mb-5 rounded-xl h-[15.5rem] overflow-hidden"
+            routerLink="/single/{{ product._id }}"
+            class="snap-center flex items-center bg-gray-100 justify-center mt-5 mb-5 rounded-md h-[15rem] md:h-[17rem] overflow-hidden"
           >
             <img
-              routerLink="/single/{{ product._id }}"
-              src="../../../../assets/images/luis-felipe-lins-LG88A2XgIXY-unsplash.jpg"
-              class="w-full transition-all hover:scale-125"
+              src="{{ product.image }}"
+              class="object-cover transition-all hover:scale-125"
             />
           </div>
-          <div>
+          <div class="snap-center">
             <div class="flex justify-between mb-5">
-              <h1>{{ product.title }}</h1>
-              <h1>{{ product.prize }}</h1>
+              <h1 class="text-3xl">{{ product.title }}</h1>
+              <h1 class="text-xl">{{ product.prize }} Rs</h1>
             </div>
             <p>{{ product.description }}</p>
-            <div class="flex justify-between mt-5">
-              <button (click)="addToCart(product, product._id)">
+            <div class="flex justify-between pb-10 pt-7">
+              <button
+                class="px-3 py-1 text-black bg-white border border-black rounded-full md:py-3 md:px-5"
+                (click)="addToCart(product, product._id)"
+              >
                 Add to cart
               </button>
-              <button (click)="addToWishList(product, product._id)">
-                Add to Wishlist
+              <button
+                class="absolute px-3 py-2 bg-white rounded-full right-10 top-14"
+                (click)="addToWishList(product, product._id)"
+              >
+                <span class="material-symbols-outlined"> favorite </span>
               </button>
             </div>
           </div>

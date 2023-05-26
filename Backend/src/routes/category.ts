@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { categoryInterface } from "../interfaces/product";
-import { verifyToken, verifyTokenAndAdmin } from "../middlewares/verify";
+import { verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
 const router = Router()
 
@@ -20,7 +20,7 @@ router.post('/add', verifyTokenAndAdmin, async (req, res) => {
 
 })
 
-router.get('/every', verifyToken, async (req, res) => {
+router.get('/every', async (req, res) => {
     try {
         const everyCategory = await categoryModel.find()
         if (!everyCategory) return res.status(500).json('no category found')
@@ -29,7 +29,7 @@ router.get('/every', verifyToken, async (req, res) => {
         res.status(500).json(error)
     }
 })
-router.get('/everySome', verifyToken, async (req, res) => {
+router.get('/everySome', async (req, res) => {
     try {
         const everyCategory = await categoryModel.find().limit(3)
         if (!everyCategory) return res.status(500).json('no category found')
@@ -64,7 +64,7 @@ router.delete('/delete/:id', verifyTokenAndAdmin, async (req, res) => {
         res.send(500).json(error)
     }
 })
-router.get('/single/:id', verifyTokenAndAdmin, async (req, res) => {
+router.get('/single/:id', async (req, res) => {
 
     const { id } = req.params
     try {

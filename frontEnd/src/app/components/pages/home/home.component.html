@@ -6,18 +6,51 @@
 <app-sm-category [category]="weekly"></app-sm-category>
 <!-- big banner -->
 
-<div class="md:my-32 my-12 h-[30rem] md:h-[36rem] bg-gray-400">
-  <div class="flex items-center">
+<div
+  class="bg-contain md:my-32 my-12 bg-yellow-300 md:h-[42rem] font-inter text-white overflow-hidden relative"
+>
+  <div class="absolute w-full h-full">
+    <img
+      class="object-cover object-left w-1/2 h-full"
+      src="../../../../assets/images/maksim-larin-ezdrvzA1hZw-unsplash.jpg"
+      alt=""
+    />
+  </div>
+  <div class="flex">
     <span class="flex-[2] hidden md:block"></span>
     <div
-      class="flex-1 flex gap-6 flex-col items-center m-4 bg-yellow-400 min-w-[13.5rem] mt-12 md:mt-28 h-96 mr-72"
+      class="flex-1 p-4 md:p-0 flex gap-6 flex-col items-center md:items-start m-4 bg-green-800 min-w-[18.5rem] mt-6 md:mt-28 h-[30rem] mr-72"
     >
-      <h1 class="mt-20 text-center">Get 5% Cash Back on 1200 Rs</h1>
-      <p class="text-center">
+      <h1
+        class="max-w-md mt-16 mb-3 text-white md:mt-20 text-3xl md:text-5xl font-bold md:leading-[4rem] text-start md:pl-10"
+      >
+        Get 5% Cash Back on ₹1200
+      </h1>
+      <p class="max-w-md mb-10 text-base md:mb-2 md:pl-10 md:text-lg">
         Shopping is a bit of a relaxing hobby for me, which is sometimes
         troubling for the bank balance.
       </p>
-      <button>Learn More</button>
+      <div class="flex justify-center gap-3 md:pl-10">
+        <a
+          class="relative inline-block md:px-5 md:py-3 px-4 py-2 overflow-hidden text-center border border-indigo-600 rounded-[1.875rem] group focus:outline-none focus:ring"
+        >
+          <span
+            class="absolute inset-y-0 right-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"
+          ></span>
+
+          <span
+            class="relative text-base font-medium text-indigo-300 transition-colors group-hover:text-white"
+          >
+            Learn more
+          </span>
+        </a>
+        <button
+          routerLink="/allProducts"
+          class="inline-flex px-4 py-2 ml-4 text-sm text-black bg-white border-0 rounded-full text- md:text-base md:px-5 md:py-3 focus:outline-none hover:bg-black hover:text-white"
+        >
+          Buy Now
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -44,3 +77,6 @@
 <app-sm-category [category]="selling"></app-sm-category>
 <app-faq></app-faq>
 <app-footer></app-footer>
+<!-- style="
+background-image: url(../../../../assets/images/maksim-larin-ezdrvzA1hZw-unsplash.jpg);
+" -->
