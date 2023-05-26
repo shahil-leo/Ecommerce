@@ -13,7 +13,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
     })
     const isCart: CartInterface[] = await cartModel.find({ userId: req.params.id })
     console.log(isCart.length)
-    if (!(isCart)) {
+    if (isCart.length === 0) {
         try {
             const newCart = await newC.save()
             if (!newCart) return res.status(500).json('cart not added to the db')
