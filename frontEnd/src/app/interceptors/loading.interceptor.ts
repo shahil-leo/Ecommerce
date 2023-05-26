@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -41,5 +42,6 @@ export class LoadingInterceptor implements HttpInterceptor {
     if (pendingRequests === 0) {
       this.loadingService.hideLoading();
     }
+
   }
 }

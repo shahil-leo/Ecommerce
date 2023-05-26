@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
@@ -25,9 +25,8 @@ export class UserService {
   allCategory(): Observable<any> {
     return this.http.get('http://localhost:4000/product/Allcategory')
   }
-  allCategories(token: any): Observable<any> {
-    const headers = new HttpHeaders({ token: token });
-    return this.http.get('http://localhost:4000/category/every', { headers })
+  allCategories(): Observable<any> {
+    return this.http.get('http://localhost:4000/category/every')
   }
   findCategory(category: string | undefined) {
     return this.http.get(`http://localhost:4000/product/findCategory/${category}`)

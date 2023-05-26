@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { map, mergeMap, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,10 +15,8 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.userService.allCategory().subscribe(console.log)
-    const accessToken = localStorage.getItem('accessToken')
 
-    this.userService.allCategories(accessToken).subscribe(
+    this.userService.allCategories().subscribe(
       { next: (res) => { this.allCategory = res, console.log(this.allCategory) } })
 
   }

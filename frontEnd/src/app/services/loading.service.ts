@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +18,6 @@ export class LoadingService {
 
   get isLoading() {
     return this.loadingSubject.asObservable();
+
   }
 }
