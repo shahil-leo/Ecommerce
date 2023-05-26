@@ -1,13 +1,12 @@
-import { LoadingService } from '../../services/loading.service';
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
-  HttpEventType
+  HttpRequest
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LoadingService } from '../../services/loading.service';
 let pendingRequest = 0
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
@@ -17,29 +16,17 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    this.loadingService.showLoading()
+    this.loadingService.show()
     pendingRequest = pendingRequest + 1
     return next.handle(request)
-    //   return next.handle(request).pipe(
-    //     tap({
-    //       next: (event) => {
-    //         if (event.type === HttpEventType.Response) {
-    //           this.handleHideLoading()
-    //         }
-    //       },
-    //       error: (_) => {
-    //         this.handleHideLoading()
-    //       }
-    //     })
-    //   )
-    // }
+  }
 
-    // handleHideLoading() {
-    //   pendingRequest = pendingRequest - 1
-    //   if (pendingRequest === 0) {
-    //     if (pendingRequest === 0) {
-    //       this.loadingService.hideLoading();
-    //     }
-    //   }
+  handleHideLoading() {
+    pendingRequest = pendingRequest - 1
+    if (pendingRequest === 0) {
+      if (pendingRequest === 0) {
+        this.loadingService.hide();
+      }
+    }
   }
 }
