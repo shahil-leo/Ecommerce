@@ -9,19 +9,18 @@
     </div>
     <div class="hidden lg:block">
       <ul class="flex gap-10 text-base">
-        <div class="relative flex items-center gap-2 cursor-pointer">
+        <div class="relative flex items-center gap-1 cursor-pointer">
           <li>
             <a
-              (mouseleave)="categories($event)"
-              (mouseenter)="categoriesLeave($event)"
               class="pb-1 ease-out border-black hover:border-b-2"
+              (mouseenter)="showHideCategory(true)"
             >
               Categories
             </a>
             <div
-              *ngIf="tru"
-              (mouseenter)="categories($event)"
-              class="absolute z-50 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-400 top-12 h-72 rounded-md"
+              class="absolute hide z-50 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-400 top-12 h-72 rounded-md"
+              (mouseleave)="showHideCategory(false)"
+              [ngClass]="{ show: isCategoryOpen }"
             >
               <h1 class="mt-5 text-2xl text-black">Top Categories</h1>
               <hr class="my-5" />
@@ -37,8 +36,8 @@
                   >
                     <img
                       class="object-center object-cover min-w-[5.25rem] rounded-md max-h-10"
-                      src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                      alt="iimg"
+                      src="{{ item.categoryImg }}"
+                      alt="categoryImage"
                     />
                     <h1>{{ item.categories }}</h1>
                   </div>
@@ -53,8 +52,45 @@
             <a> expand_less</a>
           </span>
         </div>
-        <li><a>Deals</a></li>
-        <li><a>New Arrivals</a></li>
+        <div class="relative flex items-center gap-1 cursor-pointer">
+          <li>
+            <a
+              (mouseenter)="showHideBrand(true)"
+              class="pb-1 ease-out border-black hover:border-b-2"
+            >
+              Brand
+            </a>
+            <div
+              (mouseleave)="showHideBrand(false)"
+              [ngClass]="{ show: isBrandOpen }"
+              class="absolute hide z-50 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-400 top-12 h-72 rounded-md"
+            >
+              <h1 class="mt-5 text-2xl text-black">Brand</h1>
+              <hr class="my-5" />
+
+              <div class="flex flex-wrap gap-5">
+                <div
+                  class="flex flex-col flex-wrap gap-5 md:flex-row"
+                  *ngFor="let item of uniqueBrand"
+                >
+                  <div
+                    routerLink="/productsBrand/{{ item }}"
+                    class="min-w-[15rem] bg-black items-center gap-4 flex p-2 rounded-md min-h-[5rem] bg-"
+                  >
+                    <h1 class="text-white">{{ item }}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <span *ngIf="!isTrue" class="material-symbols-outlined"
+            ><a>expand_more</a>
+          </span>
+          <span *ngIf="isTrue" class="material-symbols-outlined">
+            <a> expand_less</a>
+          </span>
+        </div>
+        <li><a>Arrivals</a></li>
         <li><a>Wishlist</a></li>
       </ul>
     </div>

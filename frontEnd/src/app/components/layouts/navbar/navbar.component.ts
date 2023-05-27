@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   isTrue: boolean = false
-  tru: boolean = false
   accessToken: any = localStorage.getItem('accessToken')
   userId: any = localStorage.getItem('userId')
   allCart: any[] = []
@@ -25,22 +24,19 @@ export class NavbarComponent implements OnInit {
   allFeatures: any[] = []
   isProfile: boolean = false
   currentUser!: any
-
-
+  brandsRes: [] = []
+  brandsArray: string[] = []
+  uniqueBrand: string[] = []
+  isCategoryOpen: boolean = false;
+  isBrandOpen: boolean = false;
 
   ngOnInit(): void {
     this.oneProfile()
     this.everyCategory()
     this.gettingCart()
+    this.getAllBrand()
   }
-  categories($event: Event) {
-    this.tru = false
-    this.isTrue = !this.isTrue
-  }
-  categoriesLeave($event: Event) {
-    this.tru = true
-    this.isTrue = !this.isTrue
-  }
+
 
   everyCategory() {
     this.userService.allCategories().subscribe({
@@ -69,11 +65,31 @@ export class NavbarComponent implements OnInit {
       complete: () => { }
     })
   }
+  getAllBrand() {
+    this.userService.getAllBrand().subscribe({
+      next: (res: any) => {
+        this.brandsRes = res
+        this.brandsRes.map((element: any) => {
+          this.brandsArray.push(element.brand)
+          this.uniqueBrand = [...new Set(this.brandsArray)]
+        })
+      }, error: (e) => { console.log(e) },
+      complete: () => { }
+    })
+  }
 
   logout() {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('userId')
     this.router.navigate(['/login'])
   }
+
+  showHideCategory(show: boolean): void {
+    this.isCategoryOpen = show;
+  }
+  showHideBrand(show: boolean): void {
+    this.isBrandOpen = show;
+  }
+
 
 }
