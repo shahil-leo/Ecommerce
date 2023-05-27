@@ -24,8 +24,8 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { RegisterComponent } from './components/pages/register/register.component';
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
-import { TokenInterceptor } from './interceptors/token.interceptor';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [

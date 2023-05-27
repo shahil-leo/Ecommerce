@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TokenInterceptor } from '../interceptors/token.interceptor';
 import { LoadingInterceptor } from '../shared/interceptors/loading.interceptor';
+import { TokenInterceptor } from '../shared/interceptors/token.interceptor';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';

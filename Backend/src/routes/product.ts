@@ -6,8 +6,6 @@ import { productModel } from '../models/productSchema';
 const router = express.Router();
 
 router.post('/create', verifyTokenAndAdmin, async (req, res) => {
-    console.log(req.body.formValue)
-    // formValue
     const {
         title,
         description,

@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -11,9 +9,11 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class LoadingComponent {
 
 
-  isLoading: Subject<boolean> = this.loader.isLoading;
-
-  constructor(private loader: LoadingService, private http: HttpClient) {
-
+  isLoading!: boolean;
+  constructor(private loadingServie: LoadingService) {
+    loadingServie.isLoading.subscribe((isLoading) => {
+      console.log(isLoading)
+      this.isLoading = isLoading
+    })
   }
 }
