@@ -1,15 +1,15 @@
 
-import express from 'express'
-import crypto from 'crypto'
-import nodemailer from 'nodemailer'
-import { ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
-import { UserModel } from "../models/userSchema";
-import { checkEmail } from '../middlewares/verify';
+import crypto from 'crypto'
 import dotenv from 'dotenv'
-import { User, fullUser, recoveryUser, registerUser } from '../interfaces/user';
+import express from 'express'
 import jwt from 'jsonwebtoken'
+import { ObjectId } from 'mongodb'
+import nodemailer from 'nodemailer'
 import { recovery } from '../interfaces/All'
+import { User, fullUser, recoveryUser, registerUser } from '../interfaces/user'
+import { checkEmail } from '../middlewares/verify'
+import { UserModel } from "../models/userSchema"
 dotenv.config()
 
 const router = express.Router()
@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
     const accessToken = jwt.sign({
         id: user._doc._id,
         isAdmin: user._doc.isAdmin
-    }, secretJwt, { expiresIn: '1d' })
+    }, secretJwt, { expiresIn: '5d' })
     const { password, ...others } = user._doc
     res.status(200).json({ ...others, accessToken })
 })
