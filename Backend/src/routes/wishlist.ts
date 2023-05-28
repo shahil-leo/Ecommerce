@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongodb';
 import { Router } from "express";
-import { wishListModel } from "../models/wishlistSchema";
+import { ObjectId } from 'mongodb';
 import { wishListInterface } from "../interfaces/All";
 import { verifyTokenAndAuthorization } from "../middlewares/verify";
+import { wishListModel } from "../models/wishlistSchema";
 
 const router = Router()
 
@@ -15,7 +15,6 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
     })
 
     const isCart: wishListInterface[] = await wishListModel.find({ userId: id })
-    console.log(isCart)
     if (isCart.length === 0) {
         try {
             const newCart = await newWish.save()
@@ -25,7 +24,6 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
             return res.status(500).json(error)
         }
     } else {
-        console.log('shahil')
         const findUserCart: any = await wishListModel.findOne(
             { "userId": new ObjectId(id), "wishList._id": new ObjectId(productId) },
             { "wishList.$": 1 }

@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { cartItem } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-single-product',
@@ -10,6 +12,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./single-product.component.scss']
 })
 export class SingleProductComponent implements OnInit {
+
+  userId = localStorage.getItem('userId') as string
 
   productId!: string
   singleProduct!: any
@@ -26,31 +30,29 @@ export class SingleProductComponent implements OnInit {
   ngOnInit(): void {
     this.universal = this.userService.number
     this.userService.findSingleProduct(this.productId).subscribe({
-      next: (res) => { this.singleProduct = res },
-      error: (e) => { console.log(e) },
+      next: (res: any) => { this.singleProduct = res },
+      error: (e: HttpErrorResponse) => { this.toastr.error(e.error) },
       complete: () => { console.log(this.singleProduct) }
     })
   }
 
-  cart(product: any) {
-    console.log(product)
-    const userId: any = localStorage.getItem('userId')
+  cart(product: cartItem) {
     this.universal.subscribe(res => { this.number = res })
     console.log(product._id)
-    this.userService.addCart(product, userId, this.productId).subscribe({
+    this.userService.addCart(product, this.userId, this.productId).subscribe({
       next: (res => { console.log(res) }),
       error: (e) => { console.log(e) },
       complete: () => {
-        this.userService.updatedQuantity(this.productId, userId, this.number).subscribe(() => {
+        this.userService.updatedQuantity(this.productId, this.userId, this.number).subscribe(() => {
         })
         this.toastr.success('Product added succesfully ')
       }
     })
   }
-  add() {
+  add(): void {
     this.userService.addQuantity()
   }
-  minus() {
+  minus(): void {
     this.userService.minusQuantity()
   }
 

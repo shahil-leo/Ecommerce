@@ -14,13 +14,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
-  { path: '', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: 'products/:category', component: ProductsComponent },
   { path: 'productsBrand/:brand', component: ProductsComponent },
   { path: 'single/:id', component: SingleProductComponent },
   { path: 'allProducts', component: AllProductsComponent },
   { path: 'carts', component: CartsComponent },
-  { path: 'address', component: AddressComponent }
+  { path: 'address', component: AddressComponent },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) }
 ];
 
 @NgModule({

@@ -342,14 +342,12 @@
 
       <div class="lg:col-span-3">
         <ul class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          <li
-            *ngFor="let item of productsArray"
-            routerLink="/single/{{ item._id }}"
-          >
+          <li *ngFor="let item of productsArray">
             <a class="block overflow-hidden group">
               <img
-                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                alt=""
+                routerLink="/single/{{ item._id }}"
+                src="{{ item.image }}"
+                alt="productImage"
                 class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
               />
 
@@ -365,11 +363,17 @@
                   <span class="tracking-wider text-gray-900">
                     {{ item.prize }}Rs</span
                   >
-                  <span class="material-symbols-outlined"> favorite </span>
+                  <button (click)="addToWishList(item, item._id)">
+                    <span class="material-symbols-outlined"> favorite </span>
+                  </button>
                 </p>
                 <div class="flex justify-between mt-3">
-                  <button>Add to cart</button>
-                  <button>Shop Now</button>
+                  <button
+                    class="p-2 text-white bg-black border-2 border-black rounded-xl"
+                    (click)="addToCart(item, item._id)"
+                  >
+                    Add to cart
+                  </button>
                 </div>
               </div>
             </a>

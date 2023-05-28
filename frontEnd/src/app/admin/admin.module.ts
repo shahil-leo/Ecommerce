@@ -16,7 +16,6 @@ import { OrdersComponent } from './components/pages/orders/orders.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { UsersComponent } from './components/pages/users/users.component';
 
-
 @NgModule({
   declarations: [
     FooterComponent,

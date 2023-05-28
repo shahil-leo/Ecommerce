@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { cartFullResponse, wishlistFullResponse } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-sm-category',
@@ -12,7 +14,9 @@ export class SmCategoryComponent implements OnInit {
 
   productArray: any = []
   @Input() category?: string
-  accessToken: any = localStorage.getItem('accessToken')
+  accessToken = localStorage.getItem('accessToken') as string
+  userId = localStorage.getItem('userId') as string
+
 
   constructor(
     private userService: UserService,
@@ -20,18 +24,21 @@ export class SmCategoryComponent implements OnInit {
     private router: Router
   ) { }
   ngOnInit(): void {
-    this.userService.findCategory(this.category).subscribe({ next: (res) => { this.productArray = res } })
+    this.userService.findCategory(this.category).subscribe(
+      (res: Object) => {
+        console.log(res)
+        this.productArray = res;
+      }
+    )
   }
 
-  addToCart(item: any, itemId: string) {
+  addToCart(item: cartFullResponse, itemId: string): Subscription | Promise<boolean> {
     if (!(this.accessToken)) {
       return this.router.navigate(['/login'])
     }
-    const userId: any = localStorage.getItem('userId')
-    return this.userService.addCart(item, userId, itemId).subscribe({
-      next(value) {
-      },
-      error: (e) => {
+    return this.userService.addCart(item, this.userId, itemId).subscribe({
+      error: (e: Error) => {
+        this.toaster.error(e.message)
       },
       complete: () => {
         this.toaster.success('Added to cart ')
@@ -39,14 +46,10 @@ export class SmCategoryComponent implements OnInit {
     })
   }
 
-  addToWishList(item: any, itemId: string) {
-    const userId: any = localStorage.getItem('userId')
-    this.userService.addWishList(item, userId, itemId).subscribe({
-      next(value) {
-        console.log(value)
-      },
-      error: (e) => {
-        this.toaster.error(e.error)
+  addToWishList(item: wishlistFullResponse, itemId: string): Subscription {
+    return this.userService.addWishList(item, this.userId, itemId).subscribe({
+      error: (e: Error) => {
+        this.toaster.error(e.message)
       },
       complete: () => {
         this.toaster.success('Added to wishlist ')

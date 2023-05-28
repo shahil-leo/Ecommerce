@@ -17,7 +17,7 @@ export class CategoriesComponent implements OnInit {
 
 
     this.userService.allCategories().subscribe(
-      { next: (res) => { this.allCategory = res, console.log(this.allCategory) } })
+      { next: (res: any) => { this.allCategory = res } })
 
   }
 }

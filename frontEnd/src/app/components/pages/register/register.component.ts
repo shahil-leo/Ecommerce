@@ -1,8 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { registerUser } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-register',
@@ -33,11 +36,11 @@ export class RegisterComponent {
   get fc() {
     return this.form.controls
   }
-  formSubmit(formData: any) {
+  formSubmit(formData: registerUser): Subscription | any {
     if (!(formData.password === formData.confirmPassword)) return this.toaster.error('Password is not same')
     return this.userService.registerUser(formData).subscribe({
-      next: (res: any) => { console.log(res) },
-      error: (e: any) => { this.toaster.error(e.error) },
+      next: (res: registerUser) => { console.log(res) },
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
       complete: () => {
         this.toaster.success('Created successfully')
         this.form.reset()

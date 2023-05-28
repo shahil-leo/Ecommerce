@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { cartItem, singleProduct } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-carts',
@@ -16,14 +19,12 @@ export class CartsComponent implements OnInit {
     private router: Router
   ) { }
 
-  allCart?: any
-  allProduct: any[] = []
-  num!: number
-  universal!: any
+  allProduct: cartItem[] = []
+  universal?: BehaviorSubject<number> | undefined
   fullAmount: number = 0
   quantity: number = 0
-  accessToken = localStorage.getItem('accessToken')
-  userId: any = localStorage.getItem('userId')
+  accessToken = localStorage.getItem('accessToken') as string
+  userId = localStorage.getItem('userId') as string
 
 
 
@@ -34,35 +35,37 @@ export class CartsComponent implements OnInit {
 
 
   fullDelete(): void {
-    this.userService.deleteAllCart(this.userId).subscribe(() => {
-      location.reload()
+    this.userService.deleteAllCart(this.userId).subscribe({
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      complete: () => { this.getCart() }
     })
 
   }
-  deleteOne(productId: string) {
-    this.userService.deleteOneCart(this.userId, productId).subscribe(() => {
-      this.getCart()
+  deleteOne(productId: string): void {
+    this.userService.deleteOneCart(this.userId, productId).subscribe({
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      complete: () => this.getCart()
     })
   }
 
-  add(itemId: any, number: number) {
+  add(itemId: string, number: number): Subscription | Promise<Boolean> {
     if (!(this.accessToken)) {
-      console.log('no user available')
+      this.toaster.show('Please login')
       return this.router.navigate(['/login'])
     }
     number++
-    return this.userService.updatedQuantity(itemId, this.userId, number).subscribe(() => {
-      this.getCart()
+    return this.userService.updatedQuantity(itemId, this.userId, number).subscribe({
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      complete: () => this.getCart()
     })
   }
 
-  minus(productId: string, number: number) {
+  minus(productId: string, number: number): void {
     number--
     if (number > 0) {
       this.userService.updatedQuantity(productId, this.userId, number,).subscribe({
-        next: (res) => { }
-        , error: (e) => { console.log(e) }
-        , complete: () => { this.getCart() }
+        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+        complete: () => { this.getCart() }
       })
     } else {
       console.log('one product to buy is minimum for the user')
@@ -70,22 +73,28 @@ export class CartsComponent implements OnInit {
   }
 
 
-  getCart() {
+  getCart(): Subscription | Promise<Boolean> {
     if (!(this.accessToken)) {
       return this.router.navigate(['/login'])
     }
     return this.userService.getCart(this.userId).subscribe({
       next: (res: any) => { this.allProduct = res.carts, this.calculateSum() },
-      error: (error: Error) => { console.log(error) },
+      error: (error: HttpErrorResponse) => {
+        if (error.error === null) {
+          console.log('no problem')
+        } else {
+          this.toaster.error(error.error)
+        }
+      },
     })
   }
 
-  calculateSum() {
-    this.fullAmount = this.allProduct.reduce((total, product) => {
+  private calculateSum(): void {
+    this.fullAmount = this.allProduct.reduce((total: number, product: singleProduct) => {
       const productTotal = product.prize * product.quantity;
       return total + productTotal;
     }, 0);
-    this.quantity = this.allProduct.reduce((total, product) => {
+    this.quantity = this.allProduct.reduce((total: number, product: singleProduct) => {
       const quantity = +product.quantity
       return total + quantity
     }, 0)

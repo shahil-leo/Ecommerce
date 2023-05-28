@@ -9,11 +9,11 @@ export class LoadingService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   constructor() { }
 
-  showLoading() {
+  showLoading(): void {
     this.loadingSubject.next(true)
   }
 
-  hideLoading() {
+  hideLoading(): void {
     this.loadingSubject.next(false)
   }
 

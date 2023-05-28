@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
+import { loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,58 +17,75 @@ export class UserService {
   userId: any = localStorage.getItem('userId')
   num!: number
 
-  registerUser(data: any): any {
+
+  // user authentication
+  registerUser(data: registerUser): any {
     const { confirmPassword, ...others } = data
-    return this.http.post('http://localhost:4000/auth/register', others)
+    return this.http.post(`${register}`, others)
   }
-  loginUser(Data: any): any {
-    return this.http.post('http://localhost:4000/auth/login', Data)
+  loginUser(Data: loginData): any {
+    return this.http.post(`${login}`, Data)
   }
-  allCategory(): Observable<any> {
-    return this.http.get('http://localhost:4000/product/Allcategory')
+
+  // category getting
+  allCategory(): Observable<Object> {
+    return this.http.get(`${allCategory}`)
   }
-  allCategories(): Observable<any> {
-    return this.http.get('http://localhost:4000/category/every')
+  allCategories(): Observable<Object> {
+    return this.http.get(`${allCategories}`)
   }
-  findCategory(category: string | undefined) {
-    return this.http.get(`http://localhost:4000/product/findCategory/${category}`)
+  findCategory(category: string | undefined): Observable<object> {
+
+    return this.http.get(`${findCategory}/${category}`)
   }
+
+  // brand CRUD
   getAllBrand() {
-    return this.http.get('http://localhost:4000/product/findBrand')
+    return this.http.get(`${getAllBrand}`)
   }
   findBrand(brand: string) {
-    return this.http.get(`http://localhost:4000/product/findBrandProduct/${brand}`)
+    return this.http.get(`${findBrand}/${brand}`)
   }
   findSingleProduct(id: string) {
-    return this.http.get(`http://localhost:4000/product/single/${id}`)
+    return this.http.get(`${findSingleProduct}/${id}`)
   }
+
+  // products CRUD
   allProducts() {
-    return this.http.get('http://localhost:4000/product/all')
+    return this.http.get(`${allProducts}`)
   }
+
+  // cart CRUD operations
+
   addCart(item: any, userId: string, productId: string) {
-    return this.http.post(`http://localhost:4000/cart/create/${userId}/${productId}`, { item: item },)
-  }
-  addWishList(item: any, userId: string, productId: string) {
-    return this.http.post(`http://localhost:4000/wishlist/create/${userId}/${productId}`, { item: item })
-  }
-  getCart(userId: string) {
-    return this.http.get(`http://localhost:4000/cart/getCart/${userId}`)
-  }
-  getWishlist(userId: string) {
-    return this.http.get(`http://localhost:4000/wishlist/get/${userId}`)
+    return this.http.post(`${addCart}/${userId}/${productId}`, { item: item },)
   }
   deleteAllCart(userId: string) {
-    return this.http.delete(`http://localhost:4000/cart/deleteAll/${userId}`)
+    return this.http.delete(`${deleteAllCart}/${userId}`)
   }
   deleteOneCart(userId: string, productId: string) {
-    return this.http.delete(`http://localhost:4000/cart/delete/${userId}/${productId}`)
+    return this.http.delete(`${deleteOneCart}/${userId}/${productId}`)
   }
+  getCart(userId: string) {
+    return this.http.get(`${getCart}/${userId}`)
+  }
+
+  // wishlist CRUD  operations
+  addWishList(item: any, userId: string, productId: string) {
+    return this.http.post(`${addWishList}/${userId}/${productId}`, { item: item })
+  }
+  getWishlist(userId: string) {
+    return this.http.get(`${getWishlist}/${userId}`)
+  }
+
   deleteAllWishList(userId: string) {
-    return this.http.delete(`http://localhost:4000/wishlist/deleteAll/${userId}`)
+    return this.http.delete(`${deleteAllWishList}/${userId}`)
   }
   deleteOneWishList(userId: string, productId: string) {
-    return this.http.delete(`http://localhost:4000/wishlist/delete/${userId}/${productId}`)
+    return this.http.delete(`${deleteOneWishList}/${userId}/${productId}`)
   }
+
+  // decrease and increase quantity using the observables
   addQuantity() {
     this.number.subscribe((res) => {
       this.num = res
@@ -81,20 +100,26 @@ export class UserService {
       this.number.next(this.num - 1)
     }
   }
-  updatedQuantity(productId: string, userId: any, number: number) {
-    return this.http.post(`http://localhost:4000/cart/updateNumber/${userId}/${productId}`,
+
+  // updating quantity of the products in cart using the method
+
+  updatedQuantity(productId: string, userId: string, number: number) {
+    return this.http.post(`${updatedQuantity}/${userId}/${productId}`,
       { number: number })
   }
 
+  // getting one profile from the logged user using he userId
   profileOne(id: string): Observable<any> {
-    return this.http.get(`http://localhost:4000/profile/get/${id}`)
+    return this.http.get(`${profileOne}/${id}`)
   }
 
+  // payment method using the stripe method
   stripe(userId: string, productArray: any) {
-    return this.http.post(`http://localhost:4000/order/stripe/${userId}`, { productArray: productArray })
+    return this.http.post(`${stripe}/${userId}`, { productArray: productArray })
   }
 
+  // when the payment is successfully then order is processing
   addOrder(userId: string, formValue: any, productArray: any, totalAmount: any) {
-    return this.http.post(`http://localhost:4000/order/create/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
+    return this.http.post(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
   }
 }

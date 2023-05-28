@@ -9,7 +9,7 @@ import { UsersComponent } from './components/pages/users/users.component';
 
 const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: AdminComponent,
     children: [
       { path: "", redirectTo: 'Dashboard', pathMatch: 'full' },

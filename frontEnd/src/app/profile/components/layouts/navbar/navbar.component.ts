@@ -1,21 +1,19 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   acessToken: any = localStorage.getItem('accessToken')
 
   constructor(
     private userService: UserService,
-    private router: Router,
-    private toaster: ToastrService
+    private router: Router
   ) { }
 
 
@@ -24,7 +22,7 @@ export class NavbarComponent implements OnInit {
   allCart: any[] = []
   allProduct: any[] = []
   length: number = 0
-  allFeatures: any
+  allFeatures: any[] = []
   currentUser!: any
   brandsRes: [] = []
   brandsArray: string[] = []
@@ -43,11 +41,7 @@ export class NavbarComponent implements OnInit {
 
   everyCategory() {
     this.userService.allCategories().subscribe({
-      next: (res: any) => {
-        console.log(res)
-        this.allFeatures = res
-        console.log(this.allFeatures)
-      },
+      next: (res: any) => { this.allFeatures = res },
       error: (e) => { console.log(e) },
       complete: () => { }
     })
@@ -68,8 +62,7 @@ export class NavbarComponent implements OnInit {
     }
     return this.userService.getCart(this.userId).subscribe({
       next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
-      error: (e: HttpErrorResponse) => {
-      },
+      error: (e: Error) => { console.log(e) },
       complete: () => { }
     })
   }
@@ -93,6 +86,7 @@ export class NavbarComponent implements OnInit {
   }
 
   showHideCategory(show: boolean): void {
+
     this.isCategoryOpen = show;
   }
   showHideBrand(show: boolean): void {
@@ -101,6 +95,5 @@ export class NavbarComponent implements OnInit {
   showHideProfile(show: boolean): void {
     this.isProfileOpen = show
   }
-
 
 }

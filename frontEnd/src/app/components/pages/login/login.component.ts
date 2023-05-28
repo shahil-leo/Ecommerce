@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import { loginData, loginUserToken } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-login',
@@ -11,15 +14,13 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
 
 
-  // onTogglePasswordShow() {
-  //   this.passwordVisible = !this.passwordVisible
-  // }
   form!: FormGroup
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toaster: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -32,16 +33,16 @@ export class LoginComponent implements OnInit {
     return this.form.controls
   }
 
-  login(Data: any) {
+  login(Data: loginData) {
+    console.log(Data)
     this.userService.loginUser(Data).subscribe(
       {
-        next: (res: any) => {
-          console.log(res)
+        next: (res: loginUserToken) => {
           localStorage.setItem('accessToken', res.accessToken)
           localStorage.setItem('userId', res._id)
         },
-        error: (e: Error) => { console.log(e) },
-        complete: () => { this.router.navigate(['/home']) }
+        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+        complete: () => { this.toaster.success('Logged in successfully'), this.router.navigate(['/home']) }
       },
     )
   }

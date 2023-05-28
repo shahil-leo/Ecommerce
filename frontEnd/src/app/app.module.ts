@@ -24,6 +24,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { RegisterComponent } from './components/pages/register/register.component';
 import { SingleProductComponent } from './components/pages/single-product/single-product.component';
+import { ProfileModule } from './profile/profile.module';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
@@ -56,10 +57,14 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AdminModule,
+    ProfileModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
+  exports: [
+    NavbarComponent
   ],
   bootstrap: [AppComponent]
 })

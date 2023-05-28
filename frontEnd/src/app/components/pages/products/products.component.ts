@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,10 +15,11 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private Router: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private toaster: ToastrService
   ) {
     this.Router.params.subscribe({
-      next: (res) => {
+      next: (res: Params) => {
         if (res['category']) {
           this.isCategory = true
           this.category = res['category']
@@ -29,24 +32,21 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  category!: any
-  productsArray: any
+  category!: string
+  productsArray: any = []
 
 
   ngOnInit(): void {
     if (this.isCategory) {
       this.userService.findCategory(this.category).subscribe({
-        next: (res: any) => { this.productsArray = res },
-        error: (e) => { console.log(e) },
-        complete: () => { console.log('success cateogry') }
+        next: (res) => { console.log(res), this.productsArray = res },
+        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) }
       })
-
     } else {
       this.userService.findBrand(this.category).subscribe(
         {
           next: (res) => { this.productsArray = res },
-          error: (e) => { console.log(e) },
-          complete: () => { console.log('brand completed') }
+          error: (e: HttpErrorResponse) => { console.log(e.error) },
         })
     }
   }
