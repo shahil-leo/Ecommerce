@@ -12,7 +12,6 @@ export class LoadingComponent {
   isLoading!: boolean;
   constructor(private loadingServie: LoadingService) {
     loadingServie.isLoading.subscribe((isLoading) => {
-      console.log(isLoading)
       this.isLoading = isLoading
     })
   }

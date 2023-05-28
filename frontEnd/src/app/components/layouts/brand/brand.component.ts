@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import { fullBrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-brand',
@@ -10,18 +13,19 @@ export class BrandComponent {
   brandsRes: [] = []
   brandsArray: string[] = []
   uniqueBrand: string[] = []
-  constructor(private userService: UserService) {
-
+  constructor(
+    private userService: UserService,
+    private toaster: ToastrService
+  ) {
 
     this.userService.getAllBrand().subscribe({
       next: (res: any) => {
         this.brandsRes = res
-        this.brandsRes.map((element: any) => {
+        this.brandsRes.map((element: fullBrandResponse) => {
           this.brandsArray.push(element.brand)
           this.uniqueBrand = [...new Set(this.brandsArray)]
         })
-      }, error: (e) => { console.log(e) },
-      complete: () => { }
+      }, error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
 

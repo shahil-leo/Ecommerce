@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { fullBrandResponse, loginUserToken, wishlist } from 'src/app/shared/interfaces/allinterfaceApp';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -10,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavbarComponent implements OnInit {
 
-  acessToken: any = localStorage.getItem('accessToken')
+  acessToken = localStorage.getItem('accessToken') as string
 
   constructor(
     private userService: UserService,
@@ -22,8 +24,8 @@ export class NavbarComponent implements OnInit {
   accessToken: any = localStorage.getItem('accessToken')
   userId: any = localStorage.getItem('userId')
   allCart: any[] = []
-  allProduct: any[] = []
-  length: number = 0
+  allProduct: wishlist[] = []
+  length!: Subject<number>
   allFeatures: any
   currentUser!: any
   brandsRes: [] = []
@@ -34,59 +36,57 @@ export class NavbarComponent implements OnInit {
   isProfileOpen: boolean = false
 
   ngOnInit(): void {
+    this.length = this.userService.cartLength
     this.oneProfile()
     this.everyCategory()
     this.gettingCart()
     this.getAllBrand()
+
   }
-
-
-  everyCategory() {
-    this.userService.allCategories().subscribe({
+  everyCategory(): Subscription {
+    return this.userService.allCategories().subscribe({
       next: (res: any) => {
-        console.log(res)
-        this.allFeatures = res
-        console.log(this.allFeatures)
+        this.allFeatures = res;
       },
-      error: (e) => { console.log(e) },
-      complete: () => { }
-    })
+      error: (e: HttpErrorResponse) => {
+        this.toaster.error(e.error);
+      }
+    });
   }
-  oneProfile() {
+
+  oneProfile(): Subscription | string {
     if (!(this.accessToken)) {
       return 'no user is here'
     }
     return this.userService.profileOne(this.userId).subscribe({
-      next: (res) => { this.currentUser = res },
-      error: (e) => { console.log(e) },
-      complete: () => { }
+      next: (res: loginUserToken) => { this.currentUser = res },
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
-  gettingCart() {
+
+  gettingCart(): Subscription | string {
     if (!(this.accessToken)) {
       return 'no user is here'
     }
     return this.userService.getCart(this.userId).subscribe({
-      next: (res: any) => { this.allProduct = res.carts, this.length = this.allProduct.length },
-      error: (e: HttpErrorResponse) => {
-      },
-      complete: () => { }
-    })
-  }
-  getAllBrand() {
-    this.userService.getAllBrand().subscribe({
-      next: (res: any) => {
-        this.brandsRes = res
-        this.brandsRes.map((element: any) => {
-          this.brandsArray.push(element.brand)
-          this.uniqueBrand = [...new Set(this.brandsArray)]
-        })
-      }, error: (e) => { console.log(e) },
-      complete: () => { }
+      next: (res: any) => { console.log(res), this.allProduct = res.carts, this.length.next(this.allProduct.length) },
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
 
-  logout() {
+  getAllBrand(): Subscription {
+    return this.userService.getAllBrand().subscribe({
+      next: (res: any) => {
+        this.brandsRes = res
+        this.brandsRes.map((element: fullBrandResponse) => {
+          this.brandsArray.push(element.brand)
+          this.uniqueBrand = [...new Set(this.brandsArray)]
+        })
+      }, error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+    })
+  }
+
+  logout(): void {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('userId')
     this.router.navigate(['/login'])

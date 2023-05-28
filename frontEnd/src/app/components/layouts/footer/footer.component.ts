@@ -7,12 +7,11 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
-  DateCurrent?: any
+  DateCurrent?: number
 
 
   ngOnInit(): void {
     this.DateCurrent = new Date().getFullYear()
-    console.log(this.DateCurrent)
   }
 
 }

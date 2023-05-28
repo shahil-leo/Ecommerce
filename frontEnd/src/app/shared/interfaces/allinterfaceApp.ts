@@ -93,3 +93,26 @@ export interface registerConfirmUser {
   _id: string,
   _v: number
 }
+
+// brand
+export interface fullBrandResponse {
+  brand: string
+}
+//brand alll response
+export interface BrandResponse {
+  _id: string;
+  categories: string;
+  categoryImg: string;
+  __v: number;
+}
+
+// categories
+
+export interface CategoryResponse {
+  _id: string;
+  categories: string;
+  categoryImg: string;
+  __v: number;
+}
+
+

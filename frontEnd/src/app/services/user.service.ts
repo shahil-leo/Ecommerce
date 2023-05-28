@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
 import { loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
@@ -9,10 +10,13 @@ import { loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 export class UserService {
 
 
-
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private toaster: ToastrService
+  ) { }
   number: BehaviorSubject<number> = new BehaviorSubject(1)
   length: BehaviorSubject<number> = new BehaviorSubject(0)
+  cartLength: Subject<number> = new Subject()
   accessToken: any = localStorage.getItem('accessToken')
   userId: any = localStorage.getItem('userId')
   num!: number
@@ -122,4 +126,6 @@ export class UserService {
   addOrder(userId: string, formValue: any, productArray: any, totalAmount: any) {
     return this.http.post(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
   }
+
+
 }

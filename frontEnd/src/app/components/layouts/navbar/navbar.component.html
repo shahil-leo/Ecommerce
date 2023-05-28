@@ -1,6 +1,6 @@
 <section class="w-screen font-medium font-inter">
   <div
-    class="flex items-center justify-between h-24 gap-4 mx-auto max-w-[85rem] px-5"
+    class="flex items-center justify-between h-24 gap-4 mx-auto max-w-[82rem] px-5"
   >
     <div class="flex items-center gap-4 md:gap-">
       <a class="block text-teal-600" href="/">
@@ -90,8 +90,8 @@
             <a> expand_less</a>
           </span>
         </div>
-        <li><a>Arrivals</a></li>
-        <li><a>Wishlist</a></li>
+        <li class="hidden xl:block"><a>Arrivals</a></li>
+        <li class="hidden xl:block"><a>Wishlist</a></li>
       </ul>
     </div>
 
@@ -184,7 +184,7 @@
         >
           <i class="fa" style="font-size: 24px">&#xf07a;</i>
           <span class="badge badge-warning" id="lblCartCount"
-            >{{ length }}
+            >{{ length | async }}
           </span>
           <h1 class="text-base">
             <a>Cart</a>

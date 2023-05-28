@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { BrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-categories',
@@ -11,13 +12,10 @@ export class CategoriesComponent implements OnInit {
 
 
   uniqueArray: string[] = []
-  allCategory: any[] = []
+  allCategory: BrandResponse[] = []
 
   ngOnInit(): void {
-
-
     this.userService.allCategories().subscribe(
-      { next: (res: any) => { this.allCategory = res } })
-
+      { next: (res: any) => this.allCategory = res })
   }
 }
