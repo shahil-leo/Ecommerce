@@ -9,9 +9,9 @@
   <body class="bg-[#f1f3f6]">
     <div class="flex flex-col">
       <app-navbar></app-navbar>
-      <div class="flex max-w-[82.5rem] mx-auto container w-full">
-        <app-side-bar class="w-[30%]"></app-side-bar>
-        <router-outlet class="w-[70%]"></router-outlet>
+      <div class="flex max-w-[82.5rem] md:mx-auto container w-full">
+        <app-side-bar class="hidden md:block md:w-[30%]"></app-side-bar>
+        <router-outlet class="md:w-[70%]"></router-outlet>
       </div>
     </div>
   </body>

@@ -9,7 +9,7 @@
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <span class="text-4xl material-symbols-outlined"> person </span>
-          <span class="ml-3 text-2xl">Profile</span>
+          <span class="ml-3 text-2xl cursor-pointer">Profile</span>
         </a>
       </li>
       <li>
@@ -17,7 +17,11 @@
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <i class="text-3xl fa-solid fa-cart-shopping"></i>
-          <span class="ml-3 text-2xl">Orders</span>
+          <span
+            class="ml-3 text-2xl cursor-pointer"
+            routerLink="/profile/orders"
+            >Orders</span
+          >
         </a>
       </li>
       <li>
@@ -25,7 +29,11 @@
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <span class="text-4xl material-symbols-outlined"> person </span>
-          <span class="ml-3 text-2xl">WishList</span>
+          <span
+            class="ml-3 text-2xl cursor-pointer"
+            routerLink="/profile/wishlist"
+            >WishList</span
+          >
         </a>
       </li>
       <li>
@@ -33,7 +41,9 @@
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <i class="text-3xl fa-solid fa-right-from-bracket"></i>
-          <span class="ml-3 text-2xl" (click)="logout()">Logout</span>
+          <span class="ml-3 text-2xl cursor-pointer" (click)="logout()"
+            >Logout</span
+          >
         </a>
       </li>
     </ul>

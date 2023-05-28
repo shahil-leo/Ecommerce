@@ -1,28 +1,32 @@
 <section class="w-[64rem] bg-white font-inter">
-  <div class="bg-yellow-300">
-    <div
-      class="flex justify-between py-6 mt-5 bg-teal-200 border-b-2 border-black px-7"
-    >
+  <div class="">
+    <div class="flex justify-between py-6 mt-5 border-b-2 border-gray-200 px-7">
       <div>My WishList</div>
       <div>Actions</div>
     </div>
-    <div class="flex justify-between w-full border-b-2 border-black p-14">
+    <div
+      *ngFor="let item of allWishList"
+      class="flex justify-between w-full border-b-2 border-gray-200 p-14"
+    >
       <div class="w-[70%]">
         <div class="flex gap-4">
-          <img src="" class="max-w-lg" alt="sdfasdh" />
+          <img src="{{ item.image }}" class="max-w-lg" alt="sdfasdh" />
           <div class="flex flex-col">
-            <h1>Blue star</h1>
-            <p>3600Rs</p>
+            <h1>{{ item.title }}</h1>
+            <p>{{ item.prize }}</p>
           </div>
         </div>
       </div>
       <div class="w-[30%] pl-24 text-center justify-center gap-9 flex">
-        <button>
+        <button (click)="deleteOneWishList(item._id)">
           <span class="text-2xl text-red-500 material-symbols-outlined">
             delete
           </span>
         </button>
-        <button class="p-2 text-white bg-green-600 rounded-md">
+        <button
+          (click)="moveToCart(item, item._id)"
+          class="px-2 text-white bg-green-500 rounded-md"
+        >
           move to Cart
         </button>
       </div>

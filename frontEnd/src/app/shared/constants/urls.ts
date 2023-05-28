@@ -16,7 +16,7 @@ export const allProducts = BASE_URL + 'product/all'
 
 // brand
 export const getAllBrand = BASE_URL + 'product/findBrand'
-export const findBrand = BASE_URL + '/product/findBrandProduct'
+export const findBrand = BASE_URL + 'product/findBrandProduct'
 export const findSingleProduct = BASE_URL + 'product/single'
 
 // cart

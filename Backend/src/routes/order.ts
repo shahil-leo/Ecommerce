@@ -1,10 +1,10 @@
+import dotenv from 'dotenv';
+import express from 'express';
 import { ObjectId } from 'mongodb';
-import Stripe from 'stripe'
-import express from 'express'
-import { orderModel } from '../models/orderSchema'
-import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify'
-import dotenv from 'dotenv'
-import { orderInterface, productsArray } from '../interfaces/order'
+import Stripe from 'stripe';
+import { orderInterface, productsArray } from '../interfaces/order';
+import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
+import { orderModel } from '../models/orderSchema';
 dotenv.config()
 
 const router = express.Router()

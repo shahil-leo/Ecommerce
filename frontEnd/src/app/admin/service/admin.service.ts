@@ -29,7 +29,7 @@ export class AdminService {
   getAllProduct() {
     return this.http.get('http://localhost:4000/product/all')
   }
-  deleteOneProduct(productId: string,) {
+  deleteOneProduct(productId: string) {
     return this.http.delete(`http://localhost:4000/product/delete/${productId}`)
   }
   addOneProduct(formValue: any) {
