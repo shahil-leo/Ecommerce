@@ -14,7 +14,7 @@ export class ProductsComponent implements OnInit {
   category!: any
   product!: any
   editProduct: string = 'Add'
-  selectedFile?: string
+  selectedFile?: File
   editSingleProductId!: any
 
 
@@ -49,13 +49,23 @@ export class ProductsComponent implements OnInit {
 
   submit() {
     if (!(this.editProduct === 'Edit')) {
-      console.log(this.forms.value)
-      this.adminService.addOneProduct(this.forms.value).subscribe({
+      if (!(this.selectedFile)) return
+
+      const fd = new FormData()
+      const { value } = this.forms
+      for (let k in value) {
+        if (k === 'image')
+          fd.append('file', this.selectedFile, this.selectedFile.name);
+        else {
+          fd.append(k, value[k]);
+        }
+      }
+      this.adminService.addOneProduct(fd).subscribe({
         next: (res) => { console.log(res), this.everyFunction() },
         error: (e) => { console.log(e) },
         complete: () => { this.everyFunction(), console.log('Added a product') }
       })
-      this.forms.reset()
+      // this.forms.reset()
     } else {
       console.log('edit')
       console.log(this.forms.value)
@@ -68,8 +78,8 @@ export class ProductsComponent implements OnInit {
     this.isTrue = !this.isTrue
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0]
+  onFileChange(event: Event) {
+    this.selectedFile = (event.target as HTMLInputElement).files?.[0];
   }
 
   get fc() {

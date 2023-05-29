@@ -28,4 +28,7 @@ export class ProfileService {
   deleteOrder(productId: string) {
     return this.http.delete(`http://localhost:4000/order/delete/${this.userId}/${productId}`)
   }
+  getSingleUser() {
+    return this.http.get(`http://localhost:4000/user/single/${this.userId}`)
+  }
 }

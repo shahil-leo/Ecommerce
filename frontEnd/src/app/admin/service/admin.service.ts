@@ -33,7 +33,7 @@ export class AdminService {
     return this.http.delete(`http://localhost:4000/product/delete/${productId}`)
   }
   addOneProduct(formValue: any) {
-    return this.http.post(`http://localhost:4000/product/create`, { formValue })
+    return this.http.post(`http://localhost:4000/product/create`, formValue)
   }
   addOneCategory(CategoryData: any) {
     return this.http.post('http://localhost:4000/category/add', { CategoryData },)

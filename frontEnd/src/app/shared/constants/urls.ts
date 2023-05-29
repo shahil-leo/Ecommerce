@@ -37,6 +37,10 @@ export const updatedQuantity = BASE_URL + 'cart/updateNumber'
 // profile getting using userId
 export const profileOne = BASE_URL + 'profile/get'
 
+// forgot password
+export const forgotPass = BASE_URL + 'auth/forgot'
+export const checkCode = BASE_URL + 'auth/check'
+
 // payment method
 export const stripe = BASE_URL + 'order/stripe'
 export const addOrder = BASE_URL + 'order/create'

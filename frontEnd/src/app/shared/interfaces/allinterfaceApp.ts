@@ -60,6 +60,10 @@ export interface loginData {
   email: string,
   password: string
 }
+export interface forgotData {
+  email: string,
+  code: string
+}
 export interface loginUserToken {
   accessToken: string,
   createdAt: string,

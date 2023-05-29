@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
-import { loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
+import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
+import { cartFullResponse, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
 })
@@ -71,7 +71,7 @@ export class UserService {
     return this.http.delete(`${deleteOneCart}/${userId}/${productId}`)
   }
   getCart(userId: string) {
-    return this.http.get(`${getCart}/${userId}`)
+    return this.http.get<cartFullResponse>(`${getCart}/${userId}`)
   }
 
   // wishlist CRUD  operations
@@ -125,6 +125,12 @@ export class UserService {
   // when the payment is successfully then order is processing
   addOrder(userId: string, formValue: any, productArray: any, totalAmount: any) {
     return this.http.post(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
+  }
+  forgotPass(email: string) {
+    return this.http.post(`${forgotPass}`, { email })
+  }
+  checkCode(email: string, code: string) {
+    return this.http.post(`${checkCode}`, { email, code })
   }
 
 

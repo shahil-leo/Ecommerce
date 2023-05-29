@@ -27,6 +27,7 @@ import { SingleProductComponent } from './components/pages/single-product/single
 import { ProfileModule } from './profile/profile.module';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { ForgotComponent } from './components/pages/forgot/forgot.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     AllProductsComponent,
     CartsComponent,
     AddressComponent,
+    ForgotComponent,
   ],
   imports: [
     BrowserModule,

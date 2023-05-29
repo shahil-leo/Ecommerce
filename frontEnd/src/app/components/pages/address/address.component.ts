@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCart(this.userId).subscribe({
-      next: (res: any) => { this.productArray = res.carts, this.calculateSum() },
+      next: (res) => { console.log(res), this.productArray = res.carts, this.calculateSum() },
       error: (error: HttpErrorResponse) => { this.toaster.error(error.error) },
     })
   }

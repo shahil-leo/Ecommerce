@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddressComponent } from './components/pages/address/address.component';
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 import { CartsComponent } from './components/pages/carts/carts.component';
+import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { ProductsComponent } from './components/pages/products/products.component';
@@ -21,7 +22,9 @@ const routes: Routes = [
   { path: 'allProducts', component: AllProductsComponent },
   { path: 'carts', component: CartsComponent },
   { path: 'address', component: AddressComponent },
+  { path: 'forgot', component: ForgotComponent },
   { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) }
+
 ];
 
 @NgModule({

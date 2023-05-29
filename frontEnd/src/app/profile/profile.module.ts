@@ -7,6 +7,7 @@ import { WishlistComponent } from './components/pages/wishlist/wishlist.componen
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
+import { SingleProfileComponent } from './components/pages/single-profile/single-profile.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { OrdersComponent } from './components/pages/orders/orders.component';
     SideBarComponent,
     NavbarComponent,
     OrdersComponent,
+    SingleProfileComponent,
   ],
   imports: [
     ProfileRoutingModule,
