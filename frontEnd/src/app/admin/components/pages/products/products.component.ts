@@ -65,7 +65,7 @@ export class ProductsComponent implements OnInit {
         error: (e) => { console.log(e) },
         complete: () => { this.everyFunction(), console.log('Added a product') }
       })
-      // this.forms.reset()
+      this.forms.reset()
     } else {
       console.log('edit')
       console.log(this.forms.value)

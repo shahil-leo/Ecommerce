@@ -7,7 +7,8 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { LoadingService } from '../../services/loading.service';
+import { LoadingService } from 'src/app/services/loading.service';
+
 let pendingRequest = 0
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
