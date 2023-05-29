@@ -1,33 +1,41 @@
 import express from 'express';
+import { cloud } from '../configs/cloudinary.config';
 import { productInterface } from '../interfaces/product';
+import upload from '../middlewares/multer';
 import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
 import { productModel } from '../models/productSchema';
 const router = express.Router();
 
-router.post('/create', verifyTokenAndAdmin, async (req, res) => {
-    const {
-        title,
-        description,
-        image,
-        categories,
-        size,
-        color,
-        price,
-        brand,
-    } = req.body.formValue
-    const productData = new productModel<productInterface>({
-        title,
-        description,
-        image,
-        categories: categories as string[],
-        size,
-        color,
-        prize: price,
-        brand,
-        quantity: 1
-    })
+
+
+
+router.post('/create', upload.single('file'), verifyTokenAndAdmin, async (req, res) => {
+
+    const { file, body } = req
+    if (!(req.file)) throw 'no file found'
     try {
+        const imageCloud = await cloud.uploader.upload(req.file?.path)
+        const {
+            title,
+            description,
+            categories,
+            size,
+            color,
+            price,
+            brand,
+        } = body
+        const productData = new productModel<productInterface>({
+            title,
+            description,
+            image: imageCloud.secure_url,
+            categories: categories as string[],
+            size,
+            color,
+            prize: price,
+            brand,
+            quantity: 1
+        })
         const savedProduct = await productData.save()
         if (!savedProduct) return res.status(500).json('Products not saved to cart')
         return res.status(200).send(savedProduct)
@@ -123,7 +131,7 @@ router.get('/findBrandProduct/:brand', async (req, res) => {
         if (!findBrand) return res.status(500).json('no brand product found')
         return res.status(200).json(findBrand)
     } catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 })
 

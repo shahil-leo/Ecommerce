@@ -1,7 +1,7 @@
-import express from 'express'
-const router = express.Router()
-import { UserModel } from '../models/userSchema';
+import express from 'express';
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
+import { UserModel } from '../models/userSchema';
+const router = express.Router()
 
 router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
     const { error } = req.body
@@ -47,6 +47,16 @@ router.get('/allUser', verifyTokenAndAdmin, async (req, res) => {
         const allUser = await UserModel.find()
         if (!allUser) return res.status(500).json('there are no users ')
         res.status(200).json(allUser)
+    } catch (error) {
+        res.status(200).json(error)
+    }
+})
+// get single user
+router.get('/single/:id', verifyTokenAndAuthorization, async (req, res) => {
+    try {
+        const singleUser = await UserModel.findById(req.params.id)
+        if (!singleUser) return res.status(500).json('there is no user sorry')
+        res.status(200).json(singleUser)
     } catch (error) {
         res.status(200).json(error)
     }

@@ -66,7 +66,7 @@ router.post('/forgot', async (req, res) => {
     const emailId = req.body.email
     try {
         const user: User | any = await UserModel.findOne({ email: emailId })
-        if (!user) return res.status(500).json('not user found')
+        if (!user) return res.status(500).json('no user found with this email id')
         // code generation for unique user
         code = generateCode()
         const transport = nodemailer.createTransport({
@@ -108,13 +108,11 @@ router.post('/forgot', async (req, res) => {
 })
 // check the user recovery code from the DB and the code saved locally if the 2 is same then we are updating the user
 router.post('/check', async (req, res) => {
-    const { email, codes } = req.body
-    const emailId = email
-    const code = codes
-    const user: any = await UserModel.findOne<recoveryUser>({ email: emailId })
+    const { email, code } = req.body
+    const user: any = await UserModel.findOne<recoveryUser>({ email: email })
     if (!user) return res.status(500).json('not user found')
     if (code === user.recoveryCode) {
-        return res.status(200).json('yeah i got you')
+        return res.status(200).json(user)
     } else {
         return res.status(500).json('you are not that user')
     }
