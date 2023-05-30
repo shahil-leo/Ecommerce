@@ -101,7 +101,9 @@ export class CartsComponent implements OnInit {
   }
 
   checkout() {
-    this.router.navigate(['/address'])
+    if (this.fullAmount > 100) {
+      this.router.navigate(['/address'])
+    }
   }
 
 }

@@ -260,12 +260,14 @@
 
                     <div class="col-span-6">
                       <button
+                        [disabled]="forms.invalid"
                         *ngIf="editProduct === 'Add'"
                         class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
                       >
                         Create new Product
                       </button>
                       <button
+                        [disabled]="forms.invalid"
                         *ngIf="editProduct === 'Edit'"
                         class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
                       >
