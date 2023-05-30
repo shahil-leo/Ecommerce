@@ -35,7 +35,9 @@ export class ProductsComponent implements OnInit {
   }
 
   storeSelectedProducts(e: any) {
-    this.categoryArray
+    if (this.editProduct === 'Edit') {
+      this.categoryArray = []
+    }
     if (e.target.checked) {
       this.categoryArray.push(e.target.value)
     } else {
@@ -45,7 +47,6 @@ export class ProductsComponent implements OnInit {
           return
         }
       })
-      console.log(this.categoryArray)
 
     }
   }
@@ -55,7 +56,6 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(productId: string) {
-    console.log(productId)
     this.adminService.deleteOneProduct(productId,).subscribe({
       next: (res) => { console.log(res) },
       error: (e) => { console.log(e) },
@@ -66,6 +66,7 @@ export class ProductsComponent implements OnInit {
   submit() {
     if (!(this.editProduct === 'Edit')) {
       if (!(this.selectedFile && this.categoryArray)) return
+      this.editProduct = 'Add'
       const fd = new FormData()
       const { value } = this.forms
       for (let k in value) {
@@ -112,6 +113,7 @@ export class ProductsComponent implements OnInit {
 
   open() {
     this.isTrue = !this.isTrue
+    this.editProduct = 'Add'
   }
 
   onFileChange(event: Event) {
@@ -139,7 +141,7 @@ export class ProductsComponent implements OnInit {
 
   editProducts(id: string) {
     this.editProduct = 'Edit'
-    this.isTrue = !this.isTrue
+    this.isTrue = true
     this.editSingleProductId = id
     this.adminService.getOneProductEdit(id).subscribe({
       next: (res: any) => {

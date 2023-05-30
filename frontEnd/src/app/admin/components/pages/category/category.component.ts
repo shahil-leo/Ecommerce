@@ -12,9 +12,9 @@ export class CategoryComponent implements OnInit {
   forms!: FormGroup
   isTrue: boolean = false
   allCategory!: any
-  Edit!: string
   singleCategory!: any
   productId!: string
+  selectedImgCategory?: File
 
   constructor(
     private fb: FormBuilder,
@@ -34,28 +34,29 @@ export class CategoryComponent implements OnInit {
     this.isTrue = !this.isTrue
   }
 
-
   get fc() {
     return this.forms.controls
   }
-  submit() {
-    if (!this.Edit) {
-      console.log(this.forms.value)
-      this.adminService.addOneCategory(this.forms.value).subscribe({
-        next: (res) => { console.log(res), this.everyFunction() },
-        error: (e) => { console.log(e) },
-        complete: () => { console.log('submited the form') }
-      })
-      this.forms.reset()
-    } else {
-      this.adminService.updateOneCategory(this.productId, this.forms.value).subscribe({
-        next: (res) => { console.log(res) },
-        error: (e) => { console.log(e) },
-        complete: () => { this.everyFunction(), console.log('updated the  Product') }
-      })
-    }
 
+  onChangeImage(e: any) {
+    this.selectedImgCategory = (e.target as HTMLInputElement).files?.[0];
   }
+
+  submit() {
+
+    const fd = new FormData()
+
+    fd.append('category', this.fc['category'].value)
+    fd.append('file', this.selectedImgCategory as File, this.selectedImgCategory?.name)
+
+    this.adminService.addOneCategory(fd).subscribe({
+      next: (res) => { console.log(res) },
+      error: (e) => { console.log(e) },
+      complete: () => { this.everyFunction(), console.log('submited the form') }
+    })
+    this.forms.reset()
+  }
+
   everyFunction() {
     this.adminService.getAllCategory().subscribe({
       next: (res) => { this.allCategory = res },
@@ -63,6 +64,7 @@ export class CategoryComponent implements OnInit {
       complete: () => { console.log('getting every category') }
     })
   }
+
   deleteOne(productId: string) {
     this.adminService.deleteOneCategory(productId).subscribe({
       next: (res) => { console.log(res) },
@@ -70,17 +72,6 @@ export class CategoryComponent implements OnInit {
       complete: () => { this.everyFunction(), console.log('deleted the Product') }
     })
   }
-  edit(productId: string) {
-    this.Edit = 'Edit'
-    this.productId = productId
-    this.isTrue = !this.isTrue
-    this.adminService.getOneCategory(productId).subscribe({
-      next: (res: any) => {
-        this.fc['category'].setValue(res.categories)
-      },
-      error: (e) => { console.log(e) },
-      complete: () => { this.everyFunction() }
-    })
-  }
+
 
 }

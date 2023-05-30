@@ -49,6 +49,19 @@ export class SingleProductComponent implements OnInit {
       }
     })
   }
+
+  wishList(item: any, id: string) {
+    return this.userService.addWishList(item, this.userId, id).subscribe({
+      error: (e: HttpErrorResponse) => {
+        console.log(e)
+      },
+      complete: () => {
+        console.log('completed')
+      }
+    })
+
+  }
+
   add(): void {
     this.userService.addQuantity()
   }

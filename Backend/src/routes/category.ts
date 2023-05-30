@@ -1,15 +1,18 @@
 import { Router } from "express";
+import { cloud } from "../configs/cloudinary.config";
 import { categoryInterface } from "../interfaces/product";
+import upload from "../middlewares/multer";
 import { verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
 const router = Router()
 
-router.post('/add', verifyTokenAndAdmin, async (req, res) => {
-    const { category, categoryImg } = req.body.CategoryData
+router.post('/add', upload.single('file'), verifyTokenAndAdmin, async (req, res) => {
+
     try {
+        const imageCloud = await cloud.uploader.upload(req.file?.path as string)
         const newCategory = new categoryModel<categoryInterface>({
-            categories: category as string,
-            categoryImg: categoryImg as string,
+            categories: req.body.category,
+            categoryImg: imageCloud.secure_url,
         })
         const newerCategory = await newCategory.save()
         if (!newerCategory) return res.status(500).json('category not added')

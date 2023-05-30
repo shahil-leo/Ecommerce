@@ -5,29 +5,19 @@
       <div>Actions</div>
     </div>
     <div class="flex justify-between w-full border-b-2 border-gray-200 p-14">
-      <div class="w-[70%]">
+      <div class="w-[100%]">
         <div class="flex gap-4">
           <div class="flex flex-row gap-20">
             <div class="flex flex-col gap-3">
-              <p>firstName: {{ singleUser.firstName }}</p>
-              <p>lastName: {{ singleUser.lastName }}</p>
+              <p class="text-2xl">firstName: {{ singleUser.firstName }}</p>
+              <p class="text-2xl">lastName: {{ singleUser.lastName }}</p>
             </div>
             <div class="flex flex-col gap-3">
-              <p>email: {{ singleUser.email }}</p>
-              <p>isAdmin: {{ singleUser.isAdmin }}</p>
-              <!-- <h1>size: {{ singleUser. | json }}</h1>
-              <p>quantity: {{ item.brand }}</p> -->
+              <p class="text-2xl">email: {{ singleUser.email }}</p>
+              <p class="text-2xl">isAdmin: {{ singleUser.isAdmin }}</p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-[30%] pl-24 text-center justify-center gap-9 flex">
-        <!-- <button (click)="deleteOrder(item._id)"> -->
-        <span class="text-2xl text-red-500 material-symbols-outlined">
-          delete
-        </span>
-        <!-- </button> -->
-        <p></p>
       </div>
     </div>
   </div>

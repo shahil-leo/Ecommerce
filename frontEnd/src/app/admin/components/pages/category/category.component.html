@@ -68,6 +68,7 @@
                       <input
                         type="file"
                         id="image"
+                        (change)="onChangeImage($event)"
                         class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
                         formControlName="categoryImg"
                       />
@@ -166,11 +167,6 @@
                     <button class="p-3" (click)="deleteOne(item._id)">
                       <span class="text-red-600 material-symbols-outlined">
                         delete
-                      </span>
-                    </button>
-                    <button class="p-3" (click)="edit(item._id)">
-                      <span class="text-green-600 material-symbols-outlined">
-                        edit
                       </span>
                     </button>
                   </tr>

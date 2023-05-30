@@ -4,48 +4,36 @@
 >
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
     <ul class="space-y-10 font-medium">
-      <li>
+      <li routerLink="/profile">
         <a
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <span class="text-4xl material-symbols-outlined"> person </span>
-          <span class="ml-3 text-2xl cursor-pointer" routerLink="/profile"
-            >Profile</span
-          >
+          <span class="ml-3 text-2xl cursor-pointer">Profile</span>
         </a>
       </li>
-      <li>
+      <li routerLink="/profile/orders">
         <a
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <i class="text-3xl fa-solid fa-cart-shopping"></i>
-          <span
-            class="ml-3 text-2xl cursor-pointer"
-            routerLink="/profile/orders"
-            >Orders</span
-          >
+          <span class="ml-3 text-2xl cursor-pointer">Orders</span>
         </a>
       </li>
-      <li>
+      <li routerLink="/profile/wishlist">
         <a
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <span class="text-4xl material-symbols-outlined"> person </span>
-          <span
-            class="ml-3 text-2xl cursor-pointer"
-            routerLink="/profile/wishlist"
-            >WishList</span
-          >
+          <span class="ml-3 text-2xl cursor-pointer">WishList</span>
         </a>
       </li>
-      <li>
+      <li (click)="logout()">
         <a
           class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
         >
           <i class="text-3xl fa-solid fa-right-from-bracket"></i>
-          <span class="ml-3 text-2xl cursor-pointer" (click)="logout()"
-            >Logout</span
-          >
+          <span class="ml-3 text-2xl cursor-pointer">Logout</span>
         </a>
       </li>
     </ul>
