@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminModule } from './admin/admin.module';
@@ -19,6 +18,7 @@ import { SmCategoryComponent } from './components/layouts/sm-category/sm-categor
 import { AddressComponent } from './components/pages/address/address.component';
 import { AllProductsComponent } from './components/pages/all-products/all-products.component';
 import { CartsComponent } from './components/pages/carts/carts.component';
+import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { ProductsComponent } from './components/pages/products/products.component';
@@ -27,7 +27,6 @@ import { SingleProductComponent } from './components/pages/single-product/single
 import { ProfileModule } from './profile/profile.module';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
-import { ForgotComponent } from './components/pages/forgot/forgot.component';
 
 @NgModule({
   declarations: [

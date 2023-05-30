@@ -1,42 +1,34 @@
 import {
   HttpEvent,
-  HttpEventType,
   HttpHandler,
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 let pendingRequest = 0
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
+  private excludedRoutes = ['/cart']; // Add the route you want to exclude here
 
   constructor(private loadingService: LoadingService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.loadingService.showLoading();
-    pendingRequest = pendingRequest + 1;
+    const shouldExclude = this.excludedRoutes.some(route => request.url.includes(route));
+
+    if (!shouldExclude) {
+      this.loadingService.showLoading();
+    }
 
     return next.handle(request).pipe(
-      tap({
-        next: (event) => {
-          if (event.type === HttpEventType.Response) {
-            this.handleHideLoading();
-          }
-        },
-        error: () => {
-          this.loadingService.hideLoading()
+      finalize(() => {
+        if (!shouldExclude) {
+          this.loadingService.hideLoading();
         }
       })
     );
   }
-
-  handleHideLoading() {
-    pendingRequest = pendingRequest - 1;
-    if (pendingRequest === 0) {
-      this.loadingService.hideLoading();
-    }
-  }
 }
+
