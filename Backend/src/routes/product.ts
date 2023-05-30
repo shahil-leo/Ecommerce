@@ -18,17 +18,20 @@ router.post('/create', upload.single('file'), verifyTokenAndAdmin, async (req, r
         const {
             title,
             description,
-            categories,
+            category,
             size,
             color,
             price,
             brand,
         } = body
+        console.log(req.body)
+        console.log(req.file);
+
         const productData = new productModel<productInterface>({
             title,
             description,
             image: imageCloud.secure_url,
-            categories: categories as string[],
+            categories: category as string[],
             size,
             color,
             prize: price,
@@ -43,13 +46,34 @@ router.post('/create', upload.single('file'), verifyTokenAndAdmin, async (req, r
     }
 })
 
-router.put('/update/:productId', verifyTokenAndAdmin, async (req, res) => {
-    const { productId } = req.params
-    const { formData } = req.body
+router.put('/update/:productId', upload.single('file'), verifyTokenAndAdmin, async (req, res) => {
+
     try {
-        const updatedProduct = await productModel.findByIdAndUpdate(productId,
+        const {
+            title,
+            description,
+            category,
+            size,
+            color,
+            price,
+            brand,
+        } = req.body
+
+        const imageCloud = await cloud.uploader.upload(req.file?.path as string)
+
+        const updatedProduct = await productModel.findByIdAndUpdate(req.params.productId,
             {
-                $set: formData
+                $set: {
+                    title,
+                    description,
+                    image: imageCloud.secure_url,
+                    categories: category as string[],
+                    size,
+                    color,
+                    prize: price,
+                    brand,
+                    quantity: 1
+                }
             }, { new: true })
         if (!updatedProduct) return res.status(500).json('server problem updating data ')
         return res.status(200).send(updatedProduct)

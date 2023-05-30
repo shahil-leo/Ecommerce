@@ -119,12 +119,20 @@
                         <legend>Category:</legend>
                         <div class="flex flex-row flex-wrap gap-5">
                           <div *ngFor="let item of category">
-                            <input
-                              formControlName="category"
-                              type="checkbox"
-                              id="category"
-                              name="category"
-                            />
+                            <label
+                              for="{{ item.categories }}"
+                              class="ml-1"
+                              for="category"
+                            >
+                              <input
+                                formControlName="category"
+                                (change)="storeSelectedProducts($event)"
+                                type="checkbox"
+                                id="{{ item.categories }}"
+                                [value]="item.categories"
+                              />
+                              {{ item.categories }}
+                            </label>
                             <div
                               class="mt-2"
                               *ngIf="
@@ -138,9 +146,6 @@
                                 image is required
                               </p>
                             </div>
-                            <label class="ml-1" for="category">{{
-                              item.categories
-                            }}</label>
                           </div>
                         </div>
                       </fieldset>
@@ -255,10 +260,16 @@
 
                     <div class="col-span-6">
                       <button
-                        [disabled]="forms.invalid"
+                        *ngIf="editProduct === 'Add'"
                         class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
                       >
                         Create new Product
+                      </button>
+                      <button
+                        *ngIf="editProduct === 'Edit'"
+                        class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
+                      >
+                        Edit product
                       </button>
                     </div>
                   </form>

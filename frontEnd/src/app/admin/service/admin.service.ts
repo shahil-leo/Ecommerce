@@ -63,6 +63,6 @@ export class AdminService {
     return this.http.get(`http://localhost:4000/product/singleProduct/${id}`)
   }
   updateOneProduct(id: string, formData: any) {
-    return this.http.put(`http://localhost:4000/product/update/${id}`, { formData })
+    return this.http.put(`http://localhost:4000/product/update/${id}`, formData)
   }
 }

@@ -16,7 +16,7 @@ export class ProductsComponent implements OnInit {
   editProduct: string = 'Add'
   selectedFile?: File
   editSingleProductId!: any
-
+  categoryArray: any[] = []
 
   constructor(
     private fb: FormBuilder,
@@ -30,8 +30,24 @@ export class ProductsComponent implements OnInit {
       color: ['', Validators.required],
       price: ['', Validators.required],
       brand: ['', Validators.required],
-      category: [false, Validators.required]
+      category: []
     })
+  }
+
+  storeSelectedProducts(e: any) {
+    this.categoryArray
+    if (e.target.checked) {
+      this.categoryArray.push(e.target.value)
+    } else {
+      this.categoryArray.forEach((item: any, i) => {
+        if (item == e.target.value) {
+          this.categoryArray.splice(i, 1)
+          return
+        }
+      })
+      console.log(this.categoryArray)
+
+    }
   }
 
   ngOnInit(): void {
@@ -49,28 +65,48 @@ export class ProductsComponent implements OnInit {
 
   submit() {
     if (!(this.editProduct === 'Edit')) {
-      if (!(this.selectedFile)) return
-
+      if (!(this.selectedFile && this.categoryArray)) return
       const fd = new FormData()
       const { value } = this.forms
       for (let k in value) {
         if (k === 'image')
           fd.append('file', this.selectedFile, this.selectedFile.name);
-        else {
+        else if (k === 'category') {
+          this.categoryArray.forEach(element => {
+
+            fd.append('category', element)
+          });
+        } else {
           fd.append(k, value[k]);
         }
       }
       this.adminService.addOneProduct(fd).subscribe({
         next: (res) => { console.log(res), this.everyFunction() },
         error: (e) => { console.log(e) },
-        complete: () => { this.everyFunction(), console.log('Added a product') }
+        complete: () => { this.everyFunction(), this.forms.reset() }
       })
       this.forms.reset()
     } else {
-      console.log('edit')
-      console.log(this.forms.value)
-      console.log(this.editSingleProductId)
-      this.adminService.updateOneProduct(this.editSingleProductId, this.forms.value).subscribe({ next: (res) => { console.log(res) }, error: (e) => { console.log(e) }, complete: () => { this.everyFunction() } })
+      const fd = new FormData()
+
+      const { value } = this.forms
+      for (let k in value) {
+        if (k === 'image')
+          fd.append('file', this.selectedFile as File, this.selectedFile?.name);
+        else if (k === 'category') {
+          this.categoryArray.forEach(element => {
+            console.log(element)
+            fd.append('category', element)
+          });
+        } else {
+          fd.append(k, value[k]);
+        }
+      }
+      this.adminService.updateOneProduct(this.editSingleProductId, fd).subscribe({
+        next: (res) => { console.log(res) },
+        error: (e) => { console.log(e) },
+        complete: () => { this.everyFunction(), this.forms.reset() }
+      })
     }
   }
 
@@ -88,16 +124,18 @@ export class ProductsComponent implements OnInit {
 
   everyFunction() {
     this.adminService.getAllCategory().subscribe({
-      next: (res) => { this.category = res },
+      next: (res) => { this.category = res, console.log(res) },
       error: (e) => { console.log(e) },
       complete: () => { console.log('completed the category') }
     })
     this.adminService.getAllProduct().subscribe({
-      next: (res) => { this.product = res, console.log(this.product) },
+      next: (res) => { this.product = res },
       error: (e) => { console.log(e) },
       complete: () => { console.log('completed the all product') }
     })
   }
+
+
 
   editProducts(id: string) {
     this.editProduct = 'Edit'
@@ -105,7 +143,8 @@ export class ProductsComponent implements OnInit {
     this.editSingleProductId = id
     this.adminService.getOneProductEdit(id).subscribe({
       next: (res: any) => {
-        const { title, description, size, color, prize, brand, image } = res
+        const { title, description, size, color, prize, brand, categories } = res
+
         this.fc['title'].setValue(title)
         this.fc['description'].setValue(description)
         this.fc['size'].setValue(size)
