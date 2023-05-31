@@ -94,6 +94,20 @@ router.delete('/delete/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
+router.delete('/deleteSingle/:id/:orderId', verifyTokenAndAuthorization, async (req, res) => {
+    const { id, orderId } = req.params
+    try {
+        const result = await orderModel.updateOne(
+            { userId: id },
+            { $pull: { products: { _id: new ObjectId(orderId) } } })
+        if (!result) return res.status(500).json('not delete order')
+        return res.status(200).json(result)
+    } catch (e) {
+        return res.status(500).json(e)
+    }
+
+})
+
 router.get('/user/:id', verifyTokenAndAuthorization, async (req, res) => {
     const { id } = req.params
     try {

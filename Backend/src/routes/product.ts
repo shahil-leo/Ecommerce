@@ -92,6 +92,8 @@ router.delete('/delete/:productId', verifyTokenAndAdmin, async (req, res) => {
         return res.status(500).json(error)
     }
 })
+
+
 router.get('/all', async (req, res) => {
     try {
         const allProducts = await productModel.find();

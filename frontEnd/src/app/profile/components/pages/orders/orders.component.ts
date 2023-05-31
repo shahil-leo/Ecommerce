@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { concat, of } from 'rxjs';
 import { ProfileService } from 'src/app/profile/service/profile.service';
@@ -38,6 +39,10 @@ export class OrdersComponent {
 
   deleteOrder(productId: string) {
     console.log(productId)
-    this.profileService.deleteOrder(productId).subscribe(console.log)
+    this.profileService.deleteOrder(productId).subscribe({
+      next: (res) => { console.log(res) },
+      error: (e: HttpErrorResponse) => { console.log(e.error) },
+      complete: () => { this.getAllCart }
+    })
   }
 }

@@ -65,4 +65,8 @@ export class AdminService {
   updateOneProduct(id: string, formData: any) {
     return this.http.put(`http://localhost:4000/product/update/${id}`, formData)
   }
+  deleteOneOrder(userId: string, productId: string) {
+    return this.http.delete(`http://localhost:4000/order/delete/${userId}/${productId}`)
+  }
+
 }

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/admin/service/admin.service';
 
@@ -17,20 +18,16 @@ export class OrdersComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.adminService.getAllOrder().subscribe({
-      next: (res) => { this.ordersArray = res },
-      error: (e) => { console.log(e) },
-      complete: () => { console.log('got all the product'), console.log(this.ordersArray) }
-    })
+    this.everyFunction()
   }
 
 
-  deleteProduct(productId: string) {
-    console.log(productId)
-    this.adminService.deleteOneProduct(productId).subscribe({
+  deleteOrder(productId: string) {
+    const userId = localStorage.getItem('userId') as string
+    this.adminService.deleteOneOrder(userId, productId).subscribe({
       next: (res) => { console.log(res) },
-      error: (e) => { console.log(e) },
-      complete: () => { console.log('deleted the Product') }
+      error: (e: HttpErrorResponse) => { console.log(e.error) },
+      complete: () => { this.everyFunction() }
     })
   }
 
@@ -42,4 +39,12 @@ export class OrdersComponent implements OnInit {
       complete: () => { console.log(this.singleOrder) }
     })
   }
+  everyFunction() {
+    this.adminService.getAllOrder().subscribe({
+      next: (res) => { this.ordersArray = res },
+      error: (e) => { console.log(e) },
+      complete: () => { console.log('got all the product'), console.log(this.ordersArray) }
+    })
+  }
+
 }
