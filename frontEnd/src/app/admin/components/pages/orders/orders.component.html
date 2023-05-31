@@ -79,6 +79,11 @@
                     <th
                       class="px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                     >
+                      Status
+                    </th>
+                    <th
+                      class="px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                    >
                       actions
                     </th>
                   </tr>
@@ -166,9 +171,29 @@
                         item.amount
                       }}</span>
                     </td>
+                    <td
+                      class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent"
+                    >
+                      <div
+                        class="w-4 h-4 mt-1 ml-1 rounded-full"
+                        [ngClass]="{
+                          'bg-green-500': item.status === 'success',
+                          'bg-red-500': item.status === 'pending'
+                        }"
+                      ></div>
+
+                      <span class="text-xs font-semibold leading-tight">{{
+                        item.status
+                      }}</span>
+                    </td>
                     <button class="p-3" (click)="deleteOrder(item._id)">
                       <span class="text-red-600 material-symbols-outlined">
                         delete
+                      </span>
+                    </button>
+                    <button class="p-3" (click)="updatingStatus(item._id)">
+                      <span class="text-green-600 material-symbols-outlined">
+                        edit
                       </span>
                     </button>
                   </tr>

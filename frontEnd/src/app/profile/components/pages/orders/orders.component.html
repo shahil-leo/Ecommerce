@@ -26,6 +26,16 @@
               <p>price: {{ item.prize }}</p>
               <h1>size: {{ item.size | json }}</h1>
               <p>quantity: {{ item.brand }}</p>
+              <div class="flex">
+                <p>{{ status }} :</p>
+                <div
+                  class="w-4 h-4 mt-1 ml-1 rounded-full"
+                  [ngClass]="{
+                    'bg-green-500': status === 'success',
+                    'bg-red-500': status === 'pending'
+                  }"
+                ></div>
+              </div>
             </div>
           </div>
         </div>

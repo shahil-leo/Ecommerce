@@ -68,5 +68,9 @@ export class AdminService {
   deleteOneOrder(userId: string, productId: string) {
     return this.http.delete(`http://localhost:4000/order/delete/${userId}/${productId}`)
   }
+  updateStatus(userId: string, orderId: string) {
+    const data = 'success'
+    return this.http.put(`http://localhost:4000/order/update/${userId}/${orderId}`, { data })
+  }
 
 }

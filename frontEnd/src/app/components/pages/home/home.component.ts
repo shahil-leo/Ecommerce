@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit {
   selling?: string
 
   ngOnInit(): void {
-    this.offer = "Today"
-    this.weekly = "Best Deals"
-    this.new = "Weekly"
-    this.selling = "shahil"
+    this.offer = "Zauj"
+    this.weekly = "Today"
+    this.new = "weekly"
+    this.selling = "Best"
   }
 
 }

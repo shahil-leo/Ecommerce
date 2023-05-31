@@ -12,6 +12,7 @@ export class OrdersComponent {
 
   allOrderList: any = []
   newArray: any = []
+  status?: string
 
   constructor(private profileService: ProfileService) { }
 
@@ -23,10 +24,10 @@ export class OrdersComponent {
     this.profileService.getEveryOrder().subscribe({
       next: (res: any) => {
         this.allOrderList = res;
-
         const allProducts$: any[] = [];
 
         this.allOrderList.forEach((order: any) => {
+          this.status = order.status
           const products$ = order.orders[0].products.map((product: any) => of(product));
           allProducts$.push(...products$);
         });

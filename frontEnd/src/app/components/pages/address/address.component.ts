@@ -69,6 +69,7 @@ export class AddressComponent implements OnInit {
         stripe?.redirectToCheckout({
           sessionId: res?.id
         })
+        console.log(res.status === 'payed')
         if (res) {
           this.userService.addOrder(this.userId, this.forms.value, this.productArray, this.totalAmount).subscribe({ error: (e: HttpErrorResponse) => { this.toaster.error(e.error) } })
         }

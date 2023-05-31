@@ -46,5 +46,10 @@ export class OrdersComponent implements OnInit {
       complete: () => { console.log('got all the product'), console.log(this.ordersArray) }
     })
   }
+  updatingStatus(orderId: string) {
+    const userId = localStorage.getItem('userId') as string
+    console.log(orderId)
+    this.adminService.updateStatus(userId, orderId).subscribe({ complete: () => { this.everyFunction() } })
+  }
 
 }

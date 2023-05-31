@@ -56,7 +56,18 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      closeButton: true,
+      newestOnTop: false,
+      progressAnimation: 'decreasing',
+      progressBar: true,
+      easeTime: 1000,
+      easing: 'ease-in',
+      tapToDismiss: true,
+    }
+    ),
     AdminModule,
     ProfileModule
   ],
