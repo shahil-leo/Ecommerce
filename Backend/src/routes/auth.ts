@@ -81,7 +81,7 @@ router.post('/forgot', async (req, res) => {
             to: `${emailId}`,
             subject: 'Verify your email',
             text: 'Please verify your email address ',
-            html: `<p>Your verification code is ${code}</a>`
+            html: `<p>Your verification code is ${code} do not share with anyone </a>`
         }
         transport.sendMail(message, (error: any, info: any) => {
             if (error) {

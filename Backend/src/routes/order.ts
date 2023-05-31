@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import { ObjectId } from 'mongodb';
+import nodemailer from 'nodemailer';
 import Stripe from 'stripe';
 import { orderInterface, productsArray } from '../interfaces/order';
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
@@ -72,10 +73,12 @@ router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
 
 
 router.put('/update/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
-    const data = 'success'
-    const { id } = req.params
+    const { id, orderId } = req.params
     try {
-        const updatedOrder = await orderModel.findByIdAndUpdate(id, { $set: { status: data } })
+        const updatedOrder = await orderModel.updateOne(
+            { _id: new ObjectId(orderId), userId: id },
+            { $set: { status: req.body.data } }
+        )
         if (!updatedOrder) return res.status(500).json('order not changed to approved')
         return res.status(200).json(updatedOrder)
     } catch (error) {
@@ -150,7 +153,6 @@ router.get('/allSome', verifyTokenAndAdmin, async (req, res) => {
 router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.create({
-
             shipping_options: [
                 {
                     shipping_rate_data: {
@@ -208,6 +210,30 @@ router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
             success_url: 'http://localhost:4000/success.html',
             cancel_url: 'http://localhost:4000/cancel.html',
         });
+        console.log(session)
+        if (session) {
+            console.log('shahil')
+            console.log(session)
+            const transport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'mshahilk28@gmail.com',
+                    pass: `${process.env.node_mailer}`
+                }
+            })
+            const message = {
+                from: 'mshahilk28@gmail.com',
+                to: 'mshahilkv@gmail.com',
+                subject: 'New Order',
+                text: 'New order from zauj.web.app',
+                html: ` a new person order some products go and checkout in the orders admin panel  </a>`
+            }
+            transport.sendMail(message, (error: any, info: any) => {
+                if (error) {
+                    return res.status(500).json('Mail not working')
+                }
+            });
+        }
         return res.status(200).json(session)
     } catch (error) {
         return res.status(500).json(error)
