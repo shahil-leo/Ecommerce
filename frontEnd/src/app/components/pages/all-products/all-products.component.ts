@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
@@ -13,24 +13,36 @@ import { cartFullResponse, wishlistFullResponse } from 'src/app/shared/interface
 })
 export class AllProductsComponent implements OnInit {
 
-
-  productsArray!: any[]
+  productsArray: any = []
+  routeParam!: string
   accessToken = localStorage.getItem('accessToken') as string
   userId = localStorage.getItem('userId') as string
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private ActivatedRoute: ActivatedRoute,
     private toaster: ToastrService
   ) { }
 
   ngOnInit(): void {
-    this.userService.allProducts().subscribe({
-      next: (res: any) => {
-        console.log(res)
-        this.productsArray = res
-      }
-    })
+    this.ActivatedRoute.params.subscribe((res: any) => { this.routeParam = res.search })
+    console.log(this.routeParam)
+    if (this.routeParam === 'All') {
+
+      this.userService.allProducts().subscribe({
+        next: (res: any) => {
+          console.log(res)
+          this.productsArray = res
+        }
+      })
+    } else {
+      this.userService.searchProduct(this.routeParam).subscribe({
+        next: (res) => {
+          this.productsArray = res
+        }
+      })
+    }
   }
   addToCart(item: cartFullResponse, itemId: string): Subscription | Promise<boolean> {
     if (!(this.accessToken)) {
@@ -48,6 +60,9 @@ export class AllProductsComponent implements OnInit {
       }
     })
   }
+
+
+
 
   addToWishList(item: wishlistFullResponse, itemId: string): Subscription {
     return this.userService.addWishList(item, this.userId, itemId).subscribe({

@@ -1,4 +1,5 @@
 import express from 'express';
+import asyncHandler from 'express-async-handler';
 import { cloud } from '../configs/cloudinary.config';
 import { productInterface } from '../interfaces/product';
 import upload from '../middlewares/multer';
@@ -81,6 +82,16 @@ router.put('/update/:productId', upload.single('file'), verifyTokenAndAdmin, asy
         return res.status(502).json(error)
     }
 })
+
+
+router.get("/search/:searchKey", asyncHandler(
+    async (req: any, res: any) => {
+        const searchRegEx = new RegExp(req.params.searchKey, "i")
+        const products = await productModel.find({ title: { $regex: searchRegEx } })
+        res.send(products)
+    }
+));
+
 
 router.delete('/delete/:productId', verifyTokenAndAdmin, async (req, res) => {
     const { productId } = req.params

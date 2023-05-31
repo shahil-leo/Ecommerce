@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'products/:category', component: ProductsComponent },
   { path: 'productsBrand/:brand', component: ProductsComponent },
   { path: 'single/:id', component: SingleProductComponent },
-  { path: 'allProducts', component: AllProductsComponent },
+  { path: 'allProducts/:search', component: AllProductsComponent },
   { path: 'carts', component: CartsComponent },
   { path: 'address', component: AddressComponent },
   { path: 'forgot', component: ForgotComponent },

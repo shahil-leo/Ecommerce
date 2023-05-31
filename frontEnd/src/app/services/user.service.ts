@@ -132,6 +132,10 @@ export class UserService {
   checkCode(email: string, code: string) {
     return this.http.post(`${checkCode}`, { email, code })
   }
+  //searching through products
+  searchProduct(searchKey: string) {
+    return this.http.get(`http://localhost:4000/product/search/${searchKey}`)
+  }
 
 
 }

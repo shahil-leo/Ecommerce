@@ -34,6 +34,8 @@ export class NavbarComponent implements OnInit {
   isCategoryOpen: boolean = false;
   isBrandOpen: boolean = false;
   isProfileOpen: boolean = false
+  searchValue!: string
+
 
   ngOnInit(): void {
     this.length = this.userService.cartLength
@@ -84,6 +86,10 @@ export class NavbarComponent implements OnInit {
         })
       }, error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
+  }
+
+  submitSearch(searchValue: string) {
+    this.router.navigate([`/allProducts/${searchValue}`])
   }
 
   logout(): void {
