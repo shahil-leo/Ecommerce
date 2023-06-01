@@ -175,6 +175,7 @@ router.get('/Allcategory', async (req, res) => {
     }
 })
 
+// routing the category
 router.get('/findCategory/:category', async (req, res) => {
     const { category } = req.params
     try {
