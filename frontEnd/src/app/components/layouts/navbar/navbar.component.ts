@@ -31,9 +31,6 @@ export class NavbarComponent implements OnInit {
   brandsRes: [] = []
   brandsArray: string[] = []
   uniqueBrand: string[] = []
-  isCategoryOpen: boolean = false;
-  isBrandOpen: boolean = false;
-  isProfileOpen: boolean = false
   searchValue!: string
 
 
@@ -98,15 +95,15 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
-  showHideCategory(show: boolean): void {
-    this.isCategoryOpen = show;
-  }
-  showHideBrand(show: boolean): void {
-    this.isBrandOpen = show;
-  }
-  showHideProfile(show: boolean): void {
-    this.isProfileOpen = show
-  }
+  // showHideCategory(show: boolean): void {
+  //   this.isCategoryOpen = show;
+  // }
+  // showHideBrand(show: boolean): void {
+  //   this.isBrandOpen = show;
+  // }
+  // showHideProfile(show: boolean): void {
+  //   this.isProfileOpen = show
+  // }
 
 
 }

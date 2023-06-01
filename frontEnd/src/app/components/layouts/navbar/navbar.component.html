@@ -11,84 +11,65 @@
       <ul class="flex gap-10 text-base">
         <div class="relative flex items-center gap-1 cursor-pointer">
           <li>
-            <a
-              class="pb-1 ease-out border-black hover:border-b-2"
-              (mouseenter)="showHideCategory(true)"
-            >
+            <a class="pb-1 ease-out hover:border-b-2 group">
               Categories
-            </a>
-            <div
-              class="absolute hide z-40 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-100 top-12 min-h-[26rem] max-h-[64rem] rounded-md"
-              (mouseleave)="showHideCategory(false)"
-              [ngClass]="{ show: isCategoryOpen }"
-            >
-              <h1 class="mt-5 text-2xl text-black">Top Categories</h1>
-              <hr class="my-5" />
+              <div
+                class="absolute group-hover:block hidden z-40 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-100 top-6 min-h-[26rem] max-h-[64rem] rounded-md"
+              >
+                <h1 class="mt-5 text-2xl text-black">Top Categories</h1>
+                <hr class="my-5" />
 
-              <div class="flex flex-wrap gap-5">
-                <div
-                  class="flex flex-col flex-wrap gap-5 md:flex-row"
-                  *ngFor="let item of allFeatures"
-                >
+                <div class="flex flex-wrap gap-5">
                   <div
-                    routerLink="/products/{{ item.categories }}"
-                    class="min-w-[15rem] items-center gap-4 flex p-2 rounded-md min-h-[5rem] bg-white"
+                    class="flex flex-col flex-wrap gap-5 md:flex-row"
+                    *ngFor="let item of allFeatures"
                   >
-                    <img
-                      class="object-center object-cover min-w-[5.25rem] rounded-md max-h-10"
-                      src="{{ item.categoryImg }}"
-                      alt="categoryImage"
-                    />
-                    <h1>{{ item.categories }}</h1>
+                    <div
+                      routerLink="/products/{{ item.categories }}"
+                      class="min-w-[15rem] items-center gap-4 flex p-2 rounded-md min-h-[5rem] bg-white"
+                    >
+                      <img
+                        class="object-center object-cover min-w-[5.25rem] rounded-md max-h-10"
+                        src="{{ item.categoryImg }}"
+                        alt="categoryImage"
+                      />
+                      <h1>{{ item.categories }}</h1>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </li>
-          <span *ngIf="!isCategoryOpen" class="material-symbols-outlined"
-            ><a>expand_more</a>
-          </span>
-          <span *ngIf="isCategoryOpen" class="material-symbols-outlined">
-            <a> expand_less</a>
-          </span>
+          <span class="material-symbols-outlined"><a>expand_more</a> </span>
         </div>
         <div class="relative flex items-center gap-1 cursor-pointer">
           <li>
-            <a
-              (mouseenter)="showHideBrand(true)"
-              class="pb-1 ease-out border-black hover:border-b-2"
-            >
+            <a class="pb-1 ease-out border-black group hover:border-b-2">
               Brand
-            </a>
-            <div
-              (mouseleave)="showHideBrand(false)"
-              [ngClass]="{ show: isBrandOpen }"
-              class="absolute hide z-50 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-100 top-12 h-72 rounded-md"
-            >
-              <h1 class="mt-5 text-2xl text-black">Brand</h1>
-              <hr class="my-5" />
 
-              <div class="flex flex-wrap gap-5">
-                <div
-                  class="flex flex-col flex-wrap gap-5 md:flex-row"
-                  *ngFor="let item of uniqueBrand"
-                >
+              <div
+                class="absolute group-hover:block hidden z-50 inset-0 min-w-[51.3rem] px-5 pb-20 bg-gray-100 top-6 h-72 rounded-md"
+              >
+                <h1 class="mt-5 text-2xl text-black">Brand</h1>
+                <hr class="my-5" />
+
+                <div class="flex flex-wrap gap-5">
                   <div
-                    routerLink="/productsBrand/{{ item }}"
-                    class="min-w-[15rem] bg-black items-center gap-4 flex p-2 rounded-md min-h-[5rem]"
+                    class="flex flex-col flex-wrap gap-5 md:flex-row"
+                    *ngFor="let item of uniqueBrand"
                   >
-                    <h1 class="text-white">{{ item }}</h1>
+                    <div
+                      routerLink="/productsBrand/{{ item }}"
+                      class="min-w-[15rem] bg-black items-center gap-4 flex p-2 rounded-md min-h-[5rem]"
+                    >
+                      <h1 class="text-white">{{ item }}</h1>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </li>
-          <span *ngIf="!isBrandOpen" class="material-symbols-outlined"
-            ><a>expand_more</a>
-          </span>
-          <span *ngIf="isBrandOpen" class="material-symbols-outlined">
-            <a> expand_less</a>
-          </span>
+          <span class="material-symbols-outlined"><a>expand_more</a> </span>
         </div>
         <li
           class="hidden cursor-pointer xl:block"
@@ -128,55 +109,51 @@
           <h1
             class="text-base cursor-pointer hover:text-orange-300"
             *ngIf="currentUser"
-          >
-            <a (mouseenter)="showHideProfile(true)">{{
-              currentUser.firstName
-            }}</a>
-          </h1>
-          <div
-            class="bg-green-700 hide"
-            (mouseleave)="showHideProfile(false)"
-            [ngClass]="{ show: isProfileOpen }"
-          >
-            <div
-              class="absolute rounded-md flex items-center justify-center gap-8 flex-col inset-0 p-5 min-w-[12rem] bg-gray-100 min-h-[22rem] top-11 -left-10 text-black pt-10"
-            >
+          ></h1>
+          <a class="group"
+            >{{ currentUser.firstName }}
+            <div class="">
               <div
-                class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg cursor-pointer"
+                class="absolute hidden group-hover:flex rounded-md items-center justify-center gap-8 flex-col inset-0 p-5 min-w-[12rem] bg-gray-100 min-h-[22rem] top-6 -left-10 text-black pt-10"
               >
-                <span class="text-2xl material-symbols-outlined"> person </span>
-                <a routerLink="/profile">My profile</a>
-              </div>
-              <div
-                class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-md cursor-pointer"
-              >
-                <span class="text-2xl material-symbols-outlined">
-                  favorite
-                </span>
-                <a routerLink="/profile/wishlist">Wishlist</a>
-              </div>
-              <div
-                class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-md cursor-pointer"
-              >
-                <span class="text-2xl material-symbols-outlined"> grade </span>
-                <a routerLink="/profile/orders">Orders</a>
-              </div>
-              <div
-                (click)="logout()"
-                class="flex items-center justify-center gap-2 px-4 py-2 mb-5 bg-white rounded-md cursor-pointer"
-              >
-                <span class="material-symbols-outlined"> logout </span>
-                <button class="cursor-pointer" (click)="logout()">
-                  Logout
-                </button>
+                <div
+                  class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg cursor-pointer"
+                >
+                  <span class="text-2xl material-symbols-outlined">
+                    person
+                  </span>
+                  <a routerLink="/profile">My profile</a>
+                </div>
+                <div
+                  class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-md cursor-pointer"
+                >
+                  <span class="text-2xl material-symbols-outlined">
+                    favorite
+                  </span>
+                  <a routerLink="/profile/wishlist">Wishlist</a>
+                </div>
+                <div
+                  class="flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-md cursor-pointer"
+                >
+                  <span class="text-2xl material-symbols-outlined">
+                    grade
+                  </span>
+                  <a routerLink="/profile/orders">Orders</a>
+                </div>
+                <div
+                  (click)="logout()"
+                  class="flex items-center justify-center gap-2 px-4 py-2 mb-5 bg-white rounded-md cursor-pointer"
+                >
+                  <span class="material-symbols-outlined"> logout </span>
+                  <button class="cursor-pointer" (click)="logout()">
+                    Logout
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <span *ngIf="!isProfileOpen" class="material-symbols-outlined"
+          </a>
+          <span class="inline-block material-symbols-outlined"
             ><a>expand_more</a>
-          </span>
-          <span *ngIf="isProfileOpen" class="material-symbols-outlined">
-            <a> expand_less</a>
           </span>
         </div>
       </ng-container>

@@ -5,10 +5,10 @@
   <div class="overflow-x-scroll h-[32rem]">
     <div class="flex gap-1 md:gap-5 w-max">
       <div
-        class="w-[13.5rem] relative h-[14rem] lg:w-[25rem]"
+        class="w-[13.5rem] relative h-[8rem] lg:w-[25rem]"
         *ngFor="let product of productArray"
       >
-        <div class="px-3 snap-x">
+        <div class="shadow-xl bg-[rgb(247,248,250)] rounded-2xl snap-x">
           <div
             routerLink="/single/{{ product._id }}"
             class="snap-center flex items-center bg-gray-100 justify-center mt-5 mb-5 rounded-md h-[15rem] md:h-[17rem] overflow-hidden"
@@ -18,9 +18,9 @@
               class="object-cover transition-all hover:scale-125"
             />
           </div>
-          <div class="snap-center">
+          <div class="px-3 snap-center">
             <div class="flex justify-between mb-5">
-              <h1 class="md:text-3xl">{{ product.title }}</h1>
+              <h1 class="font-bold md:text-3xl">{{ product.title }}</h1>
               <h1 class="md:text-xl">{{ product.prize }} Rs</h1>
             </div>
             <p>{{ product.description }}</p>

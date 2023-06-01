@@ -22,11 +22,12 @@ export class UserService {
   num!: number
 
 
-  // user authentication
-  registerUser(data: registerUser): any {
+  // registering a user
+  registerUser(data: registerUser): Observable<any> {
     const { confirmPassword, ...others } = data
     return this.http.post(`${register}`, others)
   }
+
   loginUser(Data: loginData): any {
     return this.http.post(`${login}`, Data)
   }
@@ -70,7 +71,7 @@ export class UserService {
   deleteOneCart(userId: string, productId: string) {
     return this.http.delete(`${deleteOneCart}/${userId}/${productId}`)
   }
-  getCart(userId: string) {
+  getCart(userId: string): Observable<cartFullResponse> {
     return this.http.get<cartFullResponse>(`${getCart}/${userId}`)
   }
 
