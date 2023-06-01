@@ -106,13 +106,9 @@
     <div class="z-50 items-center hidden gap-10 sm:flex">
       <ng-container *ngIf="accessToken; else loginButton">
         <div class="relative flex items-center">
-          <h1
-            class="text-base cursor-pointer hover:text-orange-300"
-            *ngIf="currentUser"
-          ></h1>
-          <a class="group"
+          <a *ngIf="currentUser" class="group"
             >{{ currentUser.firstName }}
-            <div class="">
+            <div>
               <div
                 class="absolute hidden group-hover:flex rounded-md items-center justify-center gap-8 flex-col inset-0 p-5 min-w-[12rem] bg-gray-100 min-h-[22rem] top-6 -left-10 text-black pt-10"
               >

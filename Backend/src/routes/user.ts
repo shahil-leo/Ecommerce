@@ -1,64 +1,52 @@
 import express from 'express';
+import { User } from '../interfaces/user';
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
 import { UserModel } from '../models/userSchema';
 const router = express.Router()
 
-router.put('/update/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const { error } = req.body
-    if (error) return res.status(500).json(error)
-    const { id } = req.params
-    const data = req.body
-
+// delete a user from the admin panel
+router.delete('/delete/:id', verifyTokenAndAdmin, async (req, res) => {
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: data }, { new: true })
-        if (!updatedUser) return res.status(504).send('Cannot updated database please try again later')
-        res.status(200).json(updatedUser)
-    } catch (error) {
-        res.status(500).send(error)
-    }
+        const { id } = req.params
 
-})
+        const deletedUser: User | null = await UserModel.findByIdAndDelete<User>(id)
 
-router.delete('/delete/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const { id } = req.params
-    const { error } = req.body
-    if (error) return res.status(500).json(error[0].message)
-    try {
-        const deletedUser = await UserModel.findByIdAndDelete(id)
-        if (!deletedUser) return res.status(500).send('Cannot delete user try after some times')
+        if (!deletedUser) {
+            return res.status(500).send('Cannot delete user Please try again later')
+        }
+
         res.status(200).send(deletedUser)
     } catch (error) {
         res.status(500).send('user Id is not valid')
     }
 })
 
-router.get('/singleUser/:id', verifyTokenAndAdmin, async (req, res) => {
-    const { id } = req.params
-    try {
-        const singleUser = await UserModel.findById(id)
-        if (!singleUser) return res.status(500).json('there is no user with this id')
-        res.status(200).json(singleUser)
-    } catch (error) {
-        res.status(200).json(error)
-    }
-})
+// show all the users in the admin
 router.get('/allUser', verifyTokenAndAdmin, async (req, res) => {
     try {
-        const allUser = await UserModel.find()
-        if (!allUser) return res.status(500).json('there are no users ')
+        const allUser: User[] = await UserModel.find()
+
+        if (!allUser) {
+            return res.status(500).json('No users found ')
+        }
+
         res.status(200).json(allUser)
     } catch (error) {
-        res.status(200).json(error)
+        res.status(500).json(error)
     }
 })
-// get single user
+// get single user for the logged user in the profile module
 router.get('/single/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
-        const singleUser = await UserModel.findById(req.params.id)
-        if (!singleUser) return res.status(500).json('there is no user sorry')
+        const singleUser: User | null = await UserModel.findById<User>(req.params.id)
+
+        if (!singleUser) {
+            return res.status(500).json('User not found')
+        }
+
         res.status(200).json(singleUser)
     } catch (error) {
-        res.status(200).json(error)
+        res.status(500).json(error)
     }
 })
 

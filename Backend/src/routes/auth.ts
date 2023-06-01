@@ -135,6 +135,7 @@ router.post('/forgot', async (req, res) => {
         return res.status(500).json(error)
     }
 })
+
 // check the user recovery code from the DB and the code saved locally if the 2 is same then we are updating the user
 router.post('/check', async (req, res) => {
     const { email, code } = req.body
