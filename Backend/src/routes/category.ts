@@ -6,73 +6,96 @@ import { verifyTokenAndAdmin } from "../middlewares/verify";
 import { categoryModel } from "../models/categorySchema";
 const router = Router()
 
+// adding one category
 router.post('/add', upload.single('file'), verifyTokenAndAdmin, async (req, res) => {
 
     try {
+
+        const { category } = req.body
+
         const imageCloud = await cloud.uploader.upload(req.file?.path as string)
+
         const newCategory = new categoryModel<categoryInterface>({
-            categories: req.body.category,
+            categories: category,
             categoryImg: imageCloud.secure_url,
         })
+
         const newerCategory = await newCategory.save()
-        if (!newerCategory) return res.status(500).json('category not added')
+
+        if (!newerCategory) {
+            throw new Error("Database problem cannot create category");
+        }
+
         return res.status(200).json(newerCategory)
+
     } catch (error) {
         return res.status(500).json(error)
     }
-
 })
 
+// getting every category
 router.get('/every', async (req, res) => {
     try {
-        const everyCategory = await categoryModel.find()
-        if (!everyCategory) return res.status(500).json('no category found')
+        const everyCategory: categoryInterface[] = await categoryModel.find()
+
+        if (!everyCategory) {
+            throw new Error("Cannot get every Category server problem");
+        }
+
         return res.status(200).json(everyCategory)
+
     } catch (error) {
         res.status(500).json(error)
     }
 })
+// getting only 3 category for the admin panel her page
 router.get('/everySome', async (req, res) => {
     try {
+
         const everyCategory = await categoryModel.find().limit(3)
-        if (!everyCategory) return res.status(500).json('no category found')
+
+        if (!everyCategory) {
+            throw new Error("cannot get category .Database error please wait");
+        }
+
         return res.status(200).json(everyCategory)
+
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
-
-
-router.put('/update/:id', verifyTokenAndAdmin, async (req, res) => {
-    const { id } = req.params;
-    const { category } = req.body.Data;
-    try {
-        const updatedCategory = await categoryModel.
-            findByIdAndUpdate<categoryInterface>(id, { $set: { categories: category } })
-        if (!updatedCategory) return res.status(500).json('cannot update category')
-        return res.status(200).json(updatedCategory)
-    } catch (error) {
-        res.send(500).json(error)
-    }
-})
+//delete one from the items  
 router.delete('/delete/:id', verifyTokenAndAdmin, async (req, res) => {
-    const { id } = req.params
     try {
-        const deletedCategory = await categoryModel.
-            findByIdAndDelete(id)
-        if (!deletedCategory) return res.status(500).json('cannot delete category')
+
+        const { id } = req.params
+
+        const deletedCategory = await categoryModel.findByIdAndDelete(id)
+
+        if (!deletedCategory) {
+            throw new Error("Cannot delete category");
+        }
+
         return res.status(200).json(deletedCategory)
+
     } catch (error) {
         res.send(500).json(error)
     }
 })
+
+// getting single 
 router.get('/single/:id', async (req, res) => {
 
-    const { id } = req.params
     try {
+        const { id } = req.params
+
         const singleCategory = await categoryModel.findById(id)
-        if (!singleCategory) return res.status(500).json('cannot delete category')
+
+        if (!singleCategory) {
+            throw new Error("Cannot get single category");
+
+        }
         return res.status(200).json(singleCategory)
     } catch (error) {
         return res.status(500).json(error)
