@@ -1,9 +1,8 @@
 import express from 'express';
 import { ObjectId } from 'mongodb';
-import { categoryInterface } from '../interfaces/product';
 import { verifyTokenAndAuthorization } from '../middlewares/verify';
-import { cartModel } from '../models/cartSchema';
-import { CartInterface } from './../interfaces/cart';
+import { CartInterface, cartModel } from '../models/cartSchema';
+import { categoryInterface } from '../models/categorySchema';
 const router = express.Router();
 
 // creating a cart

@@ -3,9 +3,8 @@ import express from 'express';
 import { ObjectId } from 'mongodb';
 import Stripe from 'stripe';
 import { transport } from '../configs/nodeMailer.config';
-import { orderInterface, productsArray } from '../interfaces/order';
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
-import { orderModel } from '../models/orderSchema';
+import { orderInterface, orderModel, productsArray } from '../models/orderSchema';
 dotenv.config()
 
 const router = express.Router()

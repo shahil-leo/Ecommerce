@@ -1,5 +1,8 @@
-import { categoryInterface } from './../interfaces/product';
-import mongoose, { Model, Schema } from 'mongoose'
+import mongoose, { Model, Schema } from 'mongoose';
+export interface categoryInterface {
+    categories: string
+    categoryImg: string
+}
 
 const categorySchema: Schema<categoryInterface> = new mongoose.Schema({
     categories: {

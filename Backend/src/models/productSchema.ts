@@ -1,5 +1,20 @@
-import { productInterface } from '../interfaces/product';
 import mongoose, { Model, Schema } from "mongoose";
+
+
+export interface productInterface {
+    title: string
+    description: string
+    image: string
+    categories: string[]
+    size: number
+    color: string
+    prize: number
+    brand: string
+    quantity: number
+}
+
+
+
 
 const productSchema: Schema<productInterface> = new mongoose.Schema({
     title: {

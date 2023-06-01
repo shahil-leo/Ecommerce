@@ -1,10 +1,9 @@
 import express from 'express';
 import { cloud } from '../configs/cloudinary.config';
-import { productInterface } from '../interfaces/product';
 import upload from '../middlewares/multer';
 import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verify';
 import { cartModel } from '../models/cartSchema';
-import { productModel } from '../models/productSchema';
+import { productInterface, productModel } from '../models/productSchema';
 const router = express.Router();
 
 // creating a new product

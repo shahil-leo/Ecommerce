@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { cloud } from "../configs/cloudinary.config";
-import { categoryInterface } from "../interfaces/product";
 import upload from "../middlewares/multer";
 import { verifyTokenAndAdmin } from "../middlewares/verify";
-import { categoryModel } from "../models/categorySchema";
+import { categoryInterface, categoryModel } from "../models/categorySchema";
 const router = Router()
 
 // adding one category

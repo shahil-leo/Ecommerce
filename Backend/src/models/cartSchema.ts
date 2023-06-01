@@ -1,5 +1,25 @@
-import { CartInterface } from './../interfaces/cart';
 import mongoose, { Model, Schema } from "mongoose";
+
+export interface CartInterface {
+    id?: string
+    userId: string,
+    carts: CartItem[];
+    createdAt?: number
+    updatedAt?: number
+}
+interface CartItem {
+    title: string;
+    description: string;
+    image: string;
+    categories: string[];
+    size: number;
+    color: string;
+    prize: number;
+    brand: string;
+    quantity: number;
+}
+
+
 const cartSchema: Schema<CartInterface> = new mongoose.Schema({
     userId: {
         type: String,
