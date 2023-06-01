@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { loadStripe } from '@stripe/stripe-js';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
+import { cartItem } from 'src/app/shared/interfaces/allinterfaceApp';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -11,9 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddressComponent implements OnInit {
 
-  productArray: any
+  productArray: cartItem[] = []
   totalAmount!: number
-  totalQuantity!: number
+  totalQuantity?: number
 
   userId = localStorage.getItem('userId') as string
 
@@ -46,33 +47,37 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCart(this.userId).subscribe({
-      next: (res) => { console.log(res), this.productArray = res.carts, this.calculateSum() },
+      next: (res) => { this.productArray = res.carts, this.calculateSum() },
       error: (error: HttpErrorResponse) => { this.toaster.error(error.error) },
     })
   }
+
   private calculateSum(): void {
-    this.totalAmount = this.productArray.reduce((total: any, product: any) => {
+    this.totalAmount = this.productArray?.reduce((total: number, product: cartItem) => {
       const productTotal = product.prize * product.quantity;
       return total + productTotal;
-    }, 0);
-    console.log(this.totalAmount)
-    this.totalQuantity = this.productArray.reduce((total: any, product: any) => {
+    }, 0) ?? 0;
+    this.totalQuantity = this.productArray?.reduce((total: number, product: cartItem) => {
       const quantity = +product.quantity
       return total + quantity
-    }, 0)
+    }, 0) ?? 0
   }
 
-  submit() {
+  submit(): void {
     if (!(this.productArray === undefined)) {
+
       this.userService.stripe(this.userId, this.productArray).subscribe(async (res: any) => {
-        let stripe = await loadStripe('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
+
+        let stripe = await loadStripe
+          ('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
+
         stripe?.redirectToCheckout({
           sessionId: res?.id
         })
-        console.log(res.status === 'payed')
-        if (res) {
-          this.userService.addOrder(this.userId, this.forms.value, this.productArray, this.totalAmount).subscribe({ error: (e: HttpErrorResponse) => { this.toaster.error(e.error) } })
-        }
+
+        this.userService.addOrder(this.userId, this.forms.value, this.productArray, this.totalAmount).
+          subscribe({ error: (e: HttpErrorResponse) => this.toaster.error(e.error) })
+
       })
 
     }

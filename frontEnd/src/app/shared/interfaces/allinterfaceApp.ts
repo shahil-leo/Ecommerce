@@ -7,9 +7,6 @@ export interface cartFullResponse {
   __v: number;
   carts: cartItem[]
 }
-// sm-categories
-
-
 export interface cartItem {
   brand: string;
   categories: string[];
@@ -21,13 +18,52 @@ export interface cartItem {
   size: number;
   title: string;
   _id: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+export interface addCart {
+  carts: cartItem[];
+  createdAt?: string,
+  updatedAt?: string,
+  userId: string
+  _v: number
+  _id?: string
+}
+
+// user
+export interface fullUserRes {
+  email: string,
+  firstName: string,
+  isAdmin: boolean,
+  lastName: string,
+  password: string,
+  recoveryCode?: string,
+  updatedAt: string,
+  _id: string,
+}
+
+// brand
+export interface brand {
+  brand: string
+}
+
+export interface fullBrandResponse {
+  brand: string
 }
 
 
 // wishlist
+
+export interface addWishlist {
+  wishList: cartItem[];
+  createdAt?: string,
+  updatedAt?: string,
+  userId: string
+  __v: number
+  _id?: string
+}
 
 export interface wishlistFullResponse {
   _id: string,
@@ -35,21 +71,10 @@ export interface wishlistFullResponse {
   createdAt: string;
   updatedAt: string;
   __v: number;
-  wishList: wishlist[]
+  wishList: cartItem[]
 }
 
-export interface wishlist {
-  brand: string;
-  categories: string[];
-  color: string;
-  description: string;
-  image: string;
-  prize: number;
-  quantity: number;
-  size: number;
-  title: string;
-  _id: string;
-}
+
 // single product
 export interface singleProduct {
   _id: string,
@@ -105,20 +130,7 @@ export interface registerConfirmUser {
   _v: number
 }
 
-// brand
-export interface fullBrandResponse {
-  brand: string
-}
-//brand alll response
-export interface BrandResponse {
-  _id: string;
-  categories: string;
-  categoryImg: string;
-  __v: number;
-}
-
 // categories
-
 export interface CategoryResponse {
   _id: string;
   categories: string;
@@ -126,5 +138,36 @@ export interface CategoryResponse {
   __v: number;
 }
 
+export interface CategoryFullRes {
+  categories: string,
+  categoryImg: string,
+  _id: string,
 
+}
 
+// order
+export interface fullOrderRes {
+  amount: string,
+  createdAt?: string,
+  order: address[],
+  status: string,
+  updatedAt?: string,
+  userId: string,
+  _id: string,
+}
+// address
+export interface address {
+  address: string,
+  alternativePhone?: number,
+  city: string,
+  email: string,
+  firstName: string,
+  landmark?: string,
+  lastName: string,
+  locality: string,
+  phone: number,
+  pincode: number,
+  products?: cartItem[],
+  state: string,
+  _id: string
+}

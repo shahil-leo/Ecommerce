@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
-import { fullBrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
+import { brand, fullBrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-brand',
@@ -10,7 +10,7 @@ import { fullBrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
   styleUrls: ['./brand.component.scss']
 })
 export class BrandComponent {
-  brandsRes: [] = []
+  brandsRes: brand[] = []
   brandsArray: string[] = []
   uniqueBrand: string[] = []
   constructor(
@@ -19,7 +19,7 @@ export class BrandComponent {
   ) {
 
     this.userService.getAllBrand().subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.brandsRes = res
         this.brandsRes.map((element: fullBrandResponse) => {
           this.brandsArray.push(element.brand)

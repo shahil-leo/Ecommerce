@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
-import { BrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
+import { CategoryFullRes } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-categories',
@@ -8,14 +10,20 @@ import { BrandResponse } from 'src/app/shared/interfaces/allinterfaceApp';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  constructor(private userService: UserService) { }
 
+  constructor(
+    private toaster: ToastrService,
+    private userService: UserService
+  ) { }
 
   uniqueArray: string[] = []
-  allCategory: BrandResponse[] = []
+  allCategory: CategoryFullRes[] = []
 
   ngOnInit(): void {
     this.userService.allCategories().subscribe(
-      { next: (res: any) => this.allCategory = res })
+      {
+        next: (res) => this.allCategory = res,
+        error: (e: HttpErrorResponse) => this.toaster.error(e.error)
+      })
   }
 }

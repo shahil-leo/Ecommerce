@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
-import { fullBrandResponse, loginUserToken, wishlist } from 'src/app/shared/interfaces/allinterfaceApp';
+import { CategoryFullRes, brand, cartItem, fullBrandResponse, fullUserRes } from 'src/app/shared/interfaces/allinterfaceApp';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -21,14 +21,13 @@ export class NavbarComponent implements OnInit {
   ) { }
 
 
-  accessToken: any = localStorage.getItem('accessToken')
-  userId: any = localStorage.getItem('userId')
-  allCart: any[] = []
-  allProduct: wishlist[] = []
+  accessToken = localStorage.getItem('accessToken') as string
+  userId: any = localStorage.getItem('userId') as string
+  allProduct: cartItem[] = []
   length!: Subject<number>
-  allFeatures: any
-  currentUser!: any
-  brandsRes: [] = []
+  allFeatures: CategoryFullRes[] = []
+  currentUser?: fullUserRes
+  brandsRes: brand[] = []
   brandsArray: string[] = []
   uniqueBrand: string[] = []
   searchValue!: string
@@ -44,12 +43,8 @@ export class NavbarComponent implements OnInit {
   }
   everyCategory(): Subscription {
     return this.userService.allCategories().subscribe({
-      next: (res: any) => {
-        this.allFeatures = res;
-      },
-      error: (e: HttpErrorResponse) => {
-        this.toaster.error(e.error);
-      }
+      next: (res) => this.allFeatures = res,
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error)
     });
   }
 
@@ -58,7 +53,7 @@ export class NavbarComponent implements OnInit {
       return 'no user is here'
     }
     return this.userService.profileOne(this.userId).subscribe({
-      next: (res: loginUserToken) => { this.currentUser = res },
+      next: (res) => { this.currentUser = res },
       error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
@@ -68,14 +63,14 @@ export class NavbarComponent implements OnInit {
       return 'no user is here'
     }
     return this.userService.getCart(this.userId).subscribe({
-      next: (res: any) => { console.log(res), this.allProduct = res.carts, this.length.next(this.allProduct.length) },
+      next: (res) => { this.allProduct = res.carts, this.length.next(this.allProduct.length) },
       error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
 
   getAllBrand(): Subscription {
     return this.userService.getAllBrand().subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.brandsRes = res
         this.brandsRes.map((element: fullBrandResponse) => {
           this.brandsArray.push(element.brand)
@@ -94,16 +89,5 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('userId')
     this.router.navigate(['/login'])
   }
-
-  // showHideCategory(show: boolean): void {
-  //   this.isCategoryOpen = show;
-  // }
-  // showHideBrand(show: boolean): void {
-  //   this.isBrandOpen = show;
-  // }
-  // showHideProfile(show: boolean): void {
-  //   this.isProfileOpen = show
-  // }
-
 
 }

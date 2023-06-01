@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
-import { cartFullResponse, cartItem, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
+import { CategoryFullRes, addWishlist, address, brand, cartFullResponse, cartItem, fullOrderRes, fullUserRes, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,8 +36,8 @@ export class UserService {
   allCategory(): Observable<Object> {
     return this.http.get(`${allCategory}`)
   }
-  allCategories(): Observable<Object> {
-    return this.http.get(`${allCategories}`)
+  allCategories(): Observable<CategoryFullRes[]> {
+    return this.http.get<CategoryFullRes[]>(`${allCategories}`)
   }
 
   findCategory(category: string | undefined): Observable<cartItem[]> {
@@ -45,8 +45,8 @@ export class UserService {
   }
 
   // brand CRUD
-  getAllBrand() {
-    return this.http.get(`${getAllBrand}`)
+  getAllBrand(): Observable<brand[]> {
+    return this.http.get<brand[]>(`${getAllBrand}`)
   }
   findBrand(brand: string) {
     return this.http.get(`${findBrand}/${brand}`)
@@ -56,14 +56,14 @@ export class UserService {
   }
 
   // products CRUD
-  allProducts() {
-    return this.http.get(`${allProducts}`)
+  allProducts(): Observable<cartItem[]> {
+    return this.http.get<cartItem[]>(`${allProducts}`)
   }
 
   // cart CRUD operations
 
-  addCart(item: any, userId: string, productId: string) {
-    return this.http.post(`${addCart}/${userId}/${productId}`, { item: item },)
+  addCart(item: any, userId: string, productId: string): Observable<typeof addCart> {
+    return this.http.post<typeof addCart>(`${addCart}/${userId}/${productId}`, { item: item },)
   }
   deleteAllCart(userId: string) {
     return this.http.delete(`${deleteAllCart}/${userId}`)
@@ -76,8 +76,8 @@ export class UserService {
   }
 
   // wishlist CRUD  operations
-  addWishList(item: any, userId: string, productId: string) {
-    return this.http.post(`${addWishList}/${userId}/${productId}`, { item: item })
+  addWishList(item: any, userId: string, productId: string): Observable<addWishlist> {
+    return this.http.post<addWishlist>(`${addWishList}/${userId}/${productId}`, { item: item })
   }
   getWishlist(userId: string) {
     return this.http.get(`${getWishlist}/${userId}`)
@@ -114,8 +114,8 @@ export class UserService {
   }
 
   // getting one profile from the logged user using he userId
-  profileOne(id: string): Observable<any> {
-    return this.http.get(`${profileOne}/${id}`)
+  profileOne(id: string): Observable<fullUserRes> {
+    return this.http.get<fullUserRes>(`${profileOne}/${id}`)
   }
 
   // payment method using the stripe method
@@ -124,8 +124,8 @@ export class UserService {
   }
 
   // when the payment is successfully then order is processing
-  addOrder(userId: string, formValue: any, productArray: any, totalAmount: any) {
-    return this.http.post(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
+  addOrder(userId: string, formValue: address, productArray: cartItem[], totalAmount: number): Observable<fullOrderRes> {
+    return this.http.post<fullOrderRes>(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
   }
   forgotPass(email: string) {
     return this.http.post(`${forgotPass}`, { email })
@@ -134,8 +134,8 @@ export class UserService {
     return this.http.post(`${checkCode}`, { email, code })
   }
   //searching through products
-  searchProduct(searchKey: string) {
-    return this.http.get(`http://localhost:4000/product/search/${searchKey}`)
+  searchProduct(searchKey: string): Observable<cartItem[]> {
+    return this.http.get<cartItem[]>(`http://localhost:4000/product/search/${searchKey}`)
   }
 
 
