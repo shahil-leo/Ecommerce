@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
-import { cartFullResponse, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
+import { cartFullResponse, cartItem, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
 })
@@ -39,9 +39,9 @@ export class UserService {
   allCategories(): Observable<Object> {
     return this.http.get(`${allCategories}`)
   }
-  findCategory(category: string | undefined): Observable<object> {
 
-    return this.http.get(`${findCategory}/${category}`)
+  findCategory(category: string | undefined): Observable<cartItem[]> {
+    return this.http.get<cartItem[]>(`${findCategory}/${category}`)
   }
 
   // brand CRUD

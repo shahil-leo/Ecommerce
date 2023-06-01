@@ -7,6 +7,8 @@ export interface cartFullResponse {
   __v: number;
   carts: cartItem[]
 }
+// sm-categories
+
 
 export interface cartItem {
   brand: string;
@@ -19,7 +21,12 @@ export interface cartItem {
   size: number;
   title: string;
   _id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
+
+
 // wishlist
 
 export interface wishlistFullResponse {
@@ -118,5 +125,6 @@ export interface CategoryResponse {
   categoryImg: string;
   __v: number;
 }
+
 
 
