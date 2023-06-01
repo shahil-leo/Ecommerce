@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import { ObjectId } from 'mongodb';
-import nodemailer from 'nodemailer';
 import Stripe from 'stripe';
+import { transport } from '../configs/nodeMailer.config';
 import { orderInterface, productsArray } from '../interfaces/order';
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../middlewares/verify';
 import { orderModel } from '../models/orderSchema';
@@ -13,22 +13,10 @@ const stripeKey = process.env.stripe_key as string
 const stripe = new Stripe(stripeKey, {
     apiVersion: '2022-08-01'
 });
-
+// creating a order
 router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
     const userId = req.params.id;
-    const {
-        firstName,
-        lastName, email,
-        phone,
-        pincode,
-        locality,
-        Address,
-        city,
-        state,
-        landmark,
-        alternativePhone
-    } = req.body.orders
-
+    const { firstName, lastName, email, phone, pincode, locality, Address, city, state, landmark, alternativePhone } = req.body.orders
     const orders = new orderModel<orderInterface>({
         userId: userId,
         orders: [
@@ -64,63 +52,77 @@ router.post('/create/:id', verifyTokenAndAuthorization, async (req, res) => {
 
     try {
         const order = await orders.save();
-        if (!order) return res.status(500).json('Order not done');
+
+        if (!order) {
+            throw new Error('Order not done.Please wait server error')
+        }
+
         return res.status(200).json(order);
+
     } catch (error) {
         return res.status(500).json(error);
     }
 });
 
-
+// update the order status to success or pending
 router.put('/update/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
-    const { id, orderId } = req.params
     try {
-        const updatedOrder = await orderModel.updateOne(
-            { _id: new ObjectId(orderId), userId: id },
-            { $set: { status: req.body.data } }
+        const { id, orderId } = req.params
+        const { data } = req.body
+        const updatedOrder = await orderModel.updateOne<orderInterface>(
+            {
+                _id: new ObjectId(orderId),
+                userId: id
+            },
+            { $set: { status: data } }
         )
-        if (!updatedOrder) return res.status(500).json('order not changed to approved')
+
+        if (!updatedOrder) {
+            throw new Error('order not changed to approved')
+        }
+
         return res.status(200).json(updatedOrder)
+
     } catch (error) {
         return res.status(500).json(error)
     }
 })
-
+// deleting one order
 router.delete('/delete/:id/:orderId', verifyTokenAndAdmin, async (req, res) => {
-    const { orderId } = req.params
     try {
+        const { orderId } = req.params
+
         const deletedOrder = await orderModel.findByIdAndDelete(orderId)
-        if (!deletedOrder) return res.status(500).json('did not deleted the order')
+
+        if (!deletedOrder) {
+            throw new Error('did not deleted the order')
+        }
+
         return res.status(200).json(deletedOrder)
+
     } catch (error) {
         return res.status(500).json(error)
     }
-})
-
-router.delete('/deleteSingle/:id/:orderId', verifyTokenAndAuthorization, async (req, res) => {
-    const { id, orderId } = req.params
-    try {
-        const result = await orderModel.updateOne(
-            { userId: id },
-            { $pull: { products: { _id: new ObjectId(orderId) } } })
-        if (!result) return res.status(500).json('not delete order')
-        return res.status(200).json(result)
-    } catch (e) {
-        return res.status(500).json(e)
-    }
-
 })
 
 router.get('/user/:id', verifyTokenAndAuthorization, async (req, res) => {
-    const { id } = req.params
     try {
+
+        const { id } = req.params
+
         const getOneUser = await orderModel.find({ userId: id })
-        if (!getOneUser) return res.status(500).json('no orders')
+
+        if (!getOneUser) {
+            throw new Error('no orders')
+        }
+
         return res.status(200).json(getOneUser)
+
     } catch (error) {
         return res.status(500).json(error)
     }
 })
+
 router.get('/oneProduct/:id', verifyTokenAndAdmin, async (req, res) => {
     const { id } = req.params
     try {
@@ -131,21 +133,33 @@ router.get('/oneProduct/:id', verifyTokenAndAdmin, async (req, res) => {
         return res.status(500).json(error)
     }
 })
-
+// getting all the orders
 router.get('/all', verifyTokenAndAdmin, async (req, res) => {
     try {
+
         const allOrders = await orderModel.find()
-        if (!allOrders) return res.status(400).json('no orders found')
+
+        if (!allOrders) {
+            throw new Error("no orders found");
+        }
+
         return res.status(200).json(allOrders)
+
     } catch (error) {
         return res.status(500).json(error)
     }
 })
+// getting some orders for the hero sections in the admin
 router.get('/allSome', verifyTokenAndAdmin, async (req, res) => {
     try {
+
         const allOrders = await orderModel.find().limit(3)
-        if (!allOrders) return res.status(400).json('no orders found')
+        if (!allOrders) {
+            throw new Error('no orders found')
+        }
+
         return res.status(200).json(allOrders)
+
     } catch (error) {
         return res.status(500).json(error)
     }
@@ -210,17 +224,7 @@ router.post('/stripe/:id', verifyTokenAndAuthorization, async (req, res) => {
             success_url: 'http://localhost:4000/success.html',
             cancel_url: 'http://localhost:4000/cancel.html',
         });
-        console.log(session)
         if (session) {
-            console.log('shahil')
-            console.log(session)
-            const transport = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'mshahilk28@gmail.com',
-                    pass: `${process.env.node_mailer}`
-                }
-            })
             const message = {
                 from: 'mshahilk28@gmail.com',
                 to: 'mshahilkv@gmail.com',
