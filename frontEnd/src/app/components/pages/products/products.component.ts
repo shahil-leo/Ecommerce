@@ -44,13 +44,13 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     if (this.isCategory) {
       this.userService.findCategory(this.category).subscribe({
-        next: (res) => { console.log(res), this.productsArray = res },
+        next: (res) => { this.productsArray = res },
         error: (e: HttpErrorResponse) => { this.toaster.error(e.error) }
       })
     } else {
       this.userService.findBrand(this.category).subscribe(
         {
-          next: (res) => { this.productsArray = res },
+          next: (res) => { this.productsArray = res, console.log(this.productsArray) },
           error: (e: HttpErrorResponse) => { console.log(e.error) },
         })
     }

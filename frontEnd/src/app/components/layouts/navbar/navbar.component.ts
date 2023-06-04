@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
   everyCategory(): Subscription {
     return this.userService.allCategories().subscribe({
       next: (res) => this.allFeatures = res,
-      error: (e: HttpErrorResponse) => this.toaster.error(e.error)
+      error: (e: HttpErrorResponse) => { console.log(e), this.toaster.error(e.error) }
     });
   }
 
@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit {
     }
     return this.userService.profileOne(this.userId).subscribe({
       next: (res) => { this.currentUser = res },
-      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      error: (e: HttpErrorResponse) => { console.log(e), this.toaster.error(e.error) },
     })
   }
 
@@ -64,7 +64,7 @@ export class NavbarComponent implements OnInit {
     }
     return this.userService.getCart(this.userId).subscribe({
       next: (res) => { this.allProduct = res.carts, this.length.next(this.allProduct.length) },
-      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      error: (e: HttpErrorResponse) => { console.log(e) },
     })
   }
 
@@ -76,7 +76,7 @@ export class NavbarComponent implements OnInit {
           this.brandsArray.push(element.brand)
           this.uniqueBrand = [...new Set(this.brandsArray)]
         })
-      }, error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      }, error: (e: HttpErrorResponse) => { console.log(e), this.toaster.error(e.error) },
     })
   }
 

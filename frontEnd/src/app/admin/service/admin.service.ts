@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+
+  singleUser!: any
 
   constructor(private http: HttpClient) { }
 
@@ -73,4 +74,20 @@ export class AdminService {
     return this.http.put(`http://localhost:4000/order/update/${userId}/${orderId}`, { data })
   }
 
+  isAdmin(): Promise<boolean> {
+    const token = localStorage.getItem('token') as string;
+
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.get('http://localhost:4000/auth/token').subscribe({
+        next: (res: any) => {
+          console.log(res.isAdmin);
+          resolve(res.isAdmin === true);
+        },
+        error: (error: any) => {
+          console.error(error);
+          reject(error);
+        }
+      });
+    });
+  }
 }

@@ -15,6 +15,7 @@ import { DashboardComponent } from './components/pages/dashboard/dashboard.compo
 import { OrdersComponent } from './components/pages/orders/orders.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { UsersComponent } from './components/pages/users/users.component';
+import { AdminLoginComponent } from './components/pages/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UsersComponent } from './components/pages/users/users.component';
     CategoryComponent,
     OrdersComponent,
     UsersComponent,
+    AdminLoginComponent,
   ],
   imports: [
     CommonModule,

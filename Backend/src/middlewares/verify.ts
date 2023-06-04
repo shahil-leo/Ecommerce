@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response, response, } from "express";
-import { UserModel } from "../models/userSchema";
+import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../interfaces/user";
+import { UserModel } from "../models/userSchema";
 
 
 export async function checkEmail(req: any, res: Response, next: NextFunction) {

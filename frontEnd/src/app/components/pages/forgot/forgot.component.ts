@@ -37,8 +37,6 @@ export class ForgotComponent {
   login() {
     this.code = this.fc['code'].value
     if (this.code) {
-      console.log(this.code)
-      console.log('shahil')
       return this.userService.checkCode(this.email as string, this.code as string).subscribe(console.log)
     } else {
       return 'nothing'
@@ -53,7 +51,8 @@ export class ForgotComponent {
     } else {
       this.hideOrShow = true
       return this.userService.forgotPass(this.email as string).subscribe({
-        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) }
+        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+        complete: () => { this.toaster.success('forgot password send') }
       })
     }
   }

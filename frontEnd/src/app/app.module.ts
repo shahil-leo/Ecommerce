@@ -28,6 +28,7 @@ import { ProfileModule } from './profile/profile.module';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,

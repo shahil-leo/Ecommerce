@@ -82,8 +82,9 @@ export class CartsComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         if (error.error === null) {
           console.log('no problem')
+          console.log(error)
         } else {
-          this.toaster.error(error.error)
+          console.log(error)
         }
       },
     })

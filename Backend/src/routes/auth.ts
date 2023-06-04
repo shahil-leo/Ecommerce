@@ -148,5 +148,27 @@ router.post('/check', async (req, res) => {
     }
 })
 
+router.get('/token', (req, res) => {
+    try {
+        const token = req.headers.token as string
+        const jwtKey = process.env.jwtKey as string
+
+        if (!token) {
+            return res.status(401).json({ error: 'Token missing' });
+        }
+
+        const decodedToken = jwt.verify(token, jwtKey);
+
+        if (!decodedToken) {
+            return res.status(500).json({ error: 'Invalid token' });
+        }
+
+        return res.status(200).json(decodedToken);
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ error: 'Server error' });
+    }
+});
+
 
 export const auth = router

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
-import { CategoryFullRes, addWishlist, address, brand, cartFullResponse, cartItem, fullOrderRes, fullUserRes, loginData, registerUser } from '../shared/interfaces/allinterfaceApp';
+import { CategoryFullRes, addWishlist, address, brand, cartFullResponse, cartItem, fullOrderRes, fullUserRes, loginData, loginUserToken, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +17,8 @@ export class UserService {
   number: BehaviorSubject<number> = new BehaviorSubject(1)
   length: BehaviorSubject<number> = new BehaviorSubject(0)
   cartLength: Subject<number> = new Subject()
-  accessToken: any = localStorage.getItem('accessToken')
-  userId: any = localStorage.getItem('userId')
+  accessToken = localStorage.getItem('accessToken') as string
+  userId = localStorage.getItem('userId') as string
   num!: number
 
 
@@ -28,8 +28,8 @@ export class UserService {
     return this.http.post(`${register}`, others)
   }
 
-  loginUser(Data: loginData): any {
-    return this.http.post(`${login}`, Data)
+  loginUser(Data: loginData): Observable<loginUserToken> {
+    return this.http.post<loginUserToken>(`${login}`, Data)
   }
 
   // category getting
