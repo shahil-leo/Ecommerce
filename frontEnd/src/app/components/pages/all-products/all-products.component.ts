@@ -29,7 +29,6 @@ export class AllProductsComponent implements OnInit {
     this.ActivatedRoute.params.subscribe((res: any) => { this.routeParam = res.search })
     console.log(this.routeParam)
     if (this.routeParam === 'All') {
-
       this.userService.allProducts().subscribe({
         next: (res) => {
           console.log(res)

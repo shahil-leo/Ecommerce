@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteAllWishList, deleteOneCart, deleteOneWishList, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, getWishlist, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
+import { addCart, addOrder, addWishList, allCategories, allCategory, allProducts, checkCode, deleteAllCart, deleteOneCart, findBrand, findCategory, findSingleProduct, forgotPass, getAllBrand, getCart, login, profileOne, register, stripe, updatedQuantity } from '../shared/constants/urls';
 import { CategoryFullRes, addWishlist, address, brand, cartFullResponse, cartItem, fullOrderRes, fullUserRes, loginData, loginUserToken, registerUser } from '../shared/interfaces/allinterfaceApp';
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,7 @@ export class UserService {
     return this.http.post(`${register}`, others)
   }
 
+  // loginUser
   loginUser(Data: loginData): Observable<loginUserToken> {
     return this.http.post<loginUserToken>(`${login}`, Data)
   }
@@ -36,10 +37,13 @@ export class UserService {
   allCategory(): Observable<Object> {
     return this.http.get(`${allCategory}`)
   }
+
+  // allCategories
   allCategories(): Observable<CategoryFullRes[]> {
     return this.http.get<CategoryFullRes[]>(`${allCategories}`)
   }
 
+  // findCategory
   findCategory(category: string | undefined): Observable<cartItem[]> {
     return this.http.get<cartItem[]>(`${findCategory}/${category}`)
   }
@@ -48,9 +52,13 @@ export class UserService {
   getAllBrand(): Observable<brand[]> {
     return this.http.get<brand[]>(`${getAllBrand}`)
   }
+
+  // findBrand
   findBrand(brand: string) {
     return this.http.get(`${findBrand}/${brand}`)
   }
+
+  // findSingleProduct
   findSingleProduct(id: string) {
     return this.http.get(`${findSingleProduct}/${id}`)
   }
@@ -61,16 +69,21 @@ export class UserService {
   }
 
   // cart CRUD operations
-
   addCart(item: any, userId: string, productId: string): Observable<typeof addCart> {
     return this.http.post<typeof addCart>(`${addCart}/${userId}/${productId}`, { item: item },)
   }
+
+  // deleteAllCart
   deleteAllCart(userId: string) {
     return this.http.delete(`${deleteAllCart}/${userId}`)
   }
+
+  // deleteOneCart
   deleteOneCart(userId: string, productId: string) {
     return this.http.delete(`${deleteOneCart}/${userId}/${productId}`)
   }
+
+  // getOneCart
   getCart(userId: string): Observable<cartFullResponse> {
     return this.http.get<cartFullResponse>(`${getCart}/${userId}`)
   }
@@ -79,19 +92,9 @@ export class UserService {
   addWishList(item: any, userId: string, productId: string): Observable<addWishlist> {
     return this.http.post<addWishlist>(`${addWishList}/${userId}/${productId}`, { item: item })
   }
-  getWishlist(userId: string) {
-    return this.http.get(`${getWishlist}/${userId}`)
-  }
-
-  deleteAllWishList(userId: string) {
-    return this.http.delete(`${deleteAllWishList}/${userId}`)
-  }
-  deleteOneWishList(userId: string, productId: string) {
-    return this.http.delete(`${deleteOneWishList}/${userId}/${productId}`)
-  }
 
   // decrease and increase quantity using the observables
-  addQuantity() {
+  addQuantity(): void {
     this.number.subscribe((res) => {
       this.num = res
     })
@@ -107,7 +110,6 @@ export class UserService {
   }
 
   // updating quantity of the products in cart using the method
-
   updatedQuantity(productId: string, userId: string, number: number) {
     return this.http.post(`${updatedQuantity}/${userId}/${productId}`,
       { number: number })
@@ -127,12 +129,17 @@ export class UserService {
   addOrder(userId: string, formValue: address, productArray: cartItem[], totalAmount: number): Observable<fullOrderRes> {
     return this.http.post<fullOrderRes>(`${addOrder}/${userId}`, { orders: formValue, products: productArray, amount: totalAmount })
   }
+
+  // forgotPass
   forgotPass(email: string) {
     return this.http.post(`${forgotPass}`, { email })
   }
+
+  // checkCode
   checkCode(email: string, code: string) {
     return this.http.post(`${checkCode}`, { email, code })
   }
+
   //searching through products
   searchProduct(searchKey: string): Observable<cartItem[]> {
     return this.http.get<cartItem[]>(`http://localhost:4000/product/search/${searchKey}`)

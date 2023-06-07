@@ -8,6 +8,6 @@ import { fadeInOut } from './router.animation';
 })
 export class AppComponent {
   [x: string]: any;
-  title = 'Zauj';
+  title = 'frontEnd';
 
 }

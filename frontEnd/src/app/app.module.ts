@@ -29,6 +29,7 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +71,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     }
     ),
     AdminModule,
-    ProfileModule
+    ProfileModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },

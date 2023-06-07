@@ -4,10 +4,11 @@ import { verifyTokenAndAuthorization } from '../middlewares/verify';
 import { CartInterface, cartModel } from '../models/cartSchema';
 import { categoryInterface } from '../models/categorySchema';
 const router = express.Router();
+router.use(verifyTokenAndAuthorization)
 
 // creating a cart
 
-router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+router.post('/create/:id/:productId', async (req, res) => {
 
     try {
 
@@ -71,7 +72,7 @@ router.post('/create/:id/:productId', verifyTokenAndAuthorization, async (req, r
     }
 })
 // updating the number in cart
-router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+router.post('/updateNumber/:id/:productId', async (req, res) => {
     try {
         const { number: updatedQuantity } = req.body
         const { id: userId, productId } = req.params
@@ -119,7 +120,7 @@ router.post('/updateNumber/:id/:productId', verifyTokenAndAuthorization, async (
 
 })
 // delete cart item
-router.delete('/delete/:id/:productId', verifyTokenAndAuthorization, async (req, res) => {
+router.delete('/delete/:id/:productId', async (req, res) => {
 
     try {
         const { id, productId } = req.params
@@ -139,7 +140,7 @@ router.delete('/delete/:id/:productId', verifyTokenAndAuthorization, async (req,
     }
 })
 // delete everything in the cart 
-router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) => {
+router.delete('/deleteAll/:id', async (req, res) => {
     try {
         const { id } = req.params
 
@@ -155,7 +156,7 @@ router.delete('/deleteAll/:id', verifyTokenAndAuthorization, async (req, res) =>
     }
 })
 // get single cart
-router.get('/getCart/:id', verifyTokenAndAuthorization, async (req, res) => {
+router.get('/getCart/:id', async (req, res) => {
     try {
         const { id } = req.params
 
