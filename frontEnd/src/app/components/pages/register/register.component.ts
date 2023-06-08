@@ -39,8 +39,7 @@ export class RegisterComponent {
   formSubmit(formData: registerUser): Subscription | any {
     if (!(formData.password === formData.confirmPassword)) return this.toaster.error('Password is not same')
     return this.userService.registerUser(formData).subscribe({
-      next: (res: registerUser) => { console.log(res) },
-      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
       complete: () => {
         this.toaster.success('Created successfully')
         this.form.reset()

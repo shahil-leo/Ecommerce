@@ -14,4 +14,5 @@ export class FooterComponent {
     this.DateCurrent = new Date().getFullYear()
   }
 
+
 }

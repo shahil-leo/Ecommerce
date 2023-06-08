@@ -28,10 +28,8 @@ export class ProductsComponent implements OnInit {
         if (res['category']) {
           this.isCategory = true
           this.category = res['category']
-          console.log(this.category)
         } else if (res['brand']) {
           this.category = res['brand']
-          console.log(this.category)
         }
       }
     })
@@ -44,15 +42,14 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     if (this.isCategory) {
       this.userService.findCategory(this.category).subscribe({
-        next: (res) => { this.productsArray = res },
-        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) }
+        next: (res) => this.productsArray = res,
+        error: (e: HttpErrorResponse) => this.toaster.error(e.error)
       })
     } else {
-      this.userService.findBrand(this.category).subscribe(
-        {
-          next: (res) => { this.productsArray = res, console.log(this.productsArray) },
-          error: (e: HttpErrorResponse) => { console.log(e.error) },
-        })
+      this.userService.findBrand(this.category).subscribe({
+        next: (res) => this.productsArray = res,
+        error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      })
     }
   }
 
@@ -61,26 +58,15 @@ export class ProductsComponent implements OnInit {
       return this.router.navigate(['/login'])
     }
     return this.userService.addCart(item, this.userId, itemId).subscribe({
-      next(value) {
-        console.log(value)
-      },
-      error: (e: HttpErrorResponse) => {
-        this.toaster.error(e.error)
-      },
-      complete: () => {
-        this.toaster.success('Added to cart ')
-      }
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      complete: () => this.toaster.success('Added to cart')
     })
   }
 
   addToWishList(item: wishlistFullResponse, itemId: string): Subscription {
     return this.userService.addWishList(item, this.userId, itemId).subscribe({
-      error: (e: HttpErrorResponse) => {
-        this.toaster.error(e.error)
-      },
-      complete: () => {
-        this.toaster.success('Added to wishlist ')
-      }
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      complete: () => this.toaster.success('Added to wishlist')
     })
   }
 

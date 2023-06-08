@@ -68,6 +68,7 @@ export class AddressComponent implements OnInit {
 
       this.userService.stripe(this.userId, this.productArray).subscribe(async (res: any) => {
 
+        console.log(res)
         let stripe = await loadStripe
           ('pk_test_51LQ9JfSBfNSorDV7IRbz8kMSMAWJ5Kj5nnua4DFoGwF6kC4QEymmabhfmlzaW3IVDucpRNnhOrfL6ZpbIHJcbW4U00rD9MDqTw');
 
@@ -77,7 +78,6 @@ export class AddressComponent implements OnInit {
 
         this.userService.addOrder(this.userId, this.forms.value, this.productArray, this.totalAmount).
           subscribe({ error: (e: HttpErrorResponse) => this.toaster.error(e.error) })
-
       })
 
     }

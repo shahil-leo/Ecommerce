@@ -15,7 +15,7 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(express.static("public"))
 app.use(express.json())
 dotenv.config()
-const mongoPass = process.env.mongoPass
+const mongoPass: string | undefined = process.env.mongoPass
 const mongoUrl: string = `mongodb+srv://shahil_kv:${mongoPass}@securepass.ltjt1vx.mongodb.net/Ecommerce`
 
 mongoose.connect(mongoUrl).then(() => {
