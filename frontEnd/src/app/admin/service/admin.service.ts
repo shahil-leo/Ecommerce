@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CategoryFullRes, cartItem, fullOrderRes, loginUserToken } from 'src/app/shared/interfaces/allinterfaceApp';
+import { CategoryFullRes, CategoryResponse, cartItem, fullOrderRes, loginUserToken } from 'src/app/shared/interfaces/allinterfaceApp';
 import { addOneCategory, addOneProductAdmin, allCategoryAdmin, authToken, deleteOneCategory, deleteOneOrder, deleteOneProduct, deleteOneUser, everyOrder, getAllOrder, getAllProductAdmin, getAllUser, getOneCategory, getOneOrder, getOneProductEdit, someCategory, someOrders, totalProducts, totalUser, updateOneProduct, updateStatus } from './../../shared/constants/urls';
 @Injectable({
   providedIn: 'root'
@@ -37,8 +37,8 @@ export class AdminService {
   }
 
   // getAllCategory
-  getAllCategory() {
-    return this.http.get(`${allCategoryAdmin}`)
+  getAllCategory(): Observable<CategoryFullRes[]> {
+    return this.http.get<CategoryFullRes[]>(`${allCategoryAdmin}`)
   }
 
   // getAllProducts
@@ -57,13 +57,13 @@ export class AdminService {
   }
 
   // addOneCategory
-  addOneCategory(CategoryData: any) {
-    return this.http.post(`${addOneCategory}`, CategoryData,)
+  addOneCategory(CategoryData: FormData): Observable<CategoryResponse> {
+    return this.http.post<CategoryResponse>(`${addOneCategory}`, CategoryData,)
   }
 
   // deleteOneCategory
-  deleteOneCategory(productId: string) {
-    return this.http.delete(`${deleteOneCategory}/${productId}`,)
+  deleteOneCategory(productId: string): Observable<CategoryResponse> {
+    return this.http.delete<CategoryResponse>(`${deleteOneCategory}/${productId}`,)
   }
 
   // getOneCategory
@@ -77,8 +77,8 @@ export class AdminService {
   }
 
   // getAllOrder
-  getAllOrder() {
-    return this.http.get(`${getAllOrder}`)
+  getAllOrder(): Observable<fullOrderRes[]> {
+    return this.http.get<fullOrderRes[]>(`${getAllOrder}`)
   }
 
   // getAllUsers

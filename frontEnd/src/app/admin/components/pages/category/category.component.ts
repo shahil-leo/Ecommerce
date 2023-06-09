@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/admin/service/admin.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private toaster: ToastrService
   ) {
     this.forms = this.fb.group<any>({
       category: ['', [Validators.required, Validators.minLength(2)]],
@@ -38,38 +41,35 @@ export class CategoryComponent implements OnInit {
     return this.forms.controls
   }
 
-  onChangeImage(e: any) {
+  onChangeImage(e: Event) {
     this.selectedImgCategory = (e.target as HTMLInputElement).files?.[0];
   }
 
-  submit() {
+  submit(): void {
 
-    const fd = new FormData()
+    const fd: FormData = new FormData()
 
     fd.append('category', this.fc['category'].value)
     fd.append('file', this.selectedImgCategory as File, this.selectedImgCategory?.name)
 
     this.adminService.addOneCategory(fd).subscribe({
-      next: (res) => { console.log(res) },
-      error: (e) => { console.log(e) },
-      complete: () => { this.everyFunction(), console.log('submited the form') }
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+      complete: () => this.everyFunction()
     })
     this.forms.reset()
   }
 
   everyFunction() {
     this.adminService.getAllCategory().subscribe({
-      next: (res) => { this.allCategory = res },
-      error: (e) => { console.log(e) },
-      complete: () => { console.log('getting every category') }
+      next: (res) => this.allCategory = res,
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
   }
 
   deleteOne(productId: string) {
     this.adminService.deleteOneCategory(productId).subscribe({
-      next: (res) => { console.log(res) },
-      error: (e) => { console.log(e) },
-      complete: () => { this.everyFunction(), console.log('deleted the Product') }
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
+      complete: () => this.everyFunction()
     })
   }
 

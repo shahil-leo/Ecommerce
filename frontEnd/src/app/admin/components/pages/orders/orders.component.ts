@@ -11,7 +11,7 @@ export class OrdersComponent implements OnInit {
 
   isTrue: boolean = false
   product!: any
-  ordersArray!: any
+  ordersArray!: any[]
   singleOrder!: any
   productShow: boolean = false
 
@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
     const userId = localStorage.getItem('userId') as string
     this.adminService.deleteOneOrder(userId, productId).subscribe({
       next: (res) => { console.log(res) },
-      error: (e: HttpErrorResponse) => { console.log(e.error) },
+      error: (e: HttpErrorResponse) => { console.log(e) },
       complete: () => { this.everyFunction() }
     })
   }
@@ -34,7 +34,7 @@ export class OrdersComponent implements OnInit {
   productsArray(id: string) {
     this.productShow = !this.productShow
     this.adminService.getOneOrder(id).subscribe({
-      next: (res: any) => { this.singleOrder = res.orders[0].products, console.log(this.singleOrder) },
+      next: (res: any) => { console.log(res), this.singleOrder = res.orders[0].products, console.log(this.singleOrder) },
       error: (e) => { console.log(e) },
       complete: () => { console.log(this.singleOrder) }
     })
@@ -42,13 +42,10 @@ export class OrdersComponent implements OnInit {
   everyFunction() {
     this.adminService.getAllOrder().subscribe({
       next: (res) => { this.ordersArray = res },
-      error: (e) => { console.log(e) },
-      complete: () => { console.log('got all the product'), console.log(this.ordersArray) }
     })
   }
   updatingStatus(orderId: string) {
     const userId = localStorage.getItem('userId') as string
-    console.log(orderId)
     this.adminService.updateStatus(userId, orderId).subscribe({ complete: () => { this.everyFunction() } })
   }
 
