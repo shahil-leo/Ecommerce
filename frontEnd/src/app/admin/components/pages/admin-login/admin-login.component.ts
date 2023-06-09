@@ -40,7 +40,7 @@ export class AdminLoginComponent {
           localStorage.setItem('accessToken', res.accessToken)
           localStorage.setItem('userId', res._id)
         },
-        error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
+        error: (e: HttpErrorResponse) => this.toaster.error(e.error),
         complete: () => { this.toaster.success('Logged in successfully'), this.router.navigate(['/admin']) }
       },
     )

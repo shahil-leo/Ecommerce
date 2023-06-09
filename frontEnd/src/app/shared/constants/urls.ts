@@ -44,3 +44,72 @@ export const checkCode = BASE_URL + 'auth/check'
 // payment method
 export const stripe = BASE_URL + 'order/stripe'
 export const addOrder = BASE_URL + 'order/create'
+
+
+// admin panel
+
+// totalUser
+export const totalUser = BASE_URL + 'user/allUser'
+
+// getTotalProducts
+export const totalProducts = BASE_URL + 'product/all'
+
+// getAllOrders
+export const everyOrder = BASE_URL + 'order/all'
+
+// getSomeOrders
+export const someOrders = BASE_URL + 'order/allSome'
+
+// getSomeCategory
+export const someCategory = BASE_URL + 'category/everySome'
+
+// getAllCategory
+export const allCategoryAdmin = BASE_URL + 'category/every'
+
+// getAllProducts
+export const getAllProductAdmin = BASE_URL + 'product/all'
+
+// deleteOneProduct
+export const deleteOneProduct = BASE_URL + 'product/delete'
+
+// addOneProduct
+export const addOneProductAdmin = BASE_URL + 'product/create'
+
+// addOneCategory
+export const addOneCategory = BASE_URL + 'category/add'
+
+// deleteOneCategory
+export const deleteOneCategory = BASE_URL + 'category/delete'
+
+// getOneCategory
+export const getOneCategory = BASE_URL + 'category/single'
+
+// updateOneCategory
+export const updateOneCategory = BASE_URL + 'category/update'
+
+// getAllOrder
+export const getAllOrder = BASE_URL + 'order/all'
+
+// getAllUser
+export const getAllUser = BASE_URL + 'user/allUser'
+
+// deleteOneUser
+export const deleteOneUser = BASE_URL + 'user/delete'
+
+// getOneOrder
+export const getOneOrder = BASE_URL + 'order/oneProduct'
+
+// EditOneProduct
+export const getOneProductEdit = BASE_URL + 'singleProduct'
+
+// updateOneProduct
+export const updateOneProduct = BASE_URL + 'update'
+
+// deleteOneOrder
+export const deleteOneOrder = BASE_URL + 'delete'
+
+// updating status
+export const updateStatus = BASE_URL + 'order/update'
+
+// authToken
+export const authToken = BASE_URL + 'auth/token'

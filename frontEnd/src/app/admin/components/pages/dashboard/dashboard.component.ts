@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/admin/service/admin.service';
+import { CategoryFullRes, fullOrderRes } from 'src/app/shared/interfaces/allinterfaceApp';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,49 +11,46 @@ import { AdminService } from 'src/app/admin/service/admin.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private toaster: ToastrService
+  ) { }
 
-  totalUserCount!: any
-  totalProductsCount!: any
-  totalOrders!: any
-  orders!: []
-  ordersShow!: any[]
-  totalAmount!: any
-  category!: any[]
-  accessToken = localStorage.getItem('accessToken')
+  totalUserCount?: number
+  totalProductsCount!: number
+  totalOrders!: number
+  orders!: fullOrderRes[]
+  ordersShow!: fullOrderRes[]
+  totalAmount!: number
+  category!: CategoryFullRes[]
+  accessToken = localStorage.getItem('accessToken') as string
 
   ngOnInit(): void {
     this.adminService.getTotalUser().subscribe({
-      next: (res: any) => { this.totalUserCount = res.length },
-      error: (e) => { console.log(e) },
-      complete: () => { 'sucessfully' }
+      next: (res) => this.totalUserCount = res.length,
     })
+
     this.adminService.getTotalProducts().subscribe({
-      next: (res: any) => { this.totalProductsCount = res.length },
-      error: (e) => { console.log(e) },
-      complete: () => { 'sucessfully' }
+      next: (res) => this.totalProductsCount = res.length,
+      error: (error: HttpErrorResponse) => this.toaster.error(error.error)
     })
+
     this.adminService.getTotalOrders().subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.totalOrders = res.length, this.orders = res,
           this.totalAmount = this.orders.reduce((acc, order: any) => acc + order.amount, 0);
       },
-      error: (e) => { console.log(e) },
-      complete: () => { 'sucessfully' }
+      error: (e: HttpErrorResponse) => { this.toaster.error(e.error) },
     })
+
     this.adminService.getSomeOrders().subscribe({
-      next: (res: any) => {
-        this.ordersShow = res
-      },
-      error: (e) => { console.log(e) },
-      complete: () => { 'sucessfully' }
+      next: (res) => this.ordersShow = res,
+      error: (e: HttpErrorResponse) => e.error,
     })
+
     this.adminService.getSomeCategory().subscribe({
-      next: (res: any) => {
-        this.category = res
-      },
-      error: (e) => { console.log(e) },
-      complete: () => { 'sucessfully' }
+      next: (res) => this.category = res,
+      error: (e: HttpErrorResponse) => this.toaster.error(e.error),
     })
   }
 

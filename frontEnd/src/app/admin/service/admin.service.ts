@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CategoryFullRes, cartItem, fullOrderRes, loginUserToken } from 'src/app/shared/interfaces/allinterfaceApp';
+import { addOneCategory, addOneProductAdmin, allCategoryAdmin, authToken, deleteOneCategory, deleteOneOrder, deleteOneProduct, deleteOneUser, everyOrder, getAllOrder, getAllProductAdmin, getAllUser, getOneCategory, getOneOrder, getOneProductEdit, someCategory, someOrders, totalProducts, totalUser, updateOneProduct, updateStatus } from './../../shared/constants/urls';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,82 +12,120 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getTotalUser() {
-    return this.http.get('http://localhost:4000/user/allUser')
+  // getTotalUser
+  getTotalUser(): Observable<loginUserToken[]> {
+    return this.http.get<loginUserToken[]>(`${totalUser}`)
   }
-  getTotalProducts() {
-    return this.http.get('http://localhost:4000/product/all')
+
+  // getTotalProducts
+  getTotalProducts(): Observable<cartItem[]> {
+    return this.http.get<cartItem[]>(`${totalProducts}`)
   }
-  getTotalOrders() {
-    return this.http.get('http://localhost:4000/order/all')
+  // getTotalOrders
+  getTotalOrders(): Observable<fullOrderRes[]> {
+    return this.http.get<fullOrderRes[]>(`${everyOrder}`)
   }
-  getSomeOrders() {
-    return this.http.get('http://localhost:4000/order/allSome')
+
+  // getSomeOrders
+  getSomeOrders(): Observable<fullOrderRes[]> {
+    return this.http.get<fullOrderRes[]>(`${someOrders}`)
   }
-  getSomeCategory() {
-    return this.http.get('http://localhost:4000/category/everySome')
+
+  // getSomeCategory
+  getSomeCategory(): Observable<CategoryFullRes[]> {
+    return this.http.get<CategoryFullRes[]>(`${someCategory}`)
   }
+
+  // getAllCategory
   getAllCategory() {
-    return this.http.get('http://localhost:4000/category/every',)
+    return this.http.get(`${allCategoryAdmin}`)
   }
+
+  // getAllProducts
   getAllProduct() {
-    return this.http.get('http://localhost:4000/product/all')
+    return this.http.get(`${getAllProductAdmin}`)
   }
+
+  // deleteOneProduct
   deleteOneProduct(productId: string) {
-    return this.http.delete(`http://localhost:4000/product/delete/${productId}`)
+    return this.http.delete(`${deleteOneProduct}/${productId}`)
   }
+
+  // addOneProduct
   addOneProduct(formValue: any) {
-    return this.http.post(`http://localhost:4000/product/create`, formValue)
+    return this.http.post(`${addOneProductAdmin}`, formValue)
   }
+
+  // addOneCategory
   addOneCategory(CategoryData: any) {
-    return this.http.post('http://localhost:4000/category/add', CategoryData,)
+    return this.http.post(`${addOneCategory}`, CategoryData,)
   }
+
+  // deleteOneCategory
   deleteOneCategory(productId: string) {
-    return this.http.delete(`http://localhost:4000/category/delete/${productId}`,)
+    return this.http.delete(`${deleteOneCategory}/${productId}`,)
   }
+
+  // getOneCategory
   getOneCategory(productId: string) {
-    return this.http.get(`http://localhost:4000/category/single/${productId}`,)
+    return this.http.get(`${getOneCategory}/${productId}`,)
   }
+
+  // updateOneCategory
   updateOneCategory(productId: string, Data: any) {
-    return this.http.put(`http://localhost:4000/category/update/${productId}`, { Data },)
+    return this.http.put(`/${productId}`, { Data },)
   }
+
+  // getAllOrder
   getAllOrder() {
-    return this.http.get('http://localhost:4000/order/all')
+    return this.http.get(`${getAllOrder}`)
   }
+
+  // getAllUsers
   getAllUsers() {
-    return this.http.get('http://localhost:4000/user/allUser')
+    return this.http.get(`${getAllUser}`)
   }
+
+  // deleteOneUser
   deleteOneUser(userId: string) {
-    return this.http.delete(`http://localhost:4000/user/delete/${userId}`)
+    return this.http.delete(`${deleteOneUser}/${userId}`)
   }
+
+  // getOneOrder
   getOneOrder(id: string) {
-    return this.http.get(`http://localhost:4000/order/oneProduct/${id}`)
+    return this.http.get(`${getOneOrder}/${id}`)
   }
+
+  // EditOneProduct
   getOneProductEdit(id: string) {
-    return this.http.get(`http://localhost:4000/product/singleProduct/${id}`)
+    return this.http.get(`${getOneProductEdit}/${id}`)
   }
+
+  // updateOneProduct
   updateOneProduct(id: string, formData: any) {
-    return this.http.put(`http://localhost:4000/product/update/${id}`, formData)
+    return this.http.put(`${updateOneProduct}/${id}`, formData)
   }
+
+  // deleteOneOrder
   deleteOneOrder(userId: string, productId: string) {
-    return this.http.delete(`http://localhost:4000/order/delete/${userId}/${productId}`)
+    return this.http.delete(`${deleteOneOrder}/${userId}/${productId}`)
   }
+
+  // updating status
   updateStatus(userId: string, orderId: string) {
     const data = 'success'
-    return this.http.put(`http://localhost:4000/order/update/${userId}/${orderId}`, { data })
+    return this.http.put(`${updateStatus}/${userId}/${orderId}`, { data })
   }
 
   isAdmin(): Promise<boolean> {
     const token = localStorage.getItem('token') as string;
 
     return new Promise<boolean>((resolve, reject) => {
-      this.http.get('http://localhost:4000/auth/token').subscribe({
+      this.http.get(`${authToken}`).subscribe({
         next: (res: any) => {
-          console.log(res.isAdmin);
           resolve(res.isAdmin === true);
         },
         error: (error: any) => {
-          console.error(error);
           reject(error);
         }
       });
