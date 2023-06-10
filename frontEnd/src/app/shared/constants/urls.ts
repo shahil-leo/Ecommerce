@@ -1,6 +1,6 @@
 
 // Base url of everything
-export const BASE_URL = "http://localhost:4000/"
+export const BASE_URL = "https://ecommercebackend-i8us.onrender.com/"
 
 // login/register
 export const login = BASE_URL + 'auth/login'
@@ -113,3 +113,21 @@ export const updateStatus = BASE_URL + 'order/update'
 
 // authToken
 export const authToken = BASE_URL + 'auth/token'
+
+// everyWishlist
+export const everyWishList = BASE_URL + 'wishlist/get'
+
+// deleteWishlist
+export const deleteWishList = BASE_URL + 'wishlist/delete'
+
+// moveToCart
+export const moveToCart = BASE_URL + 'cart/create'
+
+// getEveryOrder
+export const everyOrderProfile = BASE_URL + 'order/user'
+
+// deleteOrder
+export const deleteOrder = BASE_URL + 'order/deleteSingle'
+
+// getSingleUser
+export const getSingleUser = BASE_URL + 'user/single'
