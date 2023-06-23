@@ -1,22 +1,23 @@
 <section class="w-[25rem] md:w-[64rem] bg-white font-inter">
   <div class="">
-    <div class="flex justify-between py-6 mt-5 border-b-2 border-gray-200 px-7">
+    <div class="flex justify-between px-7 py-6 mt-5 border-b-2 border-gray-200">
       <div>Order Details</div>
       <div>Actions</div>
     </div>
     <div
       *ngFor="let item of newArray"
-      class="flex justify-between w-full p-6 border-b-2 border-gray-200 md:p-14"
+      class="flex justify-between p-6 w-full border-b-2 border-gray-200 md:p-14"
     >
       <div class="w-[70%]">
         <div class="flex gap-4">
           <img
+            loading="lazy"
             src="{{ item.image }}"
             class="max-w-[10.25rem] min-w-[5.5rem]"
             alt="order_img"
           />
           <div
-            class="flex flex-row items-center justify-center gap-10 md:gap-20"
+            class="flex flex-row gap-10 justify-center items-center md:gap-20"
           >
             <div class="flex flex-col gap-3">
               <p>title: {{ item.title }}</p>
@@ -29,7 +30,7 @@
               <div class="flex">
                 <p>{{ status }} :</p>
                 <div
-                  class="w-4 h-4 mt-1 ml-1 rounded-full"
+                  class="mt-1 ml-1 w-4 h-4 rounded-full"
                   [ngClass]="{
                     'bg-green-500': status === 'success',
                     'bg-red-500': status === 'pending'
@@ -45,7 +46,7 @@
           <h1 class="text-2xl">₹{{ item.quantity * item.prize }}</h1>
         </div>
         <div
-          class="flex justify-center ml-10 text-center cursor-pointer md:ml-20 gap-9"
+          class="flex gap-9 justify-center ml-10 text-center cursor-pointer md:ml-20"
           (click)="deleteOrder(item._id)"
         >
           <span class="text-3xl text-red-500 material-symbols-outlined">

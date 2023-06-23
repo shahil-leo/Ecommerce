@@ -1,25 +1,25 @@
 <section class="xl:ml-72 font-inter">
   <app-navbar></app-navbar>
-  <div class="w-full px-6 py-6 mx-auto">
+  <div class="px-6 py-6 mx-auto w-full">
     <!-- table 1 -->
 
     <div class="flex flex-wrap -mx-3">
-      <div class="flex-none w-full max-w-full px-3">
+      <div class="flex-none px-3 w-full max-w-full">
         <div
-          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl rounded-2xl bg-clip-border"
+          class="flex relative flex-col mb-6 min-w-0 break-words bg-clip-border bg-white rounded-2xl border-0 border-transparent border-solid shadow-xl"
         >
           <div
             (click)="open()"
-            class="flex justify-between p-4 mb-0 border-b-0 cursor-pointer border-b-solid rounded-t-2xl border-b-transparent"
+            class="flex justify-between p-4 mb-0 rounded-t-2xl border-b-0 cursor-pointer border-b-solid border-b-transparent"
           >
             <h6 class="text-blue-600">Add a Category</h6>
             <span class="material-symbols-outlined"> add </span>
           </div>
           <div class="flex-auto px-0 pt-0 pb-2">
-            <div class="p-0 overflow-x-auto">
+            <div class="overflow-x-auto p-0">
               <div
                 *ngIf="isTrue"
-                class="py-12 transition-all bg-white rounded-lg"
+                class="py-12 bg-white rounded-lg transition-all"
                 (submit)="submit()"
               >
                 <div class="max-w-[55rem] px-4 mx-auto">
@@ -36,7 +36,7 @@
                         formControlName="category"
                         type="text"
                         id="title"
-                        class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+                        class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
                       />
                       <div
                         class="mt-2"
@@ -69,7 +69,7 @@
                         type="file"
                         id="image"
                         (change)="onChangeImage($event)"
-                        class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+                        class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
                         formControlName="categoryImg"
                       />
                       <div
@@ -89,7 +89,7 @@
                     <div class="col-span-6">
                       <button
                         [disabled]="forms.invalid"
-                        class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
+                        class="block p-3 w-full text-sm text-white bg-black rounded-md border transition border-black/20 hover:shadow-lg"
                       >
                         Create new category
                       </button>
@@ -104,34 +104,34 @@
     </div>
 
     <div class="flex flex-wrap -mx-3">
-      <div class="flex-none w-full max-w-full px-3">
+      <div class="flex-none px-3 w-full max-w-full">
         <div
-          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl rounded-2xl bg-clip-border"
+          class="flex relative flex-col mb-6 min-w-0 break-words bg-clip-border bg-white rounded-2xl border-0 border-transparent border-solid shadow-xl"
         >
           <div
-            class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+            class="p-6 pb-0 mb-0 rounded-t-2xl border-b-0 border-b-solid border-b-transparent"
           >
             <h6 class="">Projects table</h6>
           </div>
           <div class="flex-auto px-0 pt-0 pb-2">
-            <div class="p-0 overflow-x-auto">
+            <div class="overflow-x-auto p-0">
               <table
-                class="items-center justify-center w-full mb-0 align-top border-collapse text-slate-500"
+                class="justify-center items-center mb-0 w-full align-top border-collapse text-slate-500"
               >
                 <thead class="align-bottom">
                   <tr>
                     <th
-                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                      class="px-6 py-3 font-bold text-left uppercase align-middle whitespace-nowrap bg-transparent border-b shadow-none opacity-70 text-xxs border-b-solid tracking-none text-slate-400"
                     >
                       category title
                     </th>
                     <th
-                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                      class="px-6 py-3 font-bold text-left uppercase align-middle whitespace-nowrap bg-transparent border-b shadow-none opacity-70 text-xxs border-b-solid tracking-none text-slate-400"
                     >
                       category image
                     </th>
                     <th
-                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                      class="px-6 py-3 font-bold text-left uppercase align-middle whitespace-nowrap bg-transparent border-b shadow-none opacity-70 text-xxs border-b-solid tracking-none text-slate-400"
                     >
                       Actions
                     </th>
@@ -140,7 +140,7 @@
                 <tbody class="border-t">
                   <tr *ngFor="let item of allCategory">
                     <td
-                      class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent"
+                      class="p-2 align-middle whitespace-nowrap bg-transparent border-b shadow-transparent"
                     >
                       <div class="flex px-2">
                         <div class="my-auto">
@@ -151,11 +151,12 @@
                       </div>
                     </td>
                     <td
-                      class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent"
+                      class="p-2 align-middle whitespace-nowrap bg-transparent border-b shadow-transparent"
                     >
                       <div class="flex px-2">
                         <div class="my-auto">
                           <img
+                            loading="lazy"
                             class="max-h-[5rem] max-w-[3rem]"
                             src="{{ item.categoryImg }}"
                             alt="suii"

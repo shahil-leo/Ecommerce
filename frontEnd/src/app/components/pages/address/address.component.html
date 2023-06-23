@@ -4,10 +4,10 @@
 
   <div class="grid grid-cols-1 mx-auto max-w-[85rem] md:grid-cols-2">
     <div class="py-12">
-      <div class="max-w-xl px-4 mx-auto space-y-8 lg:px-8">
-        <div class="flex items-center gap-4">
+      <div class="px-4 mx-auto space-y-8 max-w-xl lg:px-8">
+        <div class="flex gap-4 items-center">
           <span
-            class="w-10 h-10 bg-blue-700 border rounded-full border-black/20"
+            class="w-10 h-10 bg-blue-700 rounded-full border border-black/20"
           ></span>
 
           <h2 class="font-medium text-gray-900">Zauj Footwear</h2>
@@ -26,12 +26,13 @@
         <div class="flex flex-col gap-10">
           <div class="flow-root" *ngFor="let item of productArray">
             <ul class="-my-4 divide-y divide-gray-100">
-              <li class="flex items-center gap-4 py-4">
+              <li class="flex gap-4 items-center py-4">
                 <img
                   routerLink="/single/{{ item._id }}"
+                  loading="lazy"
                   src="{{ item.image }}"
                   alt=""
-                  class="object-cover w-40 rounded h-36"
+                  class="object-cover w-40 h-36 rounded"
                 />
 
                 <div>
@@ -75,7 +76,7 @@
               formControlName="firstName"
               type="text"
               id="FirstName"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -108,7 +109,7 @@
               type="text"
               id="LastName"
               formControlName="lastName"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -138,7 +139,7 @@
               type="email"
               id="Email"
               formControlName="email"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -162,7 +163,7 @@
               type="number"
               id="Phone"
               formControlName="phone"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -188,7 +189,7 @@
               type="number"
               id="pincode"
               formControlName="pincode"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -220,7 +221,7 @@
             <input
               type="text"
               id="locality"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
               formControlName="locality"
             />
             <div
@@ -247,7 +248,7 @@
               formControlName="Address"
               rows="5"
               id="locality"
-              class="w-full px-6 py-4 mt-1 border rounded-md shadow-sm resize-none border-black/20 p sm:text-sm"
+              class="px-6 py-4 mt-1 w-full rounded-md border shadow-sm resize-none border-black/20 p sm:text-sm"
             >
             </textarea>
             <div
@@ -271,7 +272,7 @@
               type="text"
               id="city"
               formControlName="city"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div class="mt-2" *ngIf="fc['city'].touched && fc['city'].invalid">
               <p class="text-red-600" *ngIf="fc['city'].errors?.['required']">
@@ -292,7 +293,7 @@
               type="text"
               id="state"
               formControlName="state"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -317,7 +318,7 @@
               type="text"
               id="landmark"
               formControlName="landmark"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -344,7 +345,7 @@
               type="number"
               id="alternative"
               formControlName="alternativePhone"
-              class="w-full p-3 mt-1 border rounded-md shadow-sm border-black/20 sm:text-sm"
+              class="p-3 mt-1 w-full rounded-md border shadow-sm border-black/20 sm:text-sm"
             />
             <div
               class="mt-2"
@@ -364,7 +365,7 @@
           <div class="col-span-6">
             <button
               [disabled]="forms.invalid"
-              class="block w-full p-3 text-sm text-white transition bg-black border rounded-md border-black/20 hover:shadow-lg"
+              class="block p-3 w-full text-sm text-white bg-black rounded-md border transition border-black/20 hover:shadow-lg"
             >
               Pay Now
             </button>

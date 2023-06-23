@@ -3,7 +3,7 @@
   class="max-w-[85rem] mx-auto px-5 flex md:flex-row flex-col justify-between"
 >
   <div class="w-full">
-    <div class="flex items-center justify-between mt-10 md:mt-24">
+    <div class="flex justify-between items-center mt-10 md:mt-24">
       <h1 class="text-2xl font-medium">Cart Section</h1>
       <button>
         <span class="text-3xl material-symbols-outlined" (click)="fullDelete()">
@@ -13,7 +13,7 @@
     </div>
     <div>
       <div
-        class="flex items-center justify-between w-full pb-4 mt-5 border-b border-black md:mt-10 md:mb-10"
+        class="flex justify-between items-center pb-4 mt-5 w-full border-b border-black md:mt-10 md:mb-10"
       >
         <div class="w-2/3">products</div>
         <div class="w-1/3">quantity</div>
@@ -21,13 +21,14 @@
       </div>
       <div
         *ngFor="let item of allProduct"
-        class="flex justify-between w-full gap-2 py-5 mt-5 border-b border-black md:gap-10"
+        class="flex gap-2 justify-between py-5 mt-5 w-full border-b border-black md:gap-10"
       >
         <div class="flex flex-col w-2/3">
           <div class="flex gap-5">
             <div class="flex flex-col" routerLink="/single/{{ item._id }}">
               <div class="flex">
                 <img
+                  loading="lazy"
                   src="{{ item.image }}"
                   class="h-12 md:h-16 max-w-[3.5rem] md:max-w-xs object-contain"
                   alt="sahh"
@@ -37,7 +38,7 @@
               <div class="flex flex-row pl-20 md:pl-28">
                 <h2>{{ item.color }}</h2>
                 <div
-                  class="w-4 h-4 mt-1 ml-1 rounded-full"
+                  class="mt-1 ml-1 w-4 h-4 rounded-full"
                   [ngStyle]="{
                     'background-color': item.color
                   }"
@@ -48,7 +49,7 @@
           </div>
         </div>
         <div class="flex flex-col justify-between w-1/3 text-center">
-          <div class="flex justify-between gap-3 w-14 md:w-20 md:gap-3">
+          <div class="flex gap-3 justify-between w-14 md:w-20 md:gap-3">
             <button
               class="px-3 bg-gray-300 rounded-full md:text-4xl"
               (click)="minus(item._id, item.quantity)"
@@ -63,7 +64,7 @@
               +
             </button>
           </div>
-          <div class="mt-10 text-red-500 w-28">
+          <div class="mt-10 w-28 text-red-500">
             <button (click)="deleteOne(item._id)">
               <span class="material-symbols-outlined"> delete </span>
             </button>
@@ -98,7 +99,7 @@
     </div>
     <button
       (click)="checkout()"
-      class="p-3 text-white bg-black rounded-lg mt-7"
+      class="p-3 mt-7 text-white bg-black rounded-lg"
     >
       Checkout Now
     </button>
